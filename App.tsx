@@ -12,7 +12,6 @@ const Stack = createNativeStackNavigator();
 function App(): JSX.Element {
   const [userLocation, setUserLocation] = useState<GeoPosition | null>(null);
   const [error, setError] = useState<'location' | null>(null);
-  console.log(error, '<-- error');
 
   async function getUserLocation(): Promise<void> {
     const isGranted = await requestLocationPermission();
