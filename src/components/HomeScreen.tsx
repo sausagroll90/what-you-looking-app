@@ -13,14 +13,16 @@ const HomeScreenSceneAR = () => {
 
   function onInitialised(state: any, reason: ViroTrackingReason) {
     console.log('onInitialised', state, reason);
-    if (state === ViroTrackingStateConstants.TRACKING_UNAVAILABLE) {
-      //render error message
+    if (state === ViroTrackingStateConstants.TRACKING_NORMAL) {
+      // compass etc.
+    } else if (state === ViroTrackingStateConstants.TRACKING_UNAVAILABLE) {
+      // Handle error
     }
   }
   return (
     <ViroARScene onTrackingUpdated={onInitialised}>
       {testData.results.map((location) => {
-        return <PointMarker key={location.place_id} />;
+        return <PointMarker key={location.place_id} location={location} />;
       })}
     </ViroARScene>
   );

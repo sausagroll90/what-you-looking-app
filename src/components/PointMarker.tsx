@@ -1,7 +1,9 @@
 import { ViroImage } from '@viro-community/react-viro';
 import React from 'react';
 
-export default function PointMarker() {
+export default function PointMarker(props: {
+  location: { geometry: { location: { lat: number; lng: number } } };
+}) {
   return (
     <ViroImage
       source={require('../../res/icons/museum.png')}
