@@ -1,56 +1,30 @@
-import {
-  ViroARScene,
-  ViroARSceneNavigator,
-  ViroText,
-  ViroTrackingReason,
-  ViroTrackingStateConstants,
-} from "@viro-community/react-viro";
-import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import * as React from 'react';
+import { View, Text, TextInput } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const HelloWorldSceneAR = () => {
-  const [text, setText] = useState("Initializing AR...");
-
-  function onInitialized(state: any, reason: ViroTrackingReason) {
-    console.log("onInitialized", state, reason);
-    if (state === ViroTrackingStateConstants.TRACKING_NORMAL) {
-      setText("Hello World!");
-    } else if (state === ViroTrackingStateConstants.TRACKING_UNAVAILABLE) {
-      // Handle loss of tracking
-    }
-  }
-
+function HomeScreen() {
   return (
-    <ViroARScene onTrackingUpdated={onInitialized}>
-      <ViroText
-        text={text}
-        scale={[0.5, 0.5, 0.5]}
-        position={[0, 0, -1]}
-        style={styles.helloWorldTextStyle}
-      />
-    </ViroARScene>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' ,}}>
+      <Text style={{color:'black'}}>Home Screen</Text>
+      <TextInput></TextInput>
+    </View>
   );
-};
+}
 
-export default () => {
+
+
+const Stack = createNativeStackNavigator();
+
+function App():JSX.Element {
   return (
-    <ViroARSceneNavigator
-      autofocus={true}
-      initialScene={{
-        scene: HelloWorldSceneAR,
-      }}
-      style={styles.f1}
-    />
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name='Home' component={HomeScreen}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-};
+}
 
-var styles = StyleSheet.create({
-  f1: { flex: 1 },
-  helloWorldTextStyle: {
-    fontFamily: "Arial",
-    fontSize: 30,
-    color: "#ffffff",
-    textAlignVertical: "center",
-    textAlign: "center",
-  },
-});
+export default App;
+
