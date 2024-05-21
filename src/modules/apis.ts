@@ -1,3 +1,5 @@
+import { GOOGLEAPIKEY } from '@env';
+
 export async function getNearbyPOIs(
   latitude: number,
   longitude: number,
@@ -6,7 +8,7 @@ export async function getNearbyPOIs(
   let response;
   try {
     response = await fetch(
-      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1000&type=${type}&key=${PASTEAPIKEYHERE}`,
+      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1000&type=${type}&key=${GOOGLEAPIKEY}`,
     );
     if (response.status != 200) {
       console.log('Error fetching from API: ' + response.status);
