@@ -18,7 +18,12 @@ export async function getNearbyPOIs(
 
   const data = await response.json();
 
-  const results: [] = data.results.map((result) => {
+  const results: {
+    latitude: number;
+    longitude: number;
+    name: string;
+    place_id: string;
+  }[] = data.results.map((result) => {
     return {
       latitude: result.geometry.location.lat,
       longitude: result.geometry.location.lng,

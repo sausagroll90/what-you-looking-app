@@ -6,7 +6,6 @@ import Geolocation, { GeoPosition } from 'react-native-geolocation-service';
 import HomeScreen from './src/components/HomeScreen';
 import ErrorScreen from './src/components/ErrorScreen';
 import LocationDeniedError from './src/components/LocationDeniedError';
-import { getNearbyPOIs } from './src/apis/apis';
 
 const Stack = createNativeStackNavigator();
 
