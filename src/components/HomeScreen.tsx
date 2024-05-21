@@ -8,6 +8,7 @@ import {
 import testData from '../../test-data.json';
 import PointMarker from './PointMarker';
 import CompassHeading from 'react-native-compass-heading';
+import { getNearbyPOIs } from '../modules/apis';
 
 const HomeScreenSceneAR = () => {
   const [pointsOfInterest, setPointsOfInterest] = useState(testData);
