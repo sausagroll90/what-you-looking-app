@@ -76,5 +76,5 @@ yarn-error.log
 # ESLint
 .eslintcache
 
-# .env files
-.env.*
+# env files
+.env*
