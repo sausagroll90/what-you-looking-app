@@ -11,8 +11,7 @@ export async function getNearbyPOIs(
       `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1000&type=${type}&key=${GOOGLEAPIKEY}`,
     );
     if (response.status !== 200) {
-      console.log('Error fetching from API: ' + response.status);
-      return null;
+      throw new Error('Error fetching from API: ' + response.status);
     }
   } catch (error) {
     console.log('Error fetching from API', error);
@@ -44,8 +43,7 @@ export async function getPlaceDetails(place_id: string) {
       `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=${GOOGLEAPIKEY}`,
     );
     if (response.status !== 200) {
-      console.log('Error fetching from API: ' + response.status);
-      return null;
+      throw new Error('Error fetching from API: ' + response.status);
     }
   } catch (error) {
     console.log('Error fetching from API', error);
