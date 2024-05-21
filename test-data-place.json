@@ -1,0 +1,391 @@
+{
+  "html_attributions": [],
+  "result": {
+    "address_components": [
+      {
+        "long_name": "Millennium Square",
+        "short_name": "Millennium Square",
+        "types": ["premise"]
+      },
+      {
+        "long_name": "Leeds",
+        "short_name": "Leeds",
+        "types": ["postal_town"]
+      },
+      {
+        "long_name": "West Yorkshire",
+        "short_name": "West Yorkshire",
+        "types": ["administrative_area_level_2", "political"]
+      },
+      {
+        "long_name": "England",
+        "short_name": "England",
+        "types": ["administrative_area_level_1", "political"]
+      },
+      {
+        "long_name": "United Kingdom",
+        "short_name": "GB",
+        "types": ["country", "political"]
+      },
+      {
+        "long_name": "LS2 8BH",
+        "short_name": "LS2 8BH",
+        "types": ["postal_code"]
+      }
+    ],
+    "adr_address": "Millennium Square, <span class=\"locality\">Leeds</span> <span class=\"postal-code\">LS2 8BH</span>, <span class=\"country-name\">UK</span>",
+    "business_status": "OPERATIONAL",
+    "current_opening_hours": {
+      "open_now": false,
+      "periods": [
+        {
+          "close": {
+            "date": "2024-05-26",
+            "day": 0,
+            "time": "1700"
+          },
+          "open": {
+            "date": "2024-05-26",
+            "day": 0,
+            "time": "1100"
+          }
+        },
+        {
+          "close": {
+            "date": "2024-05-21",
+            "day": 2,
+            "time": "1700"
+          },
+          "open": {
+            "date": "2024-05-21",
+            "day": 2,
+            "time": "1000"
+          }
+        },
+        {
+          "close": {
+            "date": "2024-05-22",
+            "day": 3,
+            "time": "1700"
+          },
+          "open": {
+            "date": "2024-05-22",
+            "day": 3,
+            "time": "1000"
+          }
+        },
+        {
+          "close": {
+            "date": "2024-05-23",
+            "day": 4,
+            "time": "1700"
+          },
+          "open": {
+            "date": "2024-05-23",
+            "day": 4,
+            "time": "1000"
+          }
+        },
+        {
+          "close": {
+            "date": "2024-05-24",
+            "day": 5,
+            "time": "1700"
+          },
+          "open": {
+            "date": "2024-05-24",
+            "day": 5,
+            "time": "1000"
+          }
+        },
+        {
+          "close": {
+            "date": "2024-05-25",
+            "day": 6,
+            "time": "1700"
+          },
+          "open": {
+            "date": "2024-05-25",
+            "day": 6,
+            "time": "1100"
+          }
+        }
+      ],
+      "weekday_text": [
+        "Monday: Closed",
+        "Tuesday: 10:00 AM – 5:00 PM",
+        "Wednesday: 10:00 AM – 5:00 PM",
+        "Thursday: 10:00 AM – 5:00 PM",
+        "Friday: 10:00 AM – 5:00 PM",
+        "Saturday: 11:00 AM – 5:00 PM",
+        "Sunday: 11:00 AM – 5:00 PM"
+      ]
+    },
+    "editorial_summary": {
+      "language": "en",
+      "overview": "Imposing home for natural & community history & the city collection of archeological items."
+    },
+    "formatted_address": "Millennium Square, Leeds LS2 8BH, UK",
+    "formatted_phone_number": "0113 378 5001",
+    "geometry": {
+      "location": {
+        "lat": 53.8015938,
+        "lng": -1.5469284
+      },
+      "viewport": {
+        "northeast": {
+          "lat": 53.8030808802915,
+          "lng": -1.545641069708498
+        },
+        "southwest": {
+          "lat": 53.8003829197085,
+          "lng": -1.548339030291502
+        }
+      }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/museum-71.png",
+    "icon_background_color": "#13B5C7",
+    "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/museum_pinlet",
+    "international_phone_number": "+44 113 378 5001",
+    "name": "Leeds City Museum",
+    "opening_hours": {
+      "open_now": false,
+      "periods": [
+        {
+          "close": {
+            "day": 0,
+            "time": "1700"
+          },
+          "open": {
+            "day": 0,
+            "time": "1100"
+          }
+        },
+        {
+          "close": {
+            "day": 2,
+            "time": "1700"
+          },
+          "open": {
+            "day": 2,
+            "time": "1000"
+          }
+        },
+        {
+          "close": {
+            "day": 3,
+            "time": "1700"
+          },
+          "open": {
+            "day": 3,
+            "time": "1000"
+          }
+        },
+        {
+          "close": {
+            "day": 4,
+            "time": "1700"
+          },
+          "open": {
+            "day": 4,
+            "time": "1000"
+          }
+        },
+        {
+          "close": {
+            "day": 5,
+            "time": "1700"
+          },
+          "open": {
+            "day": 5,
+            "time": "1000"
+          }
+        },
+        {
+          "close": {
+            "day": 6,
+            "time": "1700"
+          },
+          "open": {
+            "day": 6,
+            "time": "1100"
+          }
+        }
+      ],
+      "weekday_text": [
+        "Monday: Closed",
+        "Tuesday: 10:00 AM – 5:00 PM",
+        "Wednesday: 10:00 AM – 5:00 PM",
+        "Thursday: 10:00 AM – 5:00 PM",
+        "Friday: 10:00 AM – 5:00 PM",
+        "Saturday: 11:00 AM – 5:00 PM",
+        "Sunday: 11:00 AM – 5:00 PM"
+      ]
+    },
+    "photos": [
+      {
+        "height": 567,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/107001565629459415129\">Leeds City Museum</a>"
+        ],
+        "photo_reference": "AUGGfZkWoVSG1zdFA-NBwRdTtRgEKLOAN-yDtX_pgIu5kqc2lqYVSHuPvCkjhVzU_QNi9picQFFZKKQVFOs-ksgGTJsu3VpUAQgiU9ook3sIkLfvQ4jlSsxbrev4goAFs1IThicLRTszt2ZT-8QL8ufUW3rTnMoNtUgLi-5-WRF7ZoWS0Mhc",
+        "width": 850
+      },
+      {
+        "height": 3024,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/102204903261247452638\">Tina-Marie Overell</a>"
+        ],
+        "photo_reference": "AUGGfZncY7dcJHUlh1jbGwnEWxbcg-E17-cdzzhksU30tjkPfzVvDFF7UpTnDcUK0p1DSuNRquA2mfvtdLYaIdeHR1g1QhFQBNCz7ZA-vPj3fVukN8FV095V8uUeFgMiLavd3P0Omlbvvl-sdO7UB8iEEYPh4mN5SJ8YXcOUdHRNRep9O1P-",
+        "width": 4032
+      },
+      {
+        "height": 3072,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/112492763846272975211\">Chris Seed</a>"
+        ],
+        "photo_reference": "AUGGfZk6Qebd6IJeIgtPO2tHSpl9mKHoJ-4-uvdxqTbuoiYSaPqKncSwapftXhPZ1bu5QEp_ph0km7mwJD9oO2DtC2qTNl0VqmrOqREaPerCzViruIvVNQxn9ms3bpUnJPFbxxMM3K5tj1TJ_HtBeRxgI4xf6ogrrNq5Qm4LDAyxPQ7qxjqB",
+        "width": 4080
+      },
+      {
+        "height": 3000,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/115393352250086735829\">Bobby Lee</a>"
+        ],
+        "photo_reference": "AUGGfZkdOajH6iTHRgAxjib4L_RiLqqxb3K8OiFBxXR4xsvK1xYNDZs-AEZvFlCghPR-Re3qs5MUNbMVsg8a_zD4-x2yQER3XPwYVwUb5y5NWGkKaASqU9jRwoNXmqSrFU45TYWRyV5OgntPB1jVhIyRZMEXJyuhLOaZP_9ts-ijtZUe4w9Y",
+        "width": 4000
+      },
+      {
+        "height": 4032,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/116230796382948551167\">sinu Thomas</a>"
+        ],
+        "photo_reference": "AUGGfZkj5_I0ejLiHLfMitCkUYPSEZeN6A5-1csSB5RJKWQVhndDSY7oFoim0_C9qijT1NhpBHRety7Be575k-_m3RPYdwEQe5GohUSRyLrL-vVLBZNPqZ8CEob6DxMuprRTYJ951YGduoMwQOz2HuuFHFv6NDFzhurs3lgUcRcEbUHKe_FR",
+        "width": 3024
+      },
+      {
+        "height": 4032,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/112864428419977179678\">Oluwabukunmi John Oluwayemi</a>"
+        ],
+        "photo_reference": "AUGGfZk5m7FlxeSTi9r_1jdAhwrN98x7uQqJRi4wqAFiJJxfSWFPiGCO0GJh1eocYtUxcETAobAgNSd5rM2u8q2I8QNtVk_0SYYor5w5WCNQ_oRMt4lOAt7ng_S7louErUqO-D1cnVJoRHezM4pwf5vQErXncZCbbIxjk5-1U6p_UQXQc5-D",
+        "width": 3024
+      },
+      {
+        "height": 3146,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/115062671457345031816\">Iordan Photography</a>"
+        ],
+        "photo_reference": "AUGGfZmWOkfqpKYhdJWXklxQhtp4ha0NAXFv_nvhGp0W0cAbKmsEnxa890KyQcQWK2-4AVSQKMJFafiNoa4pPFRFv062LG1yKTmH8hK0rY0C82RJIC4LzoJdOMUUR0YNB7ud-iS_hUZ6x90qFNcF0pZPfJvrsSTMlDZDD32AthRlnbBMnslj",
+        "width": 4720
+      },
+      {
+        "height": 2268,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/101526695597018267331\">Horatiu D. Suciu</a>"
+        ],
+        "photo_reference": "AUGGfZmR3SRnIg9YXbQfB5T65If7wE1p3cOgKMuSBDKs5pZmdcbxcWig_6nzvYsUvnRQ4ZUfZJelXOZleJeUV1AzAGXQ9ZmUGqv184-R1PQsv0XJ0zxHT4lvnDKalEd0skmD0oRLmdwqFB3keUA46vfJW3ksa9uxnskjeY1Ws1r5CNYRsGyJ",
+        "width": 4032
+      },
+      {
+        "height": 366,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/102964862424419049593\">Stephen “Stevo” Thompson</a>"
+        ],
+        "photo_reference": "AUGGfZnNA80MMfC36fQNXagc1OxkCvukdquqDIiQqchdb2NwGZBilsLeWtbuDTSsEimO1ykerIuD7tz_f3kRNr-4rqsVVOu_Xef5TC2ZxfozC277ELgqV4x9j3eB6RmzfKVmTKhdHYkPrqVam-fnWUtYfk2d_FVzmjx7coI_o85O91v0TbuC",
+        "width": 550
+      },
+      {
+        "height": 4032,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/100003977206125061727\">Matthew Harwood</a>"
+        ],
+        "photo_reference": "AUGGfZnzpK5p0WITWPIwCzGyK2nR1BIvx2zdHIN9N_sqCAJ5AIyCXy8oqECY7GdgMUFwphbetMBpx2DdM6Bt0idYwI87fBNDtX5kX1hlsVnPPmuEXS9duifsYjIBQiNX_GzexnvKd8QSsab0iknWjDG-5Yo2v0hHdVp5Np-0lPWnJspy-asx",
+        "width": 3024
+      }
+    ],
+    "place_id": "ChIJwdWI4RxceUgRFF7zMoxhXQE",
+    "plus_code": {
+      "compound_code": "RF23+J6 Leeds, UK",
+      "global_code": "9C5WRF23+J6"
+    },
+    "rating": 4.4,
+    "reference": "ChIJwdWI4RxceUgRFF7zMoxhXQE",
+    "reviews": [
+      {
+        "author_name": "Lukas",
+        "author_url": "https://www.google.com/maps/contrib/102289386762794665064/reviews",
+        "language": "en",
+        "original_language": "en",
+        "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocKcAQTjxgWtU7u88uJ_4nCI8vmaC_RZ-zvBPs6NkwSgGgjAbA=s128-c0x00000000-cc-rp-mo-ba2",
+        "rating": 4,
+        "relative_time_description": "2 weeks ago",
+        "text": "Nice museum to visit, especially considering it's free of charge. Staff are kind and welcoming.\n\nA new and very emotive exhibition regarding Death was recently opened. It explores so many aspects of death and the culture around it. Likely to be upsetting to those who have experienced loss or sensitive to said themes and suicide. It does include a warning on entrance.\n\nMany aspects were interactive and they have many videos on to watch about stuff within the museum. Unfortunately, certain interactive parts of the museum didn't work but it didn't impact much.\n\nCan't wait to see the next exhibition.",
+        "time": 1715015735,
+        "translated": false
+      },
+      {
+        "author_name": "Freyja Brooks",
+        "author_url": "https://www.google.com/maps/contrib/107357877813851672773/reviews",
+        "language": "en",
+        "original_language": "en",
+        "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjVtkSDWBYTJ9_8iFBsgXHaNpAMUmhOmsyBEeVtOtOeiVXADmImJ=s128-c0x00000000-cc-rp-mo",
+        "rating": 5,
+        "relative_time_description": "a month ago",
+        "text": "During half term the museum was still relatively calm, which is helpful for myself as an adult with sensory issues and anxiety. There are so many aspects to the museum meaning anyone will enjoy it here, and there is something for all ages, not directly aimed at children, which allows us older history lovers to get stuck in too! Overall, always a lovely experience at Leeds City, definitely will be visiting again soon.",
+        "time": 1711575874,
+        "translated": false
+      },
+      {
+        "author_name": "Nnamdi Onyema",
+        "author_url": "https://www.google.com/maps/contrib/117937092108180722102/reviews",
+        "language": "en",
+        "original_language": "en",
+        "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJzXFuuMOpmdYnqthn2xyMi5r4i8jtuA-d7VWPhC7DUjEgJdA=s128-c0x00000000-cc-rp-mo-ba3",
+        "rating": 5,
+        "relative_time_description": "3 months ago",
+        "text": "Profoundly interesting place to be  with fascinating pieces from ancient to modern times. I had planned to be there for about an hour before visiting other sites in Leeds but didn't notice more than 3 hours go by. My experience was worth every minute of the visit.",
+        "time": 1706354601,
+        "translated": false
+      },
+      {
+        "author_name": "Eva Lo-van Steenbergen",
+        "author_url": "https://www.google.com/maps/contrib/114326339961442821584/reviews",
+        "language": "en",
+        "original_language": "en",
+        "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjVsbwPkuKg3a_79EHWZFk4ROKmYYBdvfypSmcqQKVvJaK1CvcuS=s128-c0x00000000-cc-rp-mo",
+        "rating": 5,
+        "relative_time_description": "2 months ago",
+        "text": "This museum is great. Especially coming from the Netherlands a free museum is already great, but they have an awesome play area for kids under 5. My boys didn't want to leave. Also the exhibitions are very nice with different educational games to interest the kids as well.",
+        "time": 1710964018,
+        "translated": false
+      },
+      {
+        "author_name": "Anna Nebo",
+        "author_url": "https://www.google.com/maps/contrib/100313836606903545474/reviews",
+        "language": "en",
+        "original_language": "en",
+        "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjXmPyAcZ7u-dtq-tZhCZ3LRi4Zqa1_O0jbxA4nD_5nmsiPEi3Q=s128-c0x00000000-cc-rp-mo-ba3",
+        "rating": 5,
+        "relative_time_description": "4 months ago",
+        "text": "Very nice place to spend couple of hours. The beauty of not giant museum is that you are not getting tired, y oh remember what you saw and you leave the building with emotions but still up to further adventures!\nI enjoyed the room with Hip Hop exhibition. So many things from my childhood!!!",
+        "time": 1704794611,
+        "translated": false
+      }
+    ],
+    "types": [
+      "museum",
+      "tourist_attraction",
+      "store",
+      "point_of_interest",
+      "establishment"
+    ],
+    "url": "https://maps.google.com/?cid=98342021650144788",
+    "user_ratings_total": 3646,
+    "utc_offset": 60,
+    "vicinity": "Millennium Square, Leeds",
+    "website": "https://citymuseum.leeds.gov.uk/",
+    "wheelchair_accessible_entrance": true
+  },
+  "status": "OK"
+}
