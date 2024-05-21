@@ -14,8 +14,8 @@ export async function getNearbyPOIs(
     if (response.status !== 200) {
       throw new Error('Error fetching from API: ' + response.status);
     }
-    const data = await response.json();
 
+    const data = await response.json();
     const results: {
       latitude: number;
       longitude: number;
