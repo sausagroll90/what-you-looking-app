@@ -49,7 +49,7 @@ const HomeScreenSceneAR = ({
       setInitialCompassHeading(compassHeading);
       setInitialised(true);
     } else if (state === ViroTrackingStateConstants.TRACKING_UNAVAILABLE) {
-      //error
+      //errorg
     }
   }
 
@@ -127,7 +127,9 @@ const HomeScreenSceneAR = ({
             );
           })
         : null}
-      {loading ? <ViroSpinner type="dark" position={[0, 0, -3]} /> : null}
+      {loading || !initialised ? (
+        <ViroSpinner type="dark" position={[0, 0, -3]} />
+      ) : null}
     </ViroARScene>
   );
 };
