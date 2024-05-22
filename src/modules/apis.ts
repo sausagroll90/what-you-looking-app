@@ -5,35 +5,33 @@ export async function getNearbyPOIs(
   longitude: number,
   type: string,
 ) {
-  try {
-    const response = await fetch(
-      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1000&type=${type}&key=${GOOGLEAPIKEY}`,
-    );
+  const response = await fetch(
+    `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1000&type=${type}&key=${GOOGLEAPIKEY}`,
+  );
 
-    if (response.status !== 200) {
-      throw new Error('Error fetching from API: ' + response.status);
-    }
-
-    const data = await response.json();
-
-    const results: {
-      latitude: number;
-      longitude: number;
-      name: string;
-      place_id: string;
-    }[] = data.results.map((result: any) => {
-      return {
-        latitude: result.geometry.location.lat,
-        longitude: result.geometry.location.lng,
-        name: result.name,
-        place_id: result.place_id,
-      };
-    });
-
-    return results;
-  } catch (error) {
-    console.log(error);
+  if (response.status !== 200) {
+    throw new Error('Error fetching from API: ' + response.status);
   }
+
+  const data = await response.json();
+
+  const results: {
+    latitude: number;
+    longitude: number;
+    name: string;
+    place_id: string;
+    types: string[];
+  }[] = data.results.map((result: any) => {
+    return {
+      latitude: result.geometry.location.lat,
+      longitude: result.geometry.location.lng,
+      name: result.name,
+      place_id: result.place_id,
+      types: result.types,
+    };
+  });
+
+  return results;
 }
 
 export async function getPlaceDetails(place_id: string) {
