@@ -8,6 +8,7 @@ interface PlaceData {
   current_opening_hours?: string[];
   website?: string;
   place_id: string;
+  overview?: string;
 }
 
 type PlaceDetailsProps = NativeStackScreenProps<

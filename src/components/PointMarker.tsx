@@ -38,6 +38,8 @@ export default function PointMarker(props: {
   });
 
   const handleClick = () => {
+    console.log('In click');
+
     navigation.push('PlaceDetails', { place_id: props.place_id });
   };
 
@@ -48,6 +50,7 @@ export default function PointMarker(props: {
       position={props.position}
       animation={{ name: 'rotate', run: true, loop: true }}
       onClick={handleClick}
+      onClickState={() => console.log('I am here')}
     />
   );
 }

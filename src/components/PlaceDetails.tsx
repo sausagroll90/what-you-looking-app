@@ -15,7 +15,6 @@ export default function PlaceDetails({
   async function onPlaceIdReceived(placeId: string) {
     try {
       const data = await getPlaceDetails(placeId);
-      console.log('onPlaceID REcieved', data);
       setPlaceDetails(data);
     } catch (_) {
       console.log('Error fetching place details');
@@ -41,6 +40,9 @@ export default function PlaceDetails({
       {placeDetails ? (
         <>
           <Text style={styles.name}>{placeDetails.name}</Text>
+          {placeDetails.overview && (
+            <Text style={styles.data}>{placeDetails.overview}</Text>
+          )}
           <Text style={styles.data}>{placeDetails.formatted_address}</Text>
           <Text style={styles.data}>Opening Hours:</Text>
           {placeDetails.current_opening_hours &&
