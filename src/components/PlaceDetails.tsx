@@ -1,31 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Linking } from 'react-native';
 import { Props } from '../types/route';
 import StyledButton from './StyledButton';
+import { getPlaceDetails } from '../modules/apis';
 
 export default function PlaceDetails({ route }: Props): React.JSX.Element {
-  const { formattedAddress, name, rating, weekday_text, website, place_id } =
-    route.params.placeData;
+  const [placeDetails, setPlaceDetails] = useState({});
+
+  const place_id: string = route.params.place_id;
+
+  async function onPlaceIdReceived(place_id) {
+    try {
+      const data = await getPlaceDetails(place_id);
+      console.log(data);
+      setPlaceDetails(data);
+    } catch (_) {
+      console.log('In catch block');
+    }
+  }
+
+  useEffect(() => {
+    onPlaceIdReceived(place_id);
+  });
 
   const handlePress = () => {
-    Linking.openURL(website);
+    Linking.openURL(placeDetails.website);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.name}>{name}</Text>
-      <Text style={styles.data}>{formattedAddress}</Text>
+      <Text>I'm here</Text>
+      <Text style={styles.name}>{placeDetails.name}</Text>
+      <Text style={styles.data}>{placeDetails.formattedAddress}</Text>
       <Text style={styles.data}>Opening Hours:</Text>
-      {weekday_text &&
-        weekday_text.map((day) => {
+      {placeDetails.current_opening_hours &&
+        placeDetails.current_opening_hours.map((day) => {
           return (
             <Text key={day} style={styles.openingData}>
               {day}
             </Text>
           );
         })}
-      {rating && <Text style={styles.data}>{rating} rating</Text>}
-      {website && <StyledButton buttonText="Website" onPress={handlePress} />}
+      {placeDetails.rating && (
+        <Text style={styles.data}>{placeDetails.rating} rating</Text>
+      )}
+      {placeDetails.website && (
+        <StyledButton buttonText="Website" onPress={handlePress} />
+      )}
     </View>
   );
 }
