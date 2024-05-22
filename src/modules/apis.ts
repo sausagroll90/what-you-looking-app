@@ -60,7 +60,7 @@ export async function getPlaceDetails(place_id: string) {
     ? (results.current_opening_hours =
         data.result.current_opening_hours.weekday_text)
     : null;
-  data.result.editorial_summary.overview
+  data.result.editorial_summary
     ? (results.overview = data.result.editorial_summary.overview)
     : null;
 

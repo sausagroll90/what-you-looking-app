@@ -16,7 +16,8 @@ export default function PlaceDetails({
     try {
       const data = await getPlaceDetails(placeId);
       setPlaceDetails(data);
-    } catch (_) {
+    } catch (e) {
+      console.log(e);
       console.log('Error fetching place details');
     }
   }
