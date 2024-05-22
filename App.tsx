@@ -5,6 +5,7 @@ import HomeScreen from './src/components/HomeScreen';
 import LocationDeniedError from './src/components/LocationDeniedError';
 import PlaceDetails from './src/components/PlaceDetails';
 import { RootStackParamList } from './src/types/route';
+import PointMarker from './src/components/PointMarker';
 
 const testPlaceData = {
   formattedAddress: 'Millennium Square, Leeds LS2 8BH, UK',
@@ -38,6 +39,7 @@ function App(): JSX.Element {
             initialParams={{ placeData: testPlaceData }}
           />
           <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="PointMarker" component={PointMarker} />
         </>
         {/* )} */}
       </Stack.Navigator>
