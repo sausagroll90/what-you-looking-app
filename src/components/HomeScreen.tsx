@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   ViroARScene,
   ViroARSceneNavigator,
+  ViroSpinner,
   ViroTrackingReason,
   ViroTrackingStateConstants,
 } from '@viro-community/react-viro';
@@ -39,25 +40,33 @@ const HomeScreenSceneAR = ({
   const [initialCompassHeading, setInitialCompassHeading] = useState<
     number | null
   >(null);
+  const [initialised, setInitialised] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   function onInitialised(state: any, reason: ViroTrackingReason) {
     console.log('onInitialised', state, reason);
     if (state === ViroTrackingStateConstants.TRACKING_NORMAL) {
       setInitialCompassHeading(compassHeading);
+      setInitialised(true);
     } else if (state === ViroTrackingStateConstants.TRACKING_UNAVAILABLE) {
-      // Handle error
+      //error
     }
   }
 
   async function onLocationReceived(position: GeoPosition) {
-    const POI_TYPE = 'museum';
-    const data = await getNearbyPOIs(
-      position.coords.latitude,
-      position.coords.longitude,
-      POI_TYPE,
-    );
-    if (data) {
-      setPointsOfInterest(data);
+    try {
+      const POI_TYPE = 'museum';
+      const data = await getNearbyPOIs(
+        position.coords.latitude,
+        position.coords.longitude,
+        POI_TYPE,
+      );
+      if (data) {
+        setPointsOfInterest(data);
+        setLoading(false);
+      }
+    } catch (_) {
+      setError('Error loading data');
     }
   }
 
@@ -118,6 +127,7 @@ const HomeScreenSceneAR = ({
             );
           })
         : null}
+      {loading ? <ViroSpinner type="dark" position={[0, 0, -3]} /> : null}
     </ViroARScene>
   );
 };
