@@ -12,10 +12,20 @@ import { getNearbyPOIs } from '../modules/apis';
 import { requestLocationPermission } from '../modules/permissions';
 import Geolocation, { GeoPosition } from 'react-native-geolocation-service';
 import { getPositionForAR } from '../modules/utils';
+import ErrorScreen from './ErrorScreen';
 
-const HomeScreenSceneAR = () => {
+const HomeScreenSceneAR = ({
+  arSceneNavigator: {
+    viroAppProps: { setError },
+  },
+}: {
+  arSceneNavigator: {
+    viroAppProps: {
+      setError: React.Dispatch<React.SetStateAction<string | null>>;
+    };
+  };
+}) => {
   const [userLocation, setUserLocation] = useState<GeoPosition | null>(null);
-  const [error, setError] = useState<'location' | null>(null);
   const [pointsOfInterest, setPointsOfInterest] = useState<
     {
       latitude: number;
@@ -63,11 +73,12 @@ const HomeScreenSceneAR = () => {
           (err) => {
             console.log(err.code, err.message);
             setUserLocation(null);
+            setError(err.message);
           },
           { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
         );
       } else {
-        setError('location');
+        setError('please enable location permissions in app settings');
       }
     }
     getUserLocation();
@@ -84,6 +95,7 @@ const HomeScreenSceneAR = () => {
     return () => {
       CompassHeading.stop();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -111,10 +123,14 @@ const HomeScreenSceneAR = () => {
 };
 
 export default () => {
-  return (
+  const [error, setError] = useState<string | null>(null);
+  return !error ? (
     <ViroARSceneNavigator
       autofocus={true}
       initialScene={{ scene: HomeScreenSceneAR }}
+      viroAppProps={{ setError }}
     />
+  ) : (
+    <ErrorScreen message={error} />
   );
 };
