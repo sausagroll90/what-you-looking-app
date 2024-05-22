@@ -3,7 +3,7 @@ import { getPositionForAR, getRelativePosition } from '../src/modules/utils';
 describe('getRelativePosition', () => {
   it('returns relative position for given user location and target', () => {
     const testTargetCoords = { latitude: 53.8, longitude: -1.55 };
-    const testUserCoords = { coords: { latitude: 53.797, longitude: -1.557 } };
+    const testUserCoords = { latitude: 53.797, longitude: -1.557 };
 
     const relativePosition = getRelativePosition(
       testUserCoords,
@@ -17,7 +17,7 @@ describe('getRelativePosition', () => {
 
 describe('getPositionForAR', () => {
   it('returns transformed coordinates', () => {
-    const testUserCoords = { coords: { latitude: 53.797, longitude: -1.557 } };
+    const testUserCoords = { latitude: 53.797, longitude: -1.557 };
     const testTargetCoords = { latitude: 53.8, longitude: -1.55 };
     const testCompassHeading = 45;
 

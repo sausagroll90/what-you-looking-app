@@ -6,7 +6,6 @@ import {
   ViroTrackingReason,
   ViroTrackingStateConstants,
 } from '@viro-community/react-viro';
-import testData from '../../test-data.json';
 import PointMarker from './PointMarker';
 import CompassHeading from 'react-native-compass-heading';
 import { getNearbyPOIs } from '../modules/apis';
@@ -26,7 +25,10 @@ const HomeScreenSceneAR = ({
     };
   };
 }) => {
-  const [userLocation, setUserLocation] = useState<GeoPosition | null>(null);
+  const [userLocation, setUserLocation] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
   const [pointsOfInterest, setPointsOfInterest] = useState<
     {
       latitude: number;
@@ -76,7 +78,10 @@ const HomeScreenSceneAR = ({
       if (isGranted) {
         Geolocation.getCurrentPosition(
           (position) => {
-            setUserLocation(position);
+            setUserLocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
             onLocationReceived(position);
           },
           (err) => {
