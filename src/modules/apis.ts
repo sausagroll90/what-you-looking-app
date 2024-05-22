@@ -1,4 +1,5 @@
 import { GOOGLEAPIKEY } from '@env';
+import { PlaceData } from '../types/route';
 
 export async function getNearbyPOIs(
   latitude: number,
@@ -35,41 +36,30 @@ export async function getNearbyPOIs(
 }
 
 export async function getPlaceDetails(place_id: string) {
-  try {
-    const response = await fetch(
-      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=${GOOGLEAPIKEY}`,
-    );
+  const response = await fetch(
+    `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=${GOOGLEAPIKEY}`,
+  );
 
-    if (response.status !== 200) {
-      throw new Error('Error fetching from API: ' + response.status);
-    }
-
-    const data = await response.json();
-
-    const results: {
-      formatted_address?: string;
-      name: string;
-      rating?: number;
-      current_opening_hours?: string[];
-      website?: string;
-      place_id: string;
-    } = {
-      name: data.result.name,
-      rating: data.result.rating,
-      place_id: data.result.place_id,
-    };
-
-    data.result.website ? (results.website = data.result.website) : null;
-    data.result.formatted_address
-      ? (results.formatted_address = data.result.formatted_address)
-      : null;
-    data.result.current_opening_hours
-      ? (results.current_opening_hours =
-          data.result.current_opening_hours.weekday_text)
-      : null;
-
-    return results;
-  } catch (error) {
-    console.log(error);
+  if (response.status !== 200) {
+    throw new Error('Error fetching from API: ' + response.status);
   }
+
+  const data = await response.json();
+
+  const results: PlaceData = {
+    name: data.result.name,
+    rating: data.result.rating,
+    place_id: data.result.place_id,
+  };
+
+  data.result.website ? (results.website = data.result.website) : null;
+  data.result.formatted_address
+    ? (results.formatted_address = data.result.formatted_address)
+    : null;
+  data.result.current_opening_hours
+    ? (results.current_opening_hours =
+        data.result.current_opening_hours.weekday_text)
+    : null;
+
+  return results;
 }

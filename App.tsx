@@ -26,7 +26,6 @@ function App(): JSX.Element {
             }}
           />
           <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="PointMarker" component={PointMarker} />
         </>
         {/* )} */}
       </Stack.Navigator>
