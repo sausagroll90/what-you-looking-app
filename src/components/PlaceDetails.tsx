@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Linking } from 'react-native';
+import { StyleSheet, Text, View, Linking, Button } from 'react-native';
 import { Props } from '../types/route';
 import StyledButton from './StyledButton';
 import { getPlaceDetails } from '../modules/apis';
 
-export default function PlaceDetails({ route }: Props): React.JSX.Element {
+export default function PlaceDetails({
+  route,
+  navigation,
+}: Props): React.JSX.Element {
   const [placeDetails, setPlaceDetails] = useState({});
 
   const place_id: string = route.params.place_id;
@@ -27,9 +30,12 @@ export default function PlaceDetails({ route }: Props): React.JSX.Element {
     Linking.openURL(placeDetails.website);
   };
 
+  const handleOnBackPress = () => {
+    navigation.push('Home');
+  };
+
   return (
     <View style={styles.container}>
-      <Text>I'm here</Text>
       <Text style={styles.name}>{placeDetails.name}</Text>
       <Text style={styles.data}>{placeDetails.formattedAddress}</Text>
       <Text style={styles.data}>Opening Hours:</Text>
@@ -47,6 +53,7 @@ export default function PlaceDetails({ route }: Props): React.JSX.Element {
       {placeDetails.website && (
         <StyledButton buttonText="Website" onPress={handlePress} />
       )}
+      <Button title="Go Back" onPress={handleOnBackPress} />
     </View>
   );
 }

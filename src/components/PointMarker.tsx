@@ -38,7 +38,7 @@ export default function PointMarker(props: {
   });
 
   const handleClick = () => {
-    navigation.navigate('PlaceDetails', { place_id: props.place_id });
+    navigation.push('PlaceDetails', { place_id: props.place_id });
   };
 
   return (
