@@ -1,9 +1,11 @@
+import { useNavigation } from '@react-navigation/native';
 import {
   ViroAnimations,
   ViroBox,
   ViroMaterials,
 } from '@viro-community/react-viro';
 import React from 'react';
+import { PointMarkerNavigationProp } from '../types/route';
 
 export default function PointMarker(props: {
   name: string;
@@ -11,6 +13,8 @@ export default function PointMarker(props: {
   types: string[];
   position: [number, number, number];
 }) {
+  const navigation = useNavigation<PointMarkerNavigationProp>();
+
   const imageSrc =
     props.types[0] === 'museum'
       ? require('../../res/icons/museum.png')
@@ -34,7 +38,9 @@ export default function PointMarker(props: {
   });
 
   const handleClick = () => {
-    console.log('clicked');
+    console.log('In click');
+
+    navigation.push('PlaceDetails', { place_id: props.place_id });
   };
 
   return (
@@ -44,6 +50,7 @@ export default function PointMarker(props: {
       position={props.position}
       animation={{ name: 'rotate', run: true, loop: true }}
       onClick={handleClick}
+      onClickState={() => console.log('I am here')}
     />
   );
 }

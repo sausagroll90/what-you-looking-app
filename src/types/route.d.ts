@@ -1,18 +1,22 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface PlaceData {
-  formattedAddress: string;
+  formatted_address?: string;
   name: string;
   rating?: number;
-  weekday_text?: string[];
+  current_opening_hours?: string[];
   website?: string;
   place_id: string;
+  overview?: string;
 }
 
-type RootStackParamList = {
-  PlaceDetails: { placeData: PlaceData };
-  Home: undefined;
-  Error: undefined;
-};
+type PlaceDetailsProps = NativeStackScreenProps<
+  RootStackParamList,
+  'PlaceDetails'
+>;
 
-type Props = NativeStackScreenProps<RootStackParamList, 'PlaceDetails'>;
+type PointMarkerNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'PointMarker'
+>;

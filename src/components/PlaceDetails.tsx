@@ -1,31 +1,67 @@
-import React from 'react';
-import { StyleSheet, Text, View, Linking } from 'react-native';
-import { Props } from '../types/route';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Linking, Button } from 'react-native';
+import { PlaceData, PlaceDetailsProps } from '../types/route';
 import StyledButton from './StyledButton';
+import { getPlaceDetails } from '../modules/apis';
 
-export default function PlaceDetails({ route }: Props): React.JSX.Element {
-  const { formattedAddress, name, rating, weekday_text, website, place_id } =
-    route.params.placeData;
+export default function PlaceDetails({
+  route,
+  navigation,
+}: PlaceDetailsProps): React.JSX.Element {
+  const [placeDetails, setPlaceDetails] = useState<PlaceData | null>(null);
+
+  const place_id: string = route.params.place_id;
+
+  async function onPlaceIdReceived(placeId: string) {
+    try {
+      const data = await getPlaceDetails(placeId);
+      setPlaceDetails(data);
+    } catch (_) {
+      console.log('Error fetching place details');
+    }
+  }
+
+  useEffect(() => {
+    onPlaceIdReceived(place_id);
+  }, [place_id]);
 
   const handlePress = () => {
-    Linking.openURL(website);
+    if (placeDetails && placeDetails.website) {
+      Linking.openURL(placeDetails.website);
+    }
+  };
+
+  const handleOnBackPress = () => {
+    navigation.push('Home');
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.name}>{name}</Text>
-      <Text style={styles.data}>{formattedAddress}</Text>
-      <Text style={styles.data}>Opening Hours:</Text>
-      {weekday_text &&
-        weekday_text.map((day) => {
-          return (
-            <Text key={day} style={styles.openingData}>
-              {day}
-            </Text>
-          );
-        })}
-      {rating && <Text style={styles.data}>{rating} rating</Text>}
-      {website && <StyledButton buttonText="Website" onPress={handlePress} />}
+      {placeDetails ? (
+        <>
+          <Text style={styles.name}>{placeDetails.name}</Text>
+          {placeDetails.overview && (
+            <Text style={styles.data}>{placeDetails.overview}</Text>
+          )}
+          <Text style={styles.data}>{placeDetails.formatted_address}</Text>
+          <Text style={styles.data}>Opening Hours:</Text>
+          {placeDetails.current_opening_hours &&
+            placeDetails.current_opening_hours.map((day) => {
+              return (
+                <Text key={day} style={styles.openingData}>
+                  {day}
+                </Text>
+              );
+            })}
+          {placeDetails.rating && (
+            <Text style={styles.data}>{placeDetails.rating} rating</Text>
+          )}
+          {placeDetails.website && (
+            <StyledButton buttonText="Website" onPress={handlePress} />
+          )}
+        </>
+      ) : null}
+      <StyledButton buttonText="Go Back" onPress={handleOnBackPress} />
     </View>
   );
 }
@@ -40,6 +76,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#136f63',
     fontSize: 32,
+    padding: 10,
   },
   data: {
     color: '#032b43',
@@ -49,8 +86,5 @@ const styles = StyleSheet.create({
   openingData: {
     color: '#032b43',
     fontSize: 16,
-  },
-  button: {
-    padding: 23,
   },
 });
