@@ -6,16 +6,15 @@ import {
 import React from 'react';
 
 export default function PointMarker(props: {
-  location: {
-    geometry: { location: { lat: number; lng: number } };
-    types: string[];
-    name: string;
-  };
+  name: string;
+  place_id: string;
+  types: string[];
+  position: [number, number, number];
 }) {
   const imageSrc =
-    props.location.types[0] === 'museum'
+    props.types[0] === 'museum'
       ? require('../../res/icons/museum.png')
-      : props.location.types[0] === 'cafe'
+      : props.types[0] === 'cafe'
       ? require('../../res/icons/cafe.png')
       : require('../../res/icons/building.png');
 
@@ -41,8 +40,8 @@ export default function PointMarker(props: {
   return (
     <ViroBox
       materials={['building']}
-      scale={[0.3, 0.3, 0.3]}
-      position={[0, 0, -1]}
+      scale={[50, 50, 50]}
+      position={props.position}
       animation={{ name: 'rotate', run: true, loop: true }}
       onClick={handleClick}
     />
