@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Linking, Button } from 'react-native';
+import { StyleSheet, Text, View, Linking } from 'react-native';
 import { PlaceData, PlaceDetailsProps } from '../types/route';
 import StyledButton from './StyledButton';
 import { getPlaceDetails } from '../modules/apis';

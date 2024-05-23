@@ -22,3 +22,8 @@ type PointMarkerNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'PointMarker'
 >;
+
+type PlaceCardNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'PlaceCard'
+>;
