@@ -42,22 +42,24 @@ export default function PlaceDetails({
       {placeDetails ? (
         <>
           <Text style={styles.name}>{placeDetails.name}</Text>
+          {placeDetails.rating && (
+            <Text style={styles.rating}>{placeDetails.rating} rating</Text>
+          )}
           {placeDetails.overview && (
             <Text style={styles.data}>{placeDetails.overview}</Text>
           )}
           <Text style={styles.data}>{placeDetails.formatted_address}</Text>
-          <Text style={styles.data}>Opening Hours:</Text>
-          {placeDetails.current_opening_hours &&
-            placeDetails.current_opening_hours.map((day) => {
-              return (
-                <Text key={day} style={styles.openingData}>
-                  {day}
-                </Text>
-              );
-            })}
-          {placeDetails.rating && (
-            <Text style={styles.data}>{placeDetails.rating} rating</Text>
-          )}
+          <View style={styles.openingHours}>
+            <Text style={styles.bold}>Opening Hours:</Text>
+            {placeDetails.current_opening_hours &&
+              placeDetails.current_opening_hours.map((day) => {
+                return (
+                  <Text key={day} style={styles.openingData}>
+                    {day}
+                  </Text>
+                );
+              })}
+          </View>
           {placeDetails.website && (
             <StyledButton buttonText="Website" onPress={handlePress} />
           )}
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   name: {
     fontWeight: 'bold',
@@ -85,10 +87,27 @@ const styles = StyleSheet.create({
   data: {
     color: '#032b43',
     fontSize: 16,
-    padding: 15,
+    padding: 10,
   },
   openingData: {
     color: '#032b43',
     fontSize: 16,
+    paddingLeft: 10,
+    lineHeight: 25,
+  },
+  openingHours: {
+    marginBottom: 10,
+  },
+  bold: {
+    fontWeight: 'bold',
+    color: '#032b43',
+    fontSize: 16,
+    padding: 10,
+  },
+  rating: {
+    fontWeight: 'bold',
+    color: '#032b43',
+    fontSize: 16,
+    alignSelf: 'center',
   },
 });
