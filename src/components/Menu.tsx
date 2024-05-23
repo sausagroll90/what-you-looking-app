@@ -15,7 +15,6 @@ export default function Menu({
   selectedTypes,
 }: MenuProps): React.JSX.Element {
   const [visible, setVisible] = useState(false);
-
   const DropdownButton = useRef<any>();
   const [dropdownTop, setDropdownTop] = useState(100);
   const [visibleTypes, setVisibleTypes] = useState(false);
@@ -78,7 +77,6 @@ export default function Menu({
       onPress={toggleDropdown}
       ref={DropdownButton}>
       <FontAwesomeIcon name="navicon" size={25} color={'black'} />
-
       <Modal visible={visible} transparent animationType="none">
         <TouchableOpacity
           style={styles.overlay}
