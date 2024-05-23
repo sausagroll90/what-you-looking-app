@@ -9,8 +9,16 @@ export default function PlacesList() {
       address: 'address one',
       place_id: 'ChIJwdWI4RxceUgRFF7zMoxhXQE',
     },
-    { name: 'two', address: 'address two', place_id: 'id2' },
-    { name: 'three', address: 'address three', place_id: 'id3' },
+    {
+      name: 'two',
+      address: 'address two',
+      place_id: 'ChIJXxlmWhxceUgRLjRj9eEbjWg',
+    },
+    {
+      name: 'three',
+      address: 'address three',
+      place_id: 'ChIJ5wvuZn1deUgR7FJBFMRD5Ik',
+    },
   ];
 
   return (

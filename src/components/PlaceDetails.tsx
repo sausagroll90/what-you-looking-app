@@ -1,22 +1,68 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Linking } from 'react-native';
+import { StyleSheet, Text, View, Linking, Button } from 'react-native';
 import { PlaceData, PlaceDetailsProps } from '../types/route';
 import StyledButton from './StyledButton';
 import { getPlaceDetails } from '../modules/apis';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function PlaceDetails({
   route,
   navigation,
 }: PlaceDetailsProps): React.JSX.Element {
   const [placeDetails, setPlaceDetails] = useState<PlaceData | null>(null);
+  const [showButton, setShowButton] = useState(false);
+  // const [itemForLocalStorage, setItemForLocalStorage] = useState(null);
+  // const [currentLocalStorage, setCurrentLocalStorage] = useState();
 
   const place_id: string = route.params.place_id;
-  const showButton: boolean = route.params.showButton;
+  // const place_id = 'ChIJLT2I8s5deUgR90SpTPQOKKo';
+
+  // const showButton: boolean | undefined = route.params.showButton;
+
+  // const storeData = async (value) => {
+  //   try {
+  //     const allData = await AsyncStorage.getItem('place');
+  //     setCurrentLocalStorage([JSON.parse(allData)]);
+  //     console.log('all data', currentLocalStorage);
+  //     const jsonValue = JSON.stringify(value);
+  //     allData ? currentLocalStorage.push(jsonValue) : null;
+  //     setCurrentLocalStorage(currentLocalStorage);
+  //     console.log('current local storage', currentLocalStorage);
+  //     await AsyncStorage.setItem('place', currentLocalStorage);
+  //   } catch (e) {
+  //     console.log('error', e);
+  //   }
+  // };
+
+  // const handleSave = () => {
+  //   console.log('In handleSave');
+  //   storeData(itemForLocalStorage);
+  // };
+
+  // const getData = async () => {
+  //   try {
+  //     const jsonValue = await AsyncStorage.getItem('place');
+  //     console.log('json value', JSON.parse(jsonValue));
+  //     return jsonValue !== null ? JSON.parse(jsonValue) : null;
+  //   } catch (e) {
+  //     console.log('error', e);
+  //   }
+  // };
+
+  // const handleGet = () => {
+  //   getData();
+  //   console.log('In get block');
+  // };
 
   async function onPlaceIdReceived(placeId: string) {
     try {
       const data = await getPlaceDetails(placeId);
       setPlaceDetails(data);
+      setItemForLocalStorage({
+        name: data.name,
+        address: data.formatted_address,
+        place_id: data.place_id,
+      });
     } catch (e) {
       console.log(e);
       console.log('Error fetching place details');
@@ -25,7 +71,8 @@ export default function PlaceDetails({
 
   useEffect(() => {
     onPlaceIdReceived(place_id);
-  }, [place_id]);
+    route.params?.showButton ? setShowButton(true) : setShowButton(false);
+  }, [place_id, route.params?.showButton]);
 
   const handlePress = () => {
     if (placeDetails && placeDetails.website) {
@@ -68,6 +115,8 @@ export default function PlaceDetails({
       {showButton ? (
         <StyledButton buttonText="Back" onPress={handleOnBackPress} />
       ) : null}
+      {/* <Button title="Save" onPress={handleSave} />
+      <Button title="Get" onPress={handleGet} /> */}
     </View>
   );
 }
