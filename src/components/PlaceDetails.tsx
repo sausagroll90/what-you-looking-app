@@ -18,11 +18,14 @@ export default function PlaceDetails({
   navigation,
 }: PlaceDetailsProps): React.JSX.Element {
   const [placeDetails, setPlaceDetails] = useState<PlaceData | null>(null);
-  const [showButton, setShowButton] = useState<boolean | null>(false);
   const [itemForLocalStorage, setItemForLocalStorage] =
     useState<PlaceThumbnailData | null>(null);
 
   const place_id: string = route.params.place_id;
+
+  let showButton = false;
+
+  route.params?.showButton ? (showButton = route.params.showButton) : false;
 
   interface PlaceThumbnailData {
     name: string;
@@ -68,8 +71,7 @@ export default function PlaceDetails({
 
   useEffect(() => {
     onPlaceIdReceived(place_id);
-    route.params?.showButton ? setShowButton(true) : setShowButton(false);
-  }, [place_id, route.params?.showButton]);
+  }, [place_id]);
 
   const handlePress = () => {
     if (placeDetails && placeDetails.website) {
