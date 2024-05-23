@@ -16,6 +16,8 @@ type PlaceDetailsProps = NativeStackScreenProps<
   'PlaceDetails'
 >;
 
+type PlacesListProps = NativeStackScreenProps<RootStackParamList, 'PlacesList'>;
+
 type PointMarkerNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'PointMarker'
