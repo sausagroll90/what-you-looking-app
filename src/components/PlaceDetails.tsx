@@ -11,6 +11,7 @@ export default function PlaceDetails({
   const [placeDetails, setPlaceDetails] = useState<PlaceData | null>(null);
 
   const place_id: string = route.params.place_id;
+  const showButton: boolean = route.params.showButton;
 
   async function onPlaceIdReceived(placeId: string) {
     try {
@@ -33,7 +34,7 @@ export default function PlaceDetails({
   };
 
   const handleOnBackPress = () => {
-    navigation.push('Home');
+    navigation.goBack();
   };
 
   return (
@@ -62,7 +63,9 @@ export default function PlaceDetails({
           )}
         </>
       ) : null}
-      <StyledButton buttonText="Go Back" onPress={handleOnBackPress} />
+      {showButton ? (
+        <StyledButton buttonText="Back" onPress={handleOnBackPress} />
+      ) : null}
     </View>
   );
 }

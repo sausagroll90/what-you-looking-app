@@ -1,14 +1,8 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import StyledButton from './StyledButton';
-import { PlacesListProps } from '../types/route';
+import { View } from 'react-native';
 import PlaceCard from './PlaceCard';
 
-export default function PlacesList({ navigation }: PlacesListProps) {
-  const handleOnBackPress = () => {
-    navigation.push('Home');
-  };
-
+export default function PlacesList() {
   const localStorageData = [
     {
       name: 'one',
@@ -21,11 +15,9 @@ export default function PlacesList({ navigation }: PlacesListProps) {
 
   return (
     <View>
-      <Text>Places List</Text>
       {localStorageData.map((place) => {
         return <PlaceCard key={place.place_id} placeDetails={place} />;
       })}
-      <StyledButton buttonText="Go Back" onPress={handleOnBackPress} />
     </View>
   );
 }

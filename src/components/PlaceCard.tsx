@@ -16,7 +16,7 @@ export default function PlaceCard(props: PlaceDetailProps) {
   const navigation = useNavigation<PlaceCardNavigationProp>();
 
   const handlePress = () => {
-    navigation.push('PlaceDetails', { place_id: place_id });
+    navigation.push('PlaceDetails', { place_id: place_id, showButton: true });
   };
 
   return (
