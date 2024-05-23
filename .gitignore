@@ -78,3 +78,6 @@ yarn-error.log
 
 # env files
 .env*
+
+#build
+android/app/src/main/assets/
