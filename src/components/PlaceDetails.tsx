@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Linking, Button } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Linking,
+  Button,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native';
 import { PlaceData, PlaceDetailsProps } from '../types/route';
 import StyledButton from './StyledButton';
 import { getPlaceDetails } from '../modules/apis';
@@ -15,7 +23,6 @@ export default function PlaceDetails({
     useState<PlaceThumbnailData | null>(null);
 
   const place_id: string = route.params.place_id;
-  //const place_id = 'ChIJLT2I8s5deUgR90SpTPQOKKo';
 
   interface PlaceThumbnailData {
     name: string;
@@ -75,38 +82,48 @@ export default function PlaceDetails({
   };
 
   return (
-    <View style={styles.container}>
-      {placeDetails ? (
-        <>
-          <Text style={styles.name}>{placeDetails.name}</Text>
-          {placeDetails.rating && (
-            <Text style={styles.rating}>{placeDetails.rating} rating</Text>
-          )}
-          {placeDetails.overview && (
-            <Text style={styles.data}>{placeDetails.overview}</Text>
-          )}
-          <Text style={styles.data}>{placeDetails.formatted_address}</Text>
-          <View style={styles.openingHours}>
-            <Text style={styles.bold}>Opening Hours:</Text>
-            {placeDetails.current_opening_hours &&
-              placeDetails.current_opening_hours.map((day) => {
-                return (
-                  <Text key={day} style={styles.openingData}>
-                    {day}
-                  </Text>
-                );
-              })}
-          </View>
-          {placeDetails.website && (
-            <StyledButton buttonText="Website" onPress={handlePress} />
-          )}
-        </>
-      ) : null}
-      {showButton ? (
-        <StyledButton buttonText="Back" onPress={handleOnBackPress} />
-      ) : null}
-      <Button title="Save" onPress={handleSave} />
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={styles.container}>
+          {placeDetails ? (
+            <>
+              <Text style={styles.name}>{placeDetails.name}</Text>
+              {placeDetails.rating && (
+                <Text style={styles.rating}>{placeDetails.rating} rating</Text>
+              )}
+              {placeDetails.overview && (
+                <Text style={styles.data}>{placeDetails.overview}</Text>
+              )}
+              <Text style={styles.data}>{placeDetails.formatted_address}</Text>
+              <View style={styles.openingHours}>
+                <Text style={styles.bold}>Opening Hours:</Text>
+                {placeDetails.current_opening_hours &&
+                  placeDetails.current_opening_hours.map((day) => {
+                    return (
+                      <Text key={day} style={styles.openingData}>
+                        {day}
+                      </Text>
+                    );
+                  })}
+              </View>
+              {placeDetails.website && (
+                <StyledButton buttonText="Website" onPress={handlePress} />
+              )}
+            </>
+          ) : null}
+          {showButton ? (
+            <StyledButton buttonText="Back" onPress={handleOnBackPress} />
+          ) : null}
+          <Button title="Save" onPress={handleSave} />
+          <Button
+            title="Place list"
+            onPress={() => {
+              navigation.push('PlacesList');
+            }}
+          />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
