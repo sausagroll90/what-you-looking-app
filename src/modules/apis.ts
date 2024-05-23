@@ -15,7 +15,6 @@ export async function getNearbyPOIs(
   }
 
   const data = await response.json();
-
   const results: {
     latitude: number;
     longitude: number;
@@ -35,7 +34,7 @@ export async function getNearbyPOIs(
   return results;
 }
 
-export async function getPlaceDetails(place_id: string) {
+export async function getPlaceDetails(place_id: string): Promise<PlaceData> {
   const response = await fetch(
     `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=${GOOGLEAPIKEY}`,
   );
@@ -50,6 +49,8 @@ export async function getPlaceDetails(place_id: string) {
     name: data.result.name,
     rating: data.result.rating,
     place_id: data.result.place_id,
+    latitude: data.result.geometry.location.lat,
+    longitude: data.result.geometry.location.lng,
   };
 
   data.result.website ? (results.website = data.result.website) : null;

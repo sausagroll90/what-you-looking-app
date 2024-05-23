@@ -9,6 +9,8 @@ interface PlaceData {
   website?: string;
   place_id: string;
   overview?: string;
+  latitude: number;
+  longitude: number;
 }
 
 type PlaceDetailsProps = NativeStackScreenProps<
