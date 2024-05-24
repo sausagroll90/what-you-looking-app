@@ -33,3 +33,5 @@ type HomeButtonNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'HomeButton'
 >;
+
+type NavButtonNavigationProp = NativeStackNavigationProp<>;

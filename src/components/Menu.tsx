@@ -4,6 +4,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 FontAwesomeIcon.loadFont();
 import FilterBy from './FilterBy';
+import NavButton from './NavButton';
 const TYPES = ['museum', 'cafe', 'library', 'bakery', 'church'];
 
 type MenuProps = {
@@ -81,6 +82,13 @@ export default function Menu({
         <TouchableOpacity
           style={styles.overlay}
           onPress={() => setVisible(false)}>
+          <View>
+            <NavButton
+              text="Favourites"
+              navigationTarget="PlacesList"
+              style={[styles.dropdown, { top: dropdownTop }]}
+            />
+          </View>
           <View>
             <TouchableOpacity
               ref={FilterButton}
