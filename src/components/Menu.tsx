@@ -7,12 +7,16 @@ import NavButton from './NavButton';
 import Filter from './Filter';
 
 type MenuProps = {
-  selectedTypes: string[];
   setSelectedTypes: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedFilters: string[];
+  setSelectedFilters: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedFilterTypes: React.Dispatch<React.SetStateAction<string[]>>;
 };
 export default function Menu({
   setSelectedTypes,
-  selectedTypes,
+  selectedFilters,
+  setSelectedFilters,
+  setSelectedFilterTypes,
 }: MenuProps): React.JSX.Element {
   const [visible, setVisible] = useState(false);
   const DropdownButton = useRef<any>();
@@ -66,7 +70,12 @@ export default function Menu({
             />
           </View>
           <View style={[styles.multiSelect, { top: dropdownTop }]}>
-            <Filter setSelectedTypes={setSelectedTypes} />
+            <Filter
+              setSelectedTypes={setSelectedTypes}
+              selectedFilters={selectedFilters}
+              setSelectedFilters={setSelectedFilters}
+              setSelectedFilterTypes={setSelectedFilterTypes}
+            />
           </View>
         </TouchableOpacity>
       </Modal>
