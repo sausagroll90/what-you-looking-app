@@ -29,7 +29,11 @@ const types = [
   },
 ];
 
-export default function Filter({ selectedTypes, setSelectedTypes }) {
+type FilterProps = {
+  setSelectedTypes: React.Dispatch<React.SetStateAction<string[]>>;
+};
+
+export default function Filter({ setSelectedTypes }: FilterProps) {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   const onSelectedTypesChange = (selectedTypes: string[]) => {
