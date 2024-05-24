@@ -2,12 +2,12 @@ import React from 'react';
 import { TouchableHighlight, View, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 
-type ButtonProps = { buttonText: string; onPress: () => void };
+type ButtonProps = { buttonText: string };
 
-export default function StyledButton(props: ButtonProps): React.JSX.Element {
+export default function DisabledButton(props: ButtonProps): React.JSX.Element {
   return (
     <View style={styles.button}>
-      <TouchableHighlight onPress={props.onPress}>
+      <TouchableHighlight>
         <Text style={styles.buttonText}>{props.buttonText}</Text>
       </TouchableHighlight>
     </View>
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: '#032b43',
     borderWidth: 2,
-    backgroundColor: '#a8d3dc',
+    backgroundColor: '#494B4B',
     width: 110,
     height: 48,
     borderRadius: 10,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
-    color: '#032b43',
+    color: '#FFFFFF',
     textAlign: 'center',
   },
 });

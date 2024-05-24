@@ -8,11 +8,18 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
-import { PlaceData, PlaceDetailsProps } from '../types/route';
+import {
+  PlaceData,
+  PlaceDetailsProps,
+  PlaceThumbnailData,
+} from '../types/route';
 import StyledButton from './StyledButton';
-import { getPlaceDetails, getWikiSummary } from '../modules/apis';
+import { getPlaceDetails } from '../modules/apis';
+import { addPlaceToStorage, getAllItems } from '../modules/localStorage';
+import { OnSave } from './OnSave';
+import { isPlaceIdUnique } from '../modules/utils';
 import EmbeddedMap from './EmbeddedMap';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import DisabledButton from './DisabledButton';
 
 export default function PlaceDetails({
   route,
@@ -21,6 +28,8 @@ export default function PlaceDetails({
   const [placeDetails, setPlaceDetails] = useState<PlaceData | null>(null);
   const [itemForLocalStorage, setItemForLocalStorage] =
     useState<PlaceThumbnailData | null>(null);
+  const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(false);
+  const [saveSuccessful, setSaveSuccessful] = useState(false);
 
   const place_id: string = route.params.place_id;
 
@@ -28,31 +37,9 @@ export default function PlaceDetails({
 
   route.params?.showButton ? (showButton = route.params.showButton) : false;
 
-  interface PlaceThumbnailData {
-    name: string;
-    address: string;
-    place_id: string;
-  }
-
-  const storeData = async (place: PlaceThumbnailData) => {
-    try {
-      const allData = await AsyncStorage.getItem('place');
-      if (allData === null) {
-        const jsonPlace = JSON.stringify([place]);
-        await AsyncStorage.setItem('place', jsonPlace);
-      } else {
-        const parsedPlaces = JSON.parse(allData);
-        parsedPlaces.push(place);
-        await AsyncStorage.setItem('place', JSON.stringify(parsedPlaces));
-      }
-    } catch (e) {
-      //what to show the user if there is no data returned
-      console.log('error', e);
-    }
-  };
-
   const handleSave = () => {
-    itemForLocalStorage ? storeData(itemForLocalStorage) : null;
+    itemForLocalStorage ? addPlaceToStorage(itemForLocalStorage) : null;
+    setSaveSuccessful(true);
   };
 
   async function onPlaceIdReceived(placeId: string) {
@@ -64,6 +51,8 @@ export default function PlaceDetails({
         address: data.formatted_address,
         place_id: data.place_id,
       });
+      const allData = await getAllItems();
+      setSaveButtonDisabled(!isPlaceIdUnique(allData, data));
     } catch (e) {
       console.log(e);
       console.log('Error fetching place details');
@@ -72,7 +61,7 @@ export default function PlaceDetails({
 
   useEffect(() => {
     onPlaceIdReceived(place_id);
-  }, [place_id]);
+  }, [place_id, saveSuccessful]);
 
   const handlePress = () => {
     if (placeDetails && placeDetails.website) {
@@ -117,13 +106,18 @@ export default function PlaceDetails({
           {showButton ? (
             <StyledButton buttonText="Back" onPress={handleOnBackPress} />
           ) : null}
-          <Button title="Save" onPress={handleSave} />
+          {saveButtonDisabled ? (
+            <DisabledButton buttonText={'Saved'} />
+          ) : (
+            <StyledButton buttonText={'Save'} onPress={handleSave} />
+          )}
           <Button
             title="Place list"
             onPress={() => {
               navigation.push('PlacesList');
             }}
           />
+          {saveSuccessful ? <OnSave /> : null}
           {placeDetails ? <EmbeddedMap placeDetails={placeDetails} /> : null}
         </View>
       </ScrollView>

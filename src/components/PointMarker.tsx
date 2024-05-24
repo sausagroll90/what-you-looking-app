@@ -6,6 +6,7 @@ import {
 } from '@viro-community/react-viro';
 import React from 'react';
 import { PointMarkerNavigationProp } from '../types/route';
+import { Vibration } from 'react-native';
 
 export default function PointMarker(props: {
   name: string;
@@ -50,6 +51,7 @@ export default function PointMarker(props: {
   });
 
   const handleClick = () => {
+    Vibration.vibrate(100);
     navigation.push('PlaceDetails', { place_id: props.place_id });
   };
 

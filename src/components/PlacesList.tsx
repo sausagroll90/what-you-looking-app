@@ -6,10 +6,12 @@ import StyledButton from './StyledButton';
 
 export default function PlacesList() {
   const [placesToDisplay, setPlacesToDisplay] = useState([]);
+  const [isDeleted, setIsDeleted] = useState(false);
 
   useEffect(() => {
+    setIsDeleted(false);
     getData();
-  }, []);
+  }, [isDeleted]);
 
   async function getData() {
     try {
@@ -39,7 +41,14 @@ export default function PlacesList() {
     <ScrollView>
       <View style={styles.places_list}>
         {placesToDisplay.map((place) => {
-          return <PlaceCard key={place.place_id} placeDetails={place} />;
+          return (
+            <PlaceCard
+              key={place.place_id}
+              placeDetails={place}
+              isDeleted={isDeleted}
+              setIsDeleted={setIsDeleted}
+            />
+          );
         })}
       </View>
       <StyledButton buttonText="Remove all" onPress={handleClear} />

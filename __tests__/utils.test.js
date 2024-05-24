@@ -1,4 +1,8 @@
-import { getPositionForAR, getRelativePosition } from '../src/modules/utils';
+import {
+  getPositionForAR,
+  getRelativePosition,
+  isPlaceIdUnique,
+} from '../src/modules/utils';
 
 describe('getRelativePosition', () => {
   it('returns relative position for given user location and target', () => {
@@ -40,5 +44,58 @@ describe('getPositionForAR', () => {
     expect(() =>
       getPositionForAR(testUserCoords, testTargetCoords, testCompassHeading),
     ).toThrow('user location not found');
+  });
+});
+
+describe('isPlaceIdUnique', () => {
+  it('returns false when there is no initial data', () => {
+    const currentData = null;
+    const newPlace = {
+      address: 'Millennium Square, Leeds LS2 8BH, UK',
+      name: 'Leeds City Museum',
+      place_id: 'ChIJwdWI4RxceUgRFF7zMoxhXQE',
+    };
+
+    expect(isPlaceIdUnique(currentData, newPlace)).toBe(true);
+  });
+  it('returns true if place does not already exist', () => {
+    const currentData = [
+      {
+        address: '74 The Headrow, Leeds LS1 3AB, UK',
+        name: 'City Sculpture Projects 1972',
+        place_id: 'ChIJXxlmWhxceUgRLjRj9eEbjWg',
+      },
+      {
+        address: 'Maths City',
+        name: 'Maths City',
+        place_id: 'ChIJLT2I8s5deUgR90SpTPQOKKo',
+      },
+    ];
+    const newData = {
+      address: 'Millennium Square, Leeds LS2 8BH, UK',
+      name: 'Leeds City Museum',
+      place_id: 'ChIJwdWI4RxceUgRFF7zMoxhXQE',
+    };
+    expect(isPlaceIdUnique(currentData, newData)).toBe(true);
+  });
+  it('returns false if place already exists in data', () => {
+    const currentData = [
+      {
+        address: '74 The Headrow, Leeds LS1 3AB, UK',
+        name: 'City Sculpture Projects 1972',
+        place_id: 'ChIJXxlmWhxceUgRLjRj9eEbjWg',
+      },
+      {
+        address: 'Millennium Square, Leeds LS2 8BH, UK',
+        name: 'Leeds City Museum',
+        place_id: 'ChIJwdWI4RxceUgRFF7zMoxhXQE',
+      },
+    ];
+    const newData = {
+      address: 'Millennium Square, Leeds LS2 8BH, UK',
+      name: 'Leeds City Museum',
+      place_id: 'ChIJwdWI4RxceUgRFF7zMoxhXQE',
+    };
+    expect(isPlaceIdUnique(currentData, newData)).toBe(false);
   });
 });
