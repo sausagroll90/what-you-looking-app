@@ -11,6 +11,7 @@ interface PlaceData {
   overview?: string;
   latitude: number;
   longitude: number;
+  type?: string;
 }
 
 type PlaceDetailsProps = NativeStackScreenProps<

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Linking } from 'react-native';
 import { PlaceData, PlaceDetailsProps } from '../types/route';
 import StyledButton from './StyledButton';
 import { getPlaceDetails } from '../modules/apis';
+import EmbeddedMap from './EmbeddedMap';
 
 export default function PlaceDetails({
   route,
@@ -68,6 +69,7 @@ export default function PlaceDetails({
       {showButton ? (
         <StyledButton buttonText="Back" onPress={handleOnBackPress} />
       ) : null}
+      {placeDetails ? <EmbeddedMap placeDetails={placeDetails} /> : null}
     </View>
   );
 }

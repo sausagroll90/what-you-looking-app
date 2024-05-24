@@ -51,6 +51,7 @@ export async function getPlaceDetails(place_id: string): Promise<PlaceData> {
     place_id: data.result.place_id,
     latitude: data.result.geometry.location.lat,
     longitude: data.result.geometry.location.lng,
+    type: data.result.types[0],
   };
 
   data.result.website ? (results.website = data.result.website) : null;

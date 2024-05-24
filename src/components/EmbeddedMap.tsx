@@ -1,53 +1,62 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  Button,
-  SafeAreaView,
-  StyleSheet,
-  PermissionsAndroid,
-  Image,
-} from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 
-const buildingImage = require('../../res/icons/building.png');
-
 type EmbeddedMapProps = {
-  placeLocation: {
+  placeDetails: {
     latitude: number;
     longitude: number;
     name?: string;
+    type?: string;
   };
-  //   pointsOfInterest: {
-  //     latitude: number;
-  //     longitude: number;
-  //     name: string;
-  //     place_id: string;
-  //     types: string[];
-  //   }[];
 };
 
 export default function EmbeddedMap(props: EmbeddedMapProps) {
+  let iconImage: HTMLImageElement = require('../../res/icons/building.png');
+  switch (props.placeDetails.type) {
+    case 'art_gallery':
+      iconImage = require('../../res/icons/art-gallery.png');
+      break;
+    case 'bar':
+      iconImage = require('../../res/icons/bar.png');
+      break;
+    case 'cafe':
+      iconImage = require('../../res/icons/cafe.png');
+      break;
+    case 'city_hall':
+      iconImage = require('../../res/icons/city-hall.png');
+      break;
+    case 'museum':
+      iconImage = require('../../res/icons/museum.png');
+      break;
+    case 'restaurant':
+      iconImage = require('../../res/icons/restaurant.png');
+      break;
+    case 'tourist_attraction':
+      iconImage = require('../../res/icons/tourist_attraction.png');
+      break;
+  }
+
   return (
     <View style={styles.mapStyle}>
       <MapView
         style={styles.mapViewStyle}
         initialRegion={{
-          latitude: props.placeLocation.latitude,
-          longitude: props.placeLocation.longitude,
+          latitude: props.placeDetails.latitude,
+          longitude: props.placeDetails.longitude,
           latitudeDelta: 0.0002,
           longitudeDelta: 0.002,
         }}>
         <Marker
           coordinate={{
-            latitude: props.placeLocation.latitude,
-            longitude: props.placeLocation.longitude,
+            latitude: props.placeDetails.latitude,
+            longitude: props.placeDetails.longitude,
           }}
-          title={props.placeLocation.name || 'here'}>
-          <Text>{props.placeLocation.name || 'here'}</Text>
+          title={props.placeDetails.name || 'here'}>
+          <Text>{props.placeDetails.name || 'here'}</Text>
           <Image
-            source={require('../../res/icons/building.png')}
+            source={iconImage}
             style={styles.markerImage}
             resizeMode="contain"
           />
