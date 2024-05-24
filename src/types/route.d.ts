@@ -34,4 +34,11 @@ type HomeButtonNavigationProp = NativeStackNavigationProp<
   'HomeButton'
 >;
 
+
+interface PlaceThumbnailData {
+  name: string;
+  address: string;
+  place_id: string;
+}
+
 type NavButtonNavigationProp = NativeStackNavigationProp<>;
