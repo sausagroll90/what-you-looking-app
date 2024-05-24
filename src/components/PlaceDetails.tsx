@@ -29,8 +29,7 @@ export default function PlaceDetails({
   const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(false);
   const [saveSuccessful, setSaveSuccessful] = useState(false);
 
-  // const place_id: string = route.params.place_id;
-  const place_id = 'ChIJLT2I8s5deUgR90SpTPQOKKo';
+  const place_id: string = route.params.place_id;
 
   let showButton = false;
 
