@@ -5,7 +5,6 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 FontAwesomeIcon.loadFont();
 import NavButton from './NavButton';
 import Filter from './Filter';
-const TYPES = ['museum', 'cafe', 'library', 'bakery', 'church'];
 
 type MenuProps = {
   selectedTypes: string[];
@@ -18,16 +17,10 @@ export default function Menu({
   const [visible, setVisible] = useState(false);
   const DropdownButton = useRef<any>();
   const [dropdownTop, setDropdownTop] = useState(100);
-  const [visibleTypes, setVisibleTypes] = useState(false);
   const FavouriteButton = useRef<any>();
-  const [favouriteTop, setFavouriteTop] = useState(140);
 
   const toggleDropdown = () => {
     visible ? setVisible(false) : openDropdown();
-  };
-
-  const toggleFilter = () => {
-    visibleTypes ? setVisibleTypes(false) : openFilter();
   };
 
   const openDropdown = () => {
@@ -48,22 +41,6 @@ export default function Menu({
     setVisible(true);
   };
 
-  const openFilter = (): void => {
-    FavouriteButton.current.measure(
-      (
-        _fx: number,
-        _fy: number,
-        _w: number,
-        h: number,
-        _px: number,
-        py: number,
-      ) => {
-        setFavouriteTop(py + h);
-      },
-    );
-    setVisibleTypes(true);
-  };
-
   return (
     <TouchableOpacity
       style={styles.button}
@@ -77,7 +54,14 @@ export default function Menu({
           <View ref={FavouriteButton}>
             <NavButton
               text="Favourites"
-              navigationTarget="PlacesList"
+              navigationTarget="Favourites"
+              style={[styles.dropdown, { top: dropdownTop }]}
+            />
+          </View>
+          <View>
+            <NavButton
+              text="History"
+              navigationTarget="History"
               style={[styles.dropdown, { top: dropdownTop }]}
             />
           </View>

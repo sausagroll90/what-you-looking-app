@@ -1,3 +1,4 @@
+import { PlaceThumbnailData } from '../types/route';
 const DEGREES_TO_RADIANS_CONVERSION = (2 * Math.PI) / 360;
 
 export function getRelativePosition(
@@ -47,4 +48,15 @@ export function getPositionForAR(
     -relativePosition.x * Math.sin(headingInRadians) +
       relativePosition.z * Math.cos(headingInRadians),
   ];
+}
+
+export function isPlaceIdUnique(
+  currentData: PlaceThumbnailData[] | null,
+  newPlace: PlaceThumbnailData,
+) {
+  const newPlaceId = newPlace.place_id;
+  if (currentData === null) {
+    return true;
+  }
+  return !currentData.some((place) => place.place_id === newPlaceId);
 }
