@@ -8,7 +8,7 @@ import {
 } from '@viro-community/react-viro';
 import PointMarker from './PointMarker';
 import CompassHeading from 'react-native-compass-heading';
-import { getNearbyPOIs } from '../modules/apis';
+import { getNearbyPOIs, getWikiSummary } from '../modules/apis';
 import { requestLocationPermission } from '../modules/permissions';
 import Geolocation from 'react-native-geolocation-service';
 import { getPositionForAR } from '../modules/utils';
