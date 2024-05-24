@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import PlaceCard from './PlaceCard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import StyledButton from './StyledButton';
 
 export default function PlacesList() {
   const [placesToDisplay, setPlacesToDisplay] = useState([]);
@@ -35,13 +36,20 @@ export default function PlacesList() {
   };
 
   return (
-    <>
-      <View>
+    <ScrollView>
+      <View style={styles.places_list}>
         {placesToDisplay.map((place) => {
           return <PlaceCard key={place.place_id} placeDetails={place} />;
         })}
       </View>
-      <Button title="Clear data" onPress={handleClear} />
-    </>
+      <StyledButton buttonText="Remove all" onPress={handleClear} />
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  places_list: {
+    marginTop: 20,
+    marginBottom: 10,
+  },
+});
