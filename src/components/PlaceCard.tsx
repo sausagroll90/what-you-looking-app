@@ -2,15 +2,11 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import StyledButton from './StyledButton';
 import { useNavigation } from '@react-navigation/native';
-import { PlaceCardNavigationProp } from '../types/route';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { PlaceCardNavigationProp, PlaceThumbnailData } from '../types/route';
+import { getAllPlaces, setPlaces } from '../modules/localStorage';
 
 type PlaceDetailProps = {
-  placeDetails: {
-    name: string;
-    address: string;
-    place_id: string;
-  };
+  placeDetails: PlaceThumbnailData;
   isDeleted: boolean;
   setIsDeleted: (open: boolean) => void;
 };
@@ -31,16 +27,14 @@ export default function PlaceCard(props: PlaceDetailProps) {
   const removeListItem = async () => {
     try {
       setDeleteButtonText('Removing...');
-      const allData = await AsyncStorage.getItem('place');
+      const allData = await getAllPlaces();
       if (allData) {
-        const parsedData = JSON.parse(allData);
-        const placeIdArray = parsedData.map(
-          (place: { name: string; address: string; place_id: string }) =>
-            place.place_id,
+        const placeIdArray = allData.map(
+          (place: PlaceThumbnailData) => place.place_id,
         );
         const indexPositionToDelete = placeIdArray.indexOf(place_id.toString());
-        parsedData.splice(indexPositionToDelete, 1);
-        await AsyncStorage.setItem('place', JSON.stringify(parsedData));
+        allData.splice(indexPositionToDelete, 1);
+        await setPlaces(allData);
         setDeleteButtonText('Removed');
         setIsDeleted(true);
       } else {

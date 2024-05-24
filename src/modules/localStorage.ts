@@ -4,15 +4,14 @@ import { PlaceThumbnailData } from '../types/route';
 
 export async function addPlaceToStorage(place: PlaceThumbnailData) {
   try {
-    const allData = await getAllItems();
+    const allData = await getAllPlaces();
     const unique = isPlaceIdUnique(allData, place);
     if (allData === null) {
-      const jsonPlace = JSON.stringify([place]);
-      await AsyncStorage.setItem('place', jsonPlace);
+      await setPlaces([place]);
     } else {
       if (unique) {
         allData.push(place);
-        await AsyncStorage.setItem('place', JSON.stringify(allData));
+        await setPlaces(allData);
       }
     }
   } catch (e) {
@@ -21,7 +20,20 @@ export async function addPlaceToStorage(place: PlaceThumbnailData) {
   }
 }
 
-export async function getAllItems(): Promise<PlaceThumbnailData[]> {
+export async function getAllPlaces(): Promise<PlaceThumbnailData[] | null> {
   const allData = await AsyncStorage.getItem('place');
   return allData ? JSON.parse(allData) : null;
+}
+
+export const removePlaceData = async () => {
+  try {
+    await AsyncStorage.removeItem('place');
+  } catch (e) {
+    console.log('error in clear', e);
+  }
+  console.log('All Cleared');
+};
+
+export async function setPlaces(data: any) {
+  await AsyncStorage.setItem('place', JSON.stringify(data));
 }
