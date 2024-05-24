@@ -18,8 +18,20 @@ export default function PointMarker(props: {
   const imageSrc =
     props.types[0] === 'museum'
       ? require('../../res/icons/museum.png')
+      : props.types[0] === 'city_hall'
+      ? require('../../res/icons/city-hall.png')
+      : props.types[0] === 'art_gallery'
+      ? require('../../res/icons/art-gallery.png')
       : props.types[0] === 'cafe'
       ? require('../../res/icons/cafe.png')
+      : props.types[0] === 'restaurant'
+      ? require('../../res/icons/restaurant.png')
+      : props.types[0] === 'bar'
+      ? require('../../res/icons/bar.png')
+      : props.types[0] === 'movie_theater'
+      ? require('../../res/icons/cinema.png')
+      : props.types[0] === 'tourist_attraction'
+      ? require('../../res/icons/tourist_attraction.png')
       : require('../../res/icons/building.png');
 
   ViroMaterials.createMaterials({
