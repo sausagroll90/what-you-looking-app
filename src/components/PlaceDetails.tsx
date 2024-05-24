@@ -11,6 +11,7 @@ import {
 import { PlaceData, PlaceDetailsProps } from '../types/route';
 import StyledButton from './StyledButton';
 import { getPlaceDetails } from '../modules/apis';
+import EmbeddedMap from './EmbeddedMap';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function PlaceDetails({
@@ -123,6 +124,7 @@ export default function PlaceDetails({
               navigation.push('PlacesList');
             }}
           />
+          {placeDetails ? <EmbeddedMap placeDetails={placeDetails} /> : null}
         </View>
       </ScrollView>
     </SafeAreaView>
