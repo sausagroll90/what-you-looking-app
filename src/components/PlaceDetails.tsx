@@ -18,6 +18,9 @@ import { getPlaceDetails } from '../modules/apis';
 import { addPlaceToStorage, getAllItems } from '../modules/localStorage';
 import { OnSave } from './OnSave';
 import { isPlaceIdUnique } from '../modules/utils';
+import EmbeddedMap from './EmbeddedMap';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function PlaceDetails({
   route,
@@ -118,6 +121,7 @@ export default function PlaceDetails({
             }}
           />
           {saveSuccessful ? <OnSave /> : null}
+          {placeDetails ? <EmbeddedMap placeDetails={placeDetails} /> : null}
         </View>
       </ScrollView>
     </SafeAreaView>
