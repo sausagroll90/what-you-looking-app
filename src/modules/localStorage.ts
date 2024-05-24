@@ -7,15 +7,15 @@ export async function addPlaceToStorage(
   key: string,
 ) {
   try {
-    const allData = await getAllItems(key);
+<
+    const allData = await getAllPlaces(key);
     const unique = isPlaceIdUnique(allData, place);
     if (allData === null) {
-      const jsonPlace = JSON.stringify([place]);
-      await AsyncStorage.setItem(key, jsonPlace);
+      await setPlaces([place]);
     } else {
       if (unique) {
         allData.push(place);
-        await AsyncStorage.setItem(key, JSON.stringify(allData));
+        await setPlaces(allData,key);
       }
     }
   } catch (e) {
@@ -24,7 +24,21 @@ export async function addPlaceToStorage(
   }
 }
 
-export async function getAllItems(key: string): Promise<PlaceThumbnailData[]> {
+
+export async function getAllPlaces(key): Promise<PlaceThumbnailData[] | null> {
   const allData = await AsyncStorage.getItem(key);
   return allData ? JSON.parse(allData) : null;
+}
+
+export const removePlaceData = async (key:string) => {
+  try {
+    await AsyncStorage.removeItem(key);
+  } catch (e) {
+    console.log('error in clear', e);
+  }
+  console.log('All Cleared');
+};
+
+export async function setPlaces(data: any, key:string ) {
+  await AsyncStorage.setItem(key, JSON.stringify(data));
 }

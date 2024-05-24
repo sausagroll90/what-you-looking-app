@@ -7,6 +7,7 @@ import {
   Button,
   SafeAreaView,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import {
   PlaceData,
@@ -16,11 +17,12 @@ import {
 import StyledButton from './StyledButton';
 
 import { getPlaceDetails } from '../modules/apis';
-import { addPlaceToStorage, getAllItems } from '../modules/localStorage';
+import { addPlaceToStorage, getAllPlaces } from '../modules/localStorage';
 import { OnSave } from './OnSave';
 import { isPlaceIdUnique } from '../modules/utils';
 import EmbeddedMap from './EmbeddedMap';
 import DisabledButton from './DisabledButton';
+import { useIsFocused } from '@react-navigation/native';
 
 export default function PlaceDetails({
   route,
@@ -31,6 +33,7 @@ export default function PlaceDetails({
     useState<PlaceThumbnailData | null>(null);
   const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(false);
   const [saveSuccessful, setSaveSuccessful] = useState(false);
+  const isFocused = useIsFocused();
 
   const place_id: string = route.params.place_id;
 
@@ -59,6 +62,7 @@ export default function PlaceDetails({
       const allData = await getAllItems('favourites');
       console.log(allData, 'is data');
 
+
       setSaveButtonDisabled(!isPlaceIdUnique(allData, data));
     } catch (e) {
       console.log(e);
@@ -68,7 +72,7 @@ export default function PlaceDetails({
 
   useEffect(() => {
     onPlaceIdReceived(place_id);
-  }, [place_id, saveSuccessful]);
+  }, [place_id, saveSuccessful, isFocused]);
 
   const handlePress = () => {
     if (placeDetails && placeDetails.website) {
@@ -109,7 +113,11 @@ export default function PlaceDetails({
                 <StyledButton buttonText="Website" onPress={handlePress} />
               )}
             </>
-          ) : null}
+          ) : (
+            <View style={styles.loadingAnimation}>
+              <ActivityIndicator size={100} />
+            </View>
+          )}
           {showButton ? (
             <StyledButton buttonText="Back" onPress={handleOnBackPress} />
           ) : null}
@@ -169,5 +177,10 @@ const styles = StyleSheet.create({
     color: '#032b43',
     fontSize: 16,
     alignSelf: 'center',
+  },
+  loadingAnimation: {
+    width: '100%',
+    flex: 1,
+    alignItems: 'center',
   },
 });
