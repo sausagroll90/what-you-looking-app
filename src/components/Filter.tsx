@@ -44,38 +44,36 @@ export default function Filter({ setSelectedTypes }: FilterProps) {
   };
 
   return (
-    <View>
-      <SectionedMultiSelect
-        items={types}
-        IconRenderer={Icon}
-        uniqueKey="id"
-        subKey="children"
-        selectText="Filter"
-        showDropDowns={true}
-        onSelectedItemsChange={onSelectedTypesChange}
-        selectedItems={selectedItems}
-        hideSearch={true}
-        selectToggleIconComponent={
-          <FontAwesomeIcon name="chevron-down" size={20} color={'black'} />
-        }
-        dropDownToggleIconDownComponent={
-          <FontAwesomeIcon name="chevron-down" size={20} color={'black'} />
-        }
-        dropDownToggleIconUpComponent={
-          <FontAwesomeIcon name="chevron-up" size={20} color={'black'} />
-        }
-        unselectedIconComponent={
-          <FontAwesomeIcon name="square-o" size={20} color={'black'} />
-        }
-        selectedIconComponent={
-          <FontAwesomeIcon name="check-square-o" size={20} color={'black'} />
-        }
-        onConfirm={onConfirm}
-        showCancelButton={true}
-        selectChildren={true}
-        showRemoveAll={true}
-        parentChipsRemoveChildren={true}
-      />
-    </View>
+    <SectionedMultiSelect
+      items={types}
+      IconRenderer={Icon}
+      uniqueKey="id"
+      subKey="children"
+      selectText="Filter"
+      showDropDowns={true}
+      onSelectedItemsChange={onSelectedTypesChange}
+      selectedItems={selectedItems}
+      hideSearch={true}
+      selectToggleIconComponent={
+        <FontAwesomeIcon name="chevron-down" size={20} color={'black'} />
+      }
+      dropDownToggleIconDownComponent={
+        <FontAwesomeIcon name="chevron-down" size={20} color={'black'} />
+      }
+      dropDownToggleIconUpComponent={
+        <FontAwesomeIcon name="chevron-up" size={20} color={'black'} />
+      }
+      unselectedIconComponent={
+        <FontAwesomeIcon name="square-o" size={20} color={'black'} />
+      }
+      selectedIconComponent={
+        <FontAwesomeIcon name="check-square-o" size={20} color={'black'} />
+      }
+      onConfirm={onConfirm}
+      showCancelButton={true}
+      selectChildren={true}
+      showRemoveAll={true}
+      parentChipsRemoveChildren={true}
+    />
   );
 }
