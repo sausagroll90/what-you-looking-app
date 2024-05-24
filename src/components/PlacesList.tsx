@@ -5,7 +5,7 @@ import StyledButton from './StyledButton';
 import { getAllPlaces, removePlaceData } from '../modules/localStorage';
 import { PlaceThumbnailData } from '../types/route';
 
-export default function PlacesList({route}) {
+export default function PlacesList({ route }) {
   const [placesToDisplay, setPlacesToDisplay] = useState<
     PlaceThumbnailData[] | []
   >([]);
@@ -14,11 +14,11 @@ export default function PlacesList({route}) {
   useEffect(() => {
     setIsDeleted(false);
 
-    getData();
+    setData(route.params.key);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDeleted]);
 
-  async function setData(key:string) {
+  async function setData(key: string) {
     const allData = await getAllPlaces(key);
     allData ? setPlacesToDisplay(allData) : null;
   }
@@ -35,6 +35,7 @@ export default function PlacesList({route}) {
           return (
             <PlaceCard
               key={place.place_id}
+              storageKey={route.params.key}
               placeDetails={place}
               isDeleted={isDeleted}
               setIsDeleted={setIsDeleted}

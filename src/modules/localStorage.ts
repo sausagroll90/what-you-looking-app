@@ -7,15 +7,14 @@ export async function addPlaceToStorage(
   key: string,
 ) {
   try {
-<
     const allData = await getAllPlaces(key);
     const unique = isPlaceIdUnique(allData, place);
     if (allData === null) {
-      await setPlaces([place]);
+      await setPlaces([place], key);
     } else {
       if (unique) {
         allData.push(place);
-        await setPlaces(allData,key);
+        await setPlaces(allData, key);
       }
     }
   } catch (e) {
@@ -24,13 +23,14 @@ export async function addPlaceToStorage(
   }
 }
 
-
-export async function getAllPlaces(key): Promise<PlaceThumbnailData[] | null> {
+export async function getAllPlaces(
+  key: string,
+): Promise<PlaceThumbnailData[] | null> {
   const allData = await AsyncStorage.getItem(key);
   return allData ? JSON.parse(allData) : null;
 }
 
-export const removePlaceData = async (key:string) => {
+export const removePlaceData = async (key: string) => {
   try {
     await AsyncStorage.removeItem(key);
   } catch (e) {
@@ -39,6 +39,6 @@ export const removePlaceData = async (key:string) => {
   console.log('All Cleared');
 };
 
-export async function setPlaces(data: any, key:string ) {
+export async function setPlaces(data: any, key: string) {
   await AsyncStorage.setItem(key, JSON.stringify(data));
 }
