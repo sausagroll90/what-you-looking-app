@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { PlaceData, PlaceDetailsProps } from '../types/route';
 import StyledButton from './StyledButton';
-import { getPlaceDetails } from '../modules/apis';
+import { getPlaceDetails, getWikiSummary } from '../modules/apis';
 import EmbeddedMap from './EmbeddedMap';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
