@@ -1,8 +1,9 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import StyledButton from './StyledButton';
 import { useNavigation } from '@react-navigation/native';
 import { PlaceCardNavigationProp } from '../types/route';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type PlaceDetailProps = {
   placeDetails: { name: string; address: string; place_id: string };
@@ -12,11 +13,34 @@ export default function PlaceCard(props: PlaceDetailProps) {
   const {
     placeDetails: { name, address, place_id },
   } = props;
+  const [deleteButtonText, setDeleteButtonText] = useState('Remove');
+  const [itemDeleted, setItemDeleted] = useState(false);
 
   const navigation = useNavigation<PlaceCardNavigationProp>();
 
   const handlePress = () => {
     navigation.push('PlaceDetails', { place_id: place_id, showButton: true });
+  };
+
+  const removeListItem = async () => {
+    try {
+      setDeleteButtonText('Removing...');
+      const allData = await AsyncStorage.getItem('place');
+      const parsedData = JSON.parse(allData);
+      const placeIdArray = parsedData.map((item) => item.place_id);
+      const indexPositionToDelete = placeIdArray.indexOf(place_id.toString());
+      parsedData.splice(indexPositionToDelete, 1);
+      const stringifiedData = JSON.stringify(parsedData);
+      await AsyncStorage.setItem('place', stringifiedData);
+      setDeleteButtonText('Removed');
+      setItemDeleted(true);
+    } catch (e) {
+      console.log('error removing item', e);
+    }
+  };
+
+  const handleDelete = () => {
+    removeListItem();
   };
 
   return (
@@ -28,7 +52,7 @@ export default function PlaceCard(props: PlaceDetailProps) {
         </View>
         <View style={styles.button_container}>
           <StyledButton buttonText="View" onPress={handlePress} />
-          <StyledButton buttonText="Remove" />
+          <StyledButton buttonText={deleteButtonText} onPress={handleDelete} />
         </View>
       </View>
     </View>
