@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import StyledButton from './StyledButton';
 import { useNavigation } from '@react-navigation/native';
 import { PlaceCardNavigationProp } from '../types/route';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type PlaceDetailProps = {
-  placeDetails: { name: string; address: string; place_id: string };
+  placeDetails: {
+    name: string;
+    address: string;
+    place_id: string;
+  };
+  isDeleted: boolean;
+  setIsDeleted: (open: boolean) => void;
 };
 
 export default function PlaceCard(props: PlaceDetailProps) {
   const {
     placeDetails: { name, address, place_id },
   } = props;
+  const { setIsDeleted } = props;
   const [deleteButtonText, setDeleteButtonText] = useState('Remove');
-  const [itemDeleted, setItemDeleted] = useState(false);
 
   const navigation = useNavigation<PlaceCardNavigationProp>();
 
@@ -26,16 +32,22 @@ export default function PlaceCard(props: PlaceDetailProps) {
     try {
       setDeleteButtonText('Removing...');
       const allData = await AsyncStorage.getItem('place');
-      const parsedData = JSON.parse(allData);
-      const placeIdArray = parsedData.map((item) => item.place_id);
-      const indexPositionToDelete = placeIdArray.indexOf(place_id.toString());
-      parsedData.splice(indexPositionToDelete, 1);
-      const stringifiedData = JSON.stringify(parsedData);
-      await AsyncStorage.setItem('place', stringifiedData);
-      setDeleteButtonText('Removed');
-      setItemDeleted(true);
+      if (allData) {
+        const parsedData = JSON.parse(allData);
+        const placeIdArray = parsedData.map(
+          (place: { name: string; address: string; place_id: string }) =>
+            place.place_id,
+        );
+        const indexPositionToDelete = placeIdArray.indexOf(place_id.toString());
+        parsedData.splice(indexPositionToDelete, 1);
+        await AsyncStorage.setItem('place', JSON.stringify(parsedData));
+        setDeleteButtonText('Removed');
+        setIsDeleted(true);
+      } else {
+        null;
+      }
     } catch (e) {
-      console.log('error removing item', e);
+      console.log('error removing item from list', e);
     }
   };
 
