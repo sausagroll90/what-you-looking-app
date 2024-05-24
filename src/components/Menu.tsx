@@ -78,7 +78,7 @@ export default function Menu({
             <NavButton
               text="Favourites"
               navigationTarget="PlacesList"
-              style={[styles.dropdown, { top: dropdownTop }]}
+              top={dropdownTop}
             />
           </View>
           <View style={[styles.multiSelect, { top: dropdownTop }]}>
