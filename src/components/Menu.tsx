@@ -6,9 +6,15 @@ FontAwesomeIcon.loadFont();
 import FilterBy from './FilterBy';
 const TYPES = ['museum', 'cafe', 'library', 'bakery', 'church'];
 
-export default function Menu(): React.JSX.Element {
+type MenuProps = {
+  selectedTypes: string[];
+  setSelectedTypes: React.Dispatch<React.SetStateAction<string[]>>;
+};
+export default function Menu({
+  setSelectedTypes,
+  selectedTypes,
+}: MenuProps): React.JSX.Element {
   const [visible, setVisible] = useState(false);
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const DropdownButton = useRef<any>();
   const [dropdownTop, setDropdownTop] = useState(100);
   const [visibleTypes, setVisibleTypes] = useState(false);
@@ -24,8 +30,6 @@ export default function Menu(): React.JSX.Element {
   };
 
   const openDropdown = () => {
-    console.log(DropdownButton.current.measure);
-
     DropdownButton.current
       ? DropdownButton.current.measure(
           (
@@ -68,13 +72,11 @@ export default function Menu(): React.JSX.Element {
   };
 
   return (
-    <Modal visible={true} transparent animationType="none">
-      <TouchableOpacity
-        style={styles.button}
-        onPress={toggleDropdown}
-        ref={DropdownButton}>
-        <FontAwesomeIcon name="navicon" size={25} color={'black'} />
-      </TouchableOpacity>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={toggleDropdown}
+      ref={DropdownButton}>
+      <FontAwesomeIcon name="navicon" size={25} color={'black'} />
       <Modal visible={visible} transparent animationType="none">
         <TouchableOpacity
           style={styles.overlay}
@@ -136,7 +138,7 @@ export default function Menu(): React.JSX.Element {
           </View>
         </TouchableOpacity>
       </Modal>
-    </Modal>
+    </TouchableOpacity>
   );
 }
 
@@ -144,7 +146,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 50,
+    height: 70,
     width: '15%',
     paddingHorizontal: 10,
     zIndex: 1,
@@ -163,7 +165,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     paddingRight: 10,
     paddingLeft: 10,
-    height: 30,
+    height: 60,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
