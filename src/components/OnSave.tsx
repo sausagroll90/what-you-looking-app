@@ -1,9 +1,11 @@
 import { Modal, View, Text, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
-import StyledButton from './StyledButton';
 
 export function OnSave() {
   const [isVisible, setIsVisible] = useState<boolean>(true);
+
+  const TOAST_DURATION_MILISECONDS = 3000;
+  setTimeout(() => setIsVisible(false), TOAST_DURATION_MILISECONDS);
 
   return (
     <View>
@@ -16,11 +18,7 @@ export function OnSave() {
         }}>
         <View>
           <View style={styles.saveView}>
-            <Text>You have added this place to your favorites list!</Text>
-            <StyledButton
-              buttonText="Close"
-              onPress={() => setIsVisible(false)}
-            />
+            <Text>Added to favourites!</Text>
           </View>
         </View>
       </Modal>
