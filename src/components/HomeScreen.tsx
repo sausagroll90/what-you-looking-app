@@ -10,18 +10,21 @@ import PointMarker from './PointMarker';
 import CompassHeading from 'react-native-compass-heading';
 import { getNearbyPOIs } from '../modules/apis';
 import { requestLocationPermission } from '../modules/permissions';
-import Geolocation, { GeoPosition } from 'react-native-geolocation-service';
+import Geolocation from 'react-native-geolocation-service';
 import { getPositionForAR } from '../modules/utils';
 import ErrorScreen from './ErrorScreen';
+import Menu from './Menu';
 
 const HomeScreenSceneAR = ({
   arSceneNavigator: {
-    viroAppProps: { setError },
+    viroAppProps: { setError, selectedTypes },
   },
 }: {
   arSceneNavigator: {
     viroAppProps: {
       setError: React.Dispatch<React.SetStateAction<string | null>>;
+      setSelectedTypes: React.Dispatch<React.SetStateAction<string[]>>;
+      selectedTypes: string[];
     };
   };
 }) => {
@@ -50,19 +53,15 @@ const HomeScreenSceneAR = ({
     if (state === ViroTrackingStateConstants.TRACKING_NORMAL) {
       setInitialCompassHeading(compassHeading);
       setInitialised(true);
-    } else if (state === ViroTrackingStateConstants.TRACKING_UNAVAILABLE) {
-      //errorg
     }
   }
 
-  async function onLocationReceived(position: GeoPosition) {
+  async function getPointsOfInterest(latitude: number, longitude: number) {
     try {
-      const POI_TYPE = 'museum';
-      const data = await getNearbyPOIs(
-        position.coords.latitude,
-        position.coords.longitude,
-        POI_TYPE,
-      );
+      const fetchedPromises = selectedTypes.map((type) => {
+        return getNearbyPOIs(latitude, longitude, type);
+      });
+      const data = (await Promise.all(fetchedPromises)).flat();
       if (data) {
         setPointsOfInterest(data);
         setLoading(false);
@@ -82,7 +81,10 @@ const HomeScreenSceneAR = ({
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             });
-            onLocationReceived(position);
+            getPointsOfInterest(
+              position.coords.latitude,
+              position.coords.longitude,
+            );
           },
           (err) => {
             console.log(err.code, err.message);
@@ -111,6 +113,13 @@ const HomeScreenSceneAR = ({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    userLocation
+      ? getPointsOfInterest(userLocation.latitude, userLocation.longitude)
+      : null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTypes]);
 
   return (
     <ViroARScene onTrackingUpdated={onInitialised}>
@@ -141,12 +150,18 @@ const HomeScreenSceneAR = ({
 
 export default () => {
   const [error, setError] = useState<string | null>(null);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>(['museum']);
+
   return !error ? (
-    <ViroARSceneNavigator
-      autofocus={true}
-      initialScene={{ scene: HomeScreenSceneAR }}
-      viroAppProps={{ setError }}
-    />
+    <>
+      <Menu selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} />
+
+      <ViroARSceneNavigator
+        autofocus={true}
+        initialScene={{ scene: HomeScreenSceneAR }}
+        viroAppProps={{ setError, selectedTypes, setSelectedTypes }}
+      />
+    </>
   ) : (
     <ErrorScreen message={error} />
   );
