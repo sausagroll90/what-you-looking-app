@@ -19,8 +19,7 @@ import { addPlaceToStorage, getAllItems } from '../modules/localStorage';
 import { OnSave } from './OnSave';
 import { isPlaceIdUnique } from '../modules/utils';
 import EmbeddedMap from './EmbeddedMap';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import DisabledButton from './DisabledButton';
 
 export default function PlaceDetails({
   route,
@@ -62,7 +61,7 @@ export default function PlaceDetails({
 
   useEffect(() => {
     onPlaceIdReceived(place_id);
-  }, [place_id]);
+  }, [place_id, saveSuccessful]);
 
   const handlePress = () => {
     if (placeDetails && placeDetails.website) {
@@ -107,13 +106,11 @@ export default function PlaceDetails({
           {showButton ? (
             <StyledButton buttonText="Back" onPress={handleOnBackPress} />
           ) : null}
-
           {saveButtonDisabled ? (
-            <StyledButton buttonText={'saved already'} />
+            <DisabledButton buttonText={'Saved'} />
           ) : (
-            <StyledButton buttonText={'save'} onPress={handleSave} />
+            <StyledButton buttonText={'Save'} onPress={handleSave} />
           )}
-
           <Button
             title="Place list"
             onPress={() => {
