@@ -7,6 +7,7 @@ import {
   Button,
   SafeAreaView,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import {
   PlaceData,
@@ -102,7 +103,11 @@ export default function PlaceDetails({
                 <StyledButton buttonText="Website" onPress={handlePress} />
               )}
             </>
-          ) : null}
+          ) : (
+            <View style={styles.loadingAnimation}>
+              <ActivityIndicator size={100} />
+            </View>
+          )}
           {showButton ? (
             <StyledButton buttonText="Back" onPress={handleOnBackPress} />
           ) : null}
@@ -162,5 +167,10 @@ const styles = StyleSheet.create({
     color: '#032b43',
     fontSize: 16,
     alignSelf: 'center',
+  },
+  loadingAnimation: {
+    width: '100%',
+    flex: 1,
+    alignItems: 'center',
   },
 });
