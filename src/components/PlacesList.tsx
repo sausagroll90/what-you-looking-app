@@ -1,40 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import PlaceCard from './PlaceCard';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import StyledButton from './StyledButton';
+import { getAllPlaces, removePlaceData } from '../modules/localStorage';
+import { PlaceThumbnailData } from '../types/route';
 
-export default function PlacesList() {
-  const [placesToDisplay, setPlacesToDisplay] = useState([]);
+export default function PlacesList({ route }) {
+  const [placesToDisplay, setPlacesToDisplay] = useState<
+    PlaceThumbnailData[] | []
+  >([]);
   const [isDeleted, setIsDeleted] = useState(false);
 
   useEffect(() => {
     setIsDeleted(false);
-    getData();
+
+    setData(route.params.key);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDeleted]);
 
-  async function getData() {
-    try {
-      const allData = await AsyncStorage.getItem('place');
-      allData ? setPlacesToDisplay(JSON.parse(allData)) : null;
-    } catch (e) {
-      //what to do if nothing is returned
-      console.log('error', e);
-    }
+  async function setData(key: string) {
+    const allData = await getAllPlaces(key);
+    allData ? setPlacesToDisplay(allData) : null;
   }
 
   const handleClear = () => {
-    removePlaceData();
+    removePlaceData(route.params.key);
     setPlacesToDisplay([]);
-  };
-
-  const removePlaceData = async () => {
-    try {
-      await AsyncStorage.removeItem('place');
-    } catch (e) {
-      console.log('error in clear', e);
-    }
-    console.log('All Cleared');
   };
 
   return (
@@ -44,6 +35,7 @@ export default function PlacesList() {
           return (
             <PlaceCard
               key={place.place_id}
+              storageKey={route.params.key}
               placeDetails={place}
               isDeleted={isDeleted}
               setIsDeleted={setIsDeleted}

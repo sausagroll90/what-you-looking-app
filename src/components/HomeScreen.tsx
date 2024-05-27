@@ -8,12 +8,17 @@ import {
 } from '@viro-community/react-viro';
 import PointMarker from './PointMarker';
 import CompassHeading from 'react-native-compass-heading';
-import { getNearbyPOIs, getWikiSummary } from '../modules/apis';
+import { getNearbyPOIs } from '../modules/apis';
 import { requestLocationPermission } from '../modules/permissions';
 import Geolocation from 'react-native-geolocation-service';
 import { getPositionForAR } from '../modules/utils';
 import ErrorScreen from './ErrorScreen';
 import Menu from './Menu';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state.',
+]);
 
 const HomeScreenSceneAR = ({
   arSceneNavigator: {
@@ -148,13 +153,21 @@ const HomeScreenSceneAR = ({
   );
 };
 
-export default () => {
+export default ({ route }) => {
   const [error, setError] = useState<string | null>(null);
   const [selectedTypes, setSelectedTypes] = useState<string[]>(['museum']);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>(
+    route.params.selectedFilterTypes,
+  );
 
   return !error ? (
     <>
-      <Menu selectedTypes={selectedTypes} setSelectedTypes={setSelectedTypes} />
+      <Menu
+        setSelectedTypes={setSelectedTypes}
+        selectedFilters={selectedFilters}
+        setSelectedFilters={setSelectedFilters}
+        setSelectedFilterTypes={route.params.setSelectedFilterTypes}
+      />
 
       <ViroARSceneNavigator
         autofocus={true}

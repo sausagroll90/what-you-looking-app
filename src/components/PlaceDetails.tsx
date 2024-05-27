@@ -7,6 +7,7 @@ import {
   Button,
   SafeAreaView,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import {
   PlaceData,
@@ -14,12 +15,14 @@ import {
   PlaceThumbnailData,
 } from '../types/route';
 import StyledButton from './StyledButton';
+
 import { getPlaceDetails } from '../modules/apis';
-import { addPlaceToStorage, getAllItems } from '../modules/localStorage';
+import { addPlaceToStorage, getAllPlaces } from '../modules/localStorage';
 import { OnSave } from './OnSave';
 import { isPlaceIdUnique } from '../modules/utils';
 import EmbeddedMap from './EmbeddedMap';
 import DisabledButton from './DisabledButton';
+import { useIsFocused } from '@react-navigation/native';
 
 export default function PlaceDetails({
   route,
@@ -30,6 +33,7 @@ export default function PlaceDetails({
     useState<PlaceThumbnailData | null>(null);
   const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(false);
   const [saveSuccessful, setSaveSuccessful] = useState(false);
+  const isFocused = useIsFocused();
 
   const place_id: string = route.params.place_id;
 
@@ -38,20 +42,25 @@ export default function PlaceDetails({
   route.params?.showButton ? (showButton = route.params.showButton) : false;
 
   const handleSave = () => {
-    itemForLocalStorage ? addPlaceToStorage(itemForLocalStorage) : null;
+    itemForLocalStorage
+      ? addPlaceToStorage(itemForLocalStorage, 'favourites')
+      : null;
     setSaveSuccessful(true);
   };
 
   async function onPlaceIdReceived(placeId: string) {
     try {
       const data = await getPlaceDetails(placeId);
-      setPlaceDetails(data);
-      setItemForLocalStorage({
+      const placeToStore = {
         name: data.name,
         address: data.formatted_address,
         place_id: data.place_id,
-      });
-      const allData = await getAllItems();
+      };
+      setPlaceDetails(data);
+      setItemForLocalStorage(placeToStore);
+      addPlaceToStorage(placeToStore, 'history');
+      const allData = await getAllPlaces('favourites');
+
       setSaveButtonDisabled(!isPlaceIdUnique(allData, data));
     } catch (e) {
       console.log(e);
@@ -61,7 +70,7 @@ export default function PlaceDetails({
 
   useEffect(() => {
     onPlaceIdReceived(place_id);
-  }, [place_id, saveSuccessful]);
+  }, [place_id, saveSuccessful, isFocused]);
 
   const handlePress = () => {
     if (placeDetails && placeDetails.website) {
@@ -88,7 +97,9 @@ export default function PlaceDetails({
               )}
               <Text style={styles.data}>{placeDetails.formatted_address}</Text>
               <View style={styles.openingHours}>
-                <Text style={styles.bold}>Opening Hours:</Text>
+                {placeDetails.current_opening_hours && (
+                  <Text style={styles.bold}>Opening Hours:</Text>
+                )}
                 {placeDetails.current_opening_hours &&
                   placeDetails.current_opening_hours.map((day) => {
                     return (
@@ -102,7 +113,11 @@ export default function PlaceDetails({
                 <StyledButton buttonText="Website" onPress={handlePress} />
               )}
             </>
-          ) : null}
+          ) : (
+            <View style={styles.loadingAnimation}>
+              <ActivityIndicator size={100} />
+            </View>
+          )}
           {showButton ? (
             <StyledButton buttonText="Back" onPress={handleOnBackPress} />
           ) : null}
@@ -112,9 +127,9 @@ export default function PlaceDetails({
             <StyledButton buttonText={'Save'} onPress={handleSave} />
           )}
           <Button
-            title="Place list"
+            title="Favourites"
             onPress={() => {
-              navigation.push('PlacesList');
+              navigation.push('Favourites');
             }}
           />
           {saveSuccessful ? <OnSave /> : null}
@@ -162,5 +177,10 @@ const styles = StyleSheet.create({
     color: '#032b43',
     fontSize: 16,
     alignSelf: 'center',
+  },
+  loadingAnimation: {
+    width: '100%',
+    flex: 1,
+    alignItems: 'center',
   },
 });

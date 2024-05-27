@@ -5,29 +5,26 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 FontAwesomeIcon.loadFont();
 import NavButton from './NavButton';
 import Filter from './Filter';
-const TYPES = ['museum', 'cafe', 'library', 'bakery', 'church'];
 
 type MenuProps = {
-  selectedTypes: string[];
   setSelectedTypes: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedFilters: string[];
+  setSelectedFilters: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedFilterTypes: React.Dispatch<React.SetStateAction<string[]>>;
 };
 export default function Menu({
   setSelectedTypes,
-  selectedTypes,
+  selectedFilters,
+  setSelectedFilters,
+  setSelectedFilterTypes,
 }: MenuProps): React.JSX.Element {
   const [visible, setVisible] = useState(false);
   const DropdownButton = useRef<any>();
   const [dropdownTop, setDropdownTop] = useState(100);
-  const [visibleTypes, setVisibleTypes] = useState(false);
   const FavouriteButton = useRef<any>();
-  const [favouriteTop, setFavouriteTop] = useState(140);
 
   const toggleDropdown = () => {
     visible ? setVisible(false) : openDropdown();
-  };
-
-  const toggleFilter = () => {
-    visibleTypes ? setVisibleTypes(false) : openFilter();
   };
 
   const openDropdown = () => {
@@ -48,22 +45,6 @@ export default function Menu({
     setVisible(true);
   };
 
-  const openFilter = (): void => {
-    FavouriteButton.current.measure(
-      (
-        _fx: number,
-        _fy: number,
-        _w: number,
-        h: number,
-        _px: number,
-        py: number,
-      ) => {
-        setFavouriteTop(py + h);
-      },
-    );
-    setVisibleTypes(true);
-  };
-
   return (
     <TouchableOpacity
       style={styles.button}
@@ -77,12 +58,24 @@ export default function Menu({
           <View ref={FavouriteButton}>
             <NavButton
               text="Favourites"
-              navigationTarget="PlacesList"
-              top={dropdownTop}
+              navigationTarget="Favourites"
+              style={[styles.dropdown, { top: dropdownTop }]}
+            />
+          </View>
+          <View>
+            <NavButton
+              text="History"
+              navigationTarget="History"
+              style={[styles.dropdown, { top: dropdownTop }]}
             />
           </View>
           <View style={[styles.multiSelect, { top: dropdownTop }]}>
-            <Filter setSelectedTypes={setSelectedTypes} />
+            <Filter
+              setSelectedTypes={setSelectedTypes}
+              selectedFilters={selectedFilters}
+              setSelectedFilters={setSelectedFilters}
+              setSelectedFilterTypes={setSelectedFilterTypes}
+            />
           </View>
         </TouchableOpacity>
       </Modal>
