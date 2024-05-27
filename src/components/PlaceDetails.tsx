@@ -59,9 +59,7 @@ export default function PlaceDetails({
       setPlaceDetails(data);
       setItemForLocalStorage(placeToStore);
       addPlaceToStorage(placeToStore, 'history');
-      const allData = await getAllItems('favourites');
-      console.log(allData, 'is data');
-
+      const allData = await getAllPlaces('favourites');
 
       setSaveButtonDisabled(!isPlaceIdUnique(allData, data));
     } catch (e) {
@@ -99,7 +97,9 @@ export default function PlaceDetails({
               )}
               <Text style={styles.data}>{placeDetails.formatted_address}</Text>
               <View style={styles.openingHours}>
-                <Text style={styles.bold}>Opening Hours:</Text>
+                {placeDetails.current_opening_hours && (
+                  <Text style={styles.bold}>Opening Hours:</Text>
+                )}
                 {placeDetails.current_opening_hours &&
                   placeDetails.current_opening_hours.map((day) => {
                     return (
