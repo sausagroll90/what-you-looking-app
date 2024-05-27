@@ -15,6 +15,7 @@ import {
   PlaceThumbnailData,
 } from '../types/route';
 import StyledButton from './StyledButton';
+
 import { getPlaceDetails } from '../modules/apis';
 import { addPlaceToStorage, getAllPlaces } from '../modules/localStorage';
 import { OnSave } from './OnSave';
@@ -41,20 +42,25 @@ export default function PlaceDetails({
   route.params?.showButton ? (showButton = route.params.showButton) : false;
 
   const handleSave = () => {
-    itemForLocalStorage ? addPlaceToStorage(itemForLocalStorage) : null;
+    itemForLocalStorage
+      ? addPlaceToStorage(itemForLocalStorage, 'favourites')
+      : null;
     setSaveSuccessful(true);
   };
 
   async function onPlaceIdReceived(placeId: string) {
     try {
       const data = await getPlaceDetails(placeId);
-      setPlaceDetails(data);
-      setItemForLocalStorage({
+      const placeToStore = {
         name: data.name,
         address: data.formatted_address,
         place_id: data.place_id,
-      });
-      const allData = await getAllPlaces();
+      };
+      setPlaceDetails(data);
+      setItemForLocalStorage(placeToStore);
+      addPlaceToStorage(placeToStore, 'history');
+      const allData = await getAllPlaces('favourites');
+
       setSaveButtonDisabled(!isPlaceIdUnique(allData, data));
     } catch (e) {
       console.log(e);
@@ -91,7 +97,9 @@ export default function PlaceDetails({
               )}
               <Text style={styles.data}>{placeDetails.formatted_address}</Text>
               <View style={styles.openingHours}>
-                <Text style={styles.bold}>Opening Hours:</Text>
+                {placeDetails.current_opening_hours && (
+                  <Text style={styles.bold}>Opening Hours:</Text>
+                )}
                 {placeDetails.current_opening_hours &&
                   placeDetails.current_opening_hours.map((day) => {
                     return (
@@ -119,9 +127,9 @@ export default function PlaceDetails({
             <StyledButton buttonText={'Save'} onPress={handleSave} />
           )}
           <Button
-            title="Place list"
+            title="Favourites"
             onPress={() => {
-              navigation.push('PlacesList');
+              navigation.push('Favourites');
             }}
           />
           {saveSuccessful ? <OnSave /> : null}

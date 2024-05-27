@@ -2,16 +2,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { isPlaceIdUnique } from './utils';
 import { PlaceThumbnailData } from '../types/route';
 
-export async function addPlaceToStorage(place: PlaceThumbnailData) {
+export async function addPlaceToStorage(
+  place: PlaceThumbnailData,
+  key: string,
+) {
   try {
-    const allData = await getAllPlaces();
+    const allData = await getAllPlaces(key);
     const unique = isPlaceIdUnique(allData, place);
     if (allData === null) {
-      await setPlaces([place]);
+      await setPlaces([place], key);
     } else {
       if (unique) {
         allData.push(place);
-        await setPlaces(allData);
+        await setPlaces(allData, key);
       }
     }
   } catch (e) {
@@ -20,20 +23,22 @@ export async function addPlaceToStorage(place: PlaceThumbnailData) {
   }
 }
 
-export async function getAllPlaces(): Promise<PlaceThumbnailData[] | null> {
-  const allData = await AsyncStorage.getItem('place');
+export async function getAllPlaces(
+  key: string,
+): Promise<PlaceThumbnailData[] | null> {
+  const allData = await AsyncStorage.getItem(key);
   return allData ? JSON.parse(allData) : null;
 }
 
-export const removePlaceData = async () => {
+export const removePlaceData = async (key: string) => {
   try {
-    await AsyncStorage.removeItem('place');
+    await AsyncStorage.removeItem(key);
   } catch (e) {
     console.log('error in clear', e);
   }
   console.log('All Cleared');
 };
 
-export async function setPlaces(data: any) {
-  await AsyncStorage.setItem('place', JSON.stringify(data));
+export async function setPlaces(data: any, key: string) {
+  await AsyncStorage.setItem(key, JSON.stringify(data));
 }

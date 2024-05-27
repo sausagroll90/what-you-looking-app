@@ -26,12 +26,23 @@ function App(): JSX.Element {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="PlacesList"
+          name="Favourites"
           component={PlacesList}
           options={{
             headerRight: HomeButton,
             headerBackVisible: false,
-            title: 'Places',
+            title: 'Favourites',
+          }}
+          initialParams={{ key: 'favourites' }}
+        />
+        <Stack.Screen
+          name="History"
+          component={PlacesList}
+          initialParams={{ key: 'history' }}
+          options={{
+            headerRight: HomeButton,
+            headerBackVisible: false,
+            title: 'History',
           }}
         />
       </Stack.Navigator>

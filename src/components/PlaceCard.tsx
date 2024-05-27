@@ -9,13 +9,14 @@ type PlaceDetailProps = {
   placeDetails: PlaceThumbnailData;
   isDeleted: boolean;
   setIsDeleted: (open: boolean) => void;
+  storageKey: string;
 };
 
 export default function PlaceCard(props: PlaceDetailProps) {
   const {
     placeDetails: { name, address, place_id },
   } = props;
-  const { setIsDeleted } = props;
+  const { setIsDeleted, storageKey } = props;
   const [deleteButtonText, setDeleteButtonText] = useState('Remove');
 
   const navigation = useNavigation<PlaceCardNavigationProp>();
@@ -27,14 +28,16 @@ export default function PlaceCard(props: PlaceDetailProps) {
   const removeListItem = async () => {
     try {
       setDeleteButtonText('Removing...');
-      const allData = await getAllPlaces();
+      console.log(storageKey);
+
+      const allData = await getAllPlaces(storageKey);
       if (allData) {
         const placeIdArray = allData.map(
           (place: PlaceThumbnailData) => place.place_id,
         );
         const indexPositionToDelete = placeIdArray.indexOf(place_id.toString());
         allData.splice(indexPositionToDelete, 1);
-        await setPlaces(allData);
+        await setPlaces(allData, storageKey);
         setDeleteButtonText('Removed');
         setIsDeleted(true);
       } else {
