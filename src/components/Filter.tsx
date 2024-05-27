@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
@@ -31,16 +30,23 @@ const types = [
 
 type FilterProps = {
   setSelectedTypes: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedFilters: string[];
+  setSelectedFilters: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedFilterTypes: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-export default function Filter({ setSelectedTypes }: FilterProps) {
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-
+export default function Filter({
+  setSelectedTypes,
+  selectedFilters,
+  setSelectedFilters,
+  setSelectedFilterTypes,
+}: FilterProps) {
   const onSelectedTypesChange = (selectedTypes: string[]) => {
-    setSelectedItems(selectedTypes);
+    setSelectedFilters(selectedTypes);
+    setSelectedFilterTypes(selectedTypes);
   };
   const onConfirm = () => {
-    setSelectedTypes(selectedItems);
+    setSelectedTypes(selectedFilters);
   };
 
   return (
@@ -52,7 +58,7 @@ export default function Filter({ setSelectedTypes }: FilterProps) {
       selectText="Filter"
       showDropDowns={true}
       onSelectedItemsChange={onSelectedTypesChange}
-      selectedItems={selectedItems}
+      selectedItems={selectedFilters}
       hideSearch={true}
       selectToggleIconComponent={
         <FontAwesomeIcon name="chevron-down" size={20} color={'black'} />

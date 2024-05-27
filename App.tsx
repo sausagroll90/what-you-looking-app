@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/components/HomeScreen';
@@ -9,6 +9,7 @@ import HomeButton from './src/components/HomeButton';
 const Stack = createNativeStackNavigator();
 
 function App(): JSX.Element {
+  const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([]);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={'Home'}>
@@ -24,6 +25,7 @@ function App(): JSX.Element {
           name="Home"
           component={HomeScreen}
           options={{ headerShown: false }}
+          initialParams={{ selectedFilterTypes, setSelectedFilterTypes }}
         />
         <Stack.Screen
           name="Favourites"
