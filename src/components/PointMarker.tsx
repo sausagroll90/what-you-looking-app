@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import {
   Viro3DObject,
+  ViroAmbientLight,
   ViroAnimations,
   ViroBox,
   ViroMaterials,
@@ -40,8 +41,9 @@ export default function PointMarker(props: {
 
   const type = props.types[0];
   let objScale = [100, 100, 100];
-  let imageSrc = '';
+  let imageSrc;
   let objSource = '';
+  let objType = 'OBJ';
 
   switch (type) {
     case 'museum':
@@ -49,15 +51,30 @@ export default function PointMarker(props: {
       imageSrc = 'slate';
       objSource = require('../../res/models/museum.obj');
       break;
-    case 'cafe':
-      objScale = [400, 400, 400];
-      imageSrc = 'mug';
-      objSource = require('../../res/models/mug.obj');
+    case 'city_hall':
+      objScale = [1, 1, 1];
+      objSource = require('../../res/models/city_hall.glb');
+      objType = 'GLB';
       break;
-    default:
-      objScale = [400, 400, 400];
-      imageSrc = 'slate';
-      objSource = require('../../res/models/mug.obj');
+    // case 'art_gallery':
+    //   objScale = [5, 5, 5];
+    //   objSource = require('../../res/models/art_gallery.glb');
+    //   objType = 'GLB';
+    //   break;
+    case 'movie_theater':
+      objScale = [0.3, 0.3, 0.3];
+      objSource = require('../../res/models/cinema/cinema.obj');
+      break;
+    case 'tourist_attraction':
+      objScale = [300, 300, 300];
+      objSource = require('../../res/models/tourist_site.glb');
+      objType = 'GLB';
+      break;
+    case 'cafe':
+      objScale = [7, 7, 7];
+      objSource = require('../../res/models/cafe.glb');
+      objType = 'GLB';
+      break;
   }
   ViroMaterials.createMaterials({
     slate: {
@@ -84,13 +101,24 @@ export default function PointMarker(props: {
 
   return (
     <ViroNode position={props.position} onClick={handleClick}>
-      <Viro3DObject
-        source={objSource}
-        type="OBJ"
-        materials={[imageSrc]}
-        scale={objScale}
-        animation={{ name: 'rotate', run: true, loop: true }}
-      />
+      <ViroAmbientLight color="#ffffff" />
+
+      {imageSrc ? (
+        <Viro3DObject
+          source={objSource}
+          type={objType}
+          materials={imageSrc}
+          scale={objScale}
+          animation={{ name: 'rotate', run: true, loop: true }}
+        />
+      ) : (
+        <Viro3DObject
+          source={objSource}
+          type={objType}
+          scale={objScale}
+          animation={{ name: 'rotate', run: true, loop: true }}
+        />
+      )}
       <ViroText
         style={styles.text}
         text={props.name}
