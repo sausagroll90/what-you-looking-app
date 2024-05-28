@@ -14,7 +14,7 @@ import Geolocation from 'react-native-geolocation-service';
 import { getPositionForAR } from '../modules/utils';
 import ErrorScreen from './ErrorScreen';
 import Menu from './Menu';
-import { LogBox } from 'react-native';
+import { LogBox, Pressable } from 'react-native';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state.',
@@ -168,7 +168,6 @@ export default ({ route }) => {
         setSelectedFilters={setSelectedFilters}
         setSelectedFilterTypes={route.params.setSelectedFilterTypes}
       />
-
       <ViroARSceneNavigator
         autofocus={true}
         initialScene={{ scene: HomeScreenSceneAR }}
