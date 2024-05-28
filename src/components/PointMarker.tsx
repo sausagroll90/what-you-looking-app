@@ -1,8 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import {
+  Viro3DObject,
   ViroAnimations,
   ViroBox,
   ViroMaterials,
+  ViroNode,
+  ViroText,
 } from '@viro-community/react-viro';
 import React from 'react';
 import { PointMarkerNavigationProp } from '../types/route';
@@ -18,7 +21,7 @@ export default function PointMarker(props: {
 
   const imageSrc =
     props.types[0] === 'museum'
-      ? require('../../res/icons/museum.png')
+      ? require('../../res/models/slate.jpeg')
       : props.types[0] === 'city_hall'
       ? require('../../res/icons/city-hall.png')
       : props.types[0] === 'art_gallery'
@@ -36,7 +39,7 @@ export default function PointMarker(props: {
       : require('../../res/icons/building.png');
 
   ViroMaterials.createMaterials({
-    building: {
+    slate: {
       diffuseTexture: imageSrc,
     },
   });
@@ -56,12 +59,28 @@ export default function PointMarker(props: {
   };
 
   return (
-    <ViroBox
-      materials={['building']}
-      scale={[50, 50, 50]}
-      position={props.position}
-      animation={{ name: 'rotate', run: true, loop: true }}
-      onClick={handleClick}
-    />
+    <ViroNode position={props.position} onClick={handleClick}>
+      <Viro3DObject
+        source={require('../../res/models/museum.obj')}
+        type="OBJ"
+        materials={['slate']}
+        scale={[8, 8, 8]}
+        animation={{ name: 'rotate', run: true, loop: true }}
+      />
+      <ViroText
+        text={props.name}
+        scale={[100, 100, 100]}
+        position={[0, -50, 0]}
+        animation={{ name: 'rotate', run: true, loop: true }}
+        transformBehaviors={'billboard'}
+      />
+    </ViroNode>
+    // <ViroBox
+    //   materials={['building']}
+    //   scale={[50, 50, 50]}
+    //   position={props.position}
+    //   animation={{ name: 'rotate', run: true, loop: true }}
+    //   onClick={handleClick}
+    // />
   );
 }

@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Viro3DObject,
   ViroARScene,
   ViroARSceneNavigator,
+  ViroAnimations,
+  ViroMaterials,
+  ViroNode,
   ViroSpinner,
+  ViroText,
   ViroTrackingReason,
   ViroTrackingStateConstants,
 } from '@viro-community/react-viro';
@@ -126,9 +131,38 @@ const HomeScreenSceneAR = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTypes]);
 
+  // ViroMaterials.createMaterials({
+  //   slate: {
+  //     diffuseTexture: require('../../res/models/slate.jpeg'),
+  //   },
+  // });
+
+  // ViroAnimations.registerAnimations({
+  //   rotate: {
+  //     properties: {
+  //       rotateY: '+=180',
+  //     },
+  //     duration: 5000,
+  //   },
+  // });
   return (
     <ViroARScene onTrackingUpdated={onInitialised}>
-      {initialCompassHeading
+      <ViroNode position={[0, 0, -4]}>
+        <Viro3DObject
+          source={require('../../res/models/museum.obj')}
+          type="OBJ"
+          materials={['slate']}
+          scale={[0.2, 0.2, 0.2]}
+          animation={{ name: 'rotate', run: true, loop: true }}
+        />
+        <ViroText
+          text="Leeds City Museum"
+          scale={[1.5, 1.5, 1.5]}
+          position={[0, -0.6, -0]}
+        />
+      </ViroNode>
+
+      {/* {initialCompassHeading
         ? pointsOfInterest.map((location) => {
             const transformedPosition = getPositionForAR(
               userLocation,
@@ -145,7 +179,7 @@ const HomeScreenSceneAR = ({
               />
             );
           })
-        : null}
+        : null} */}
       {loading || !initialised ? (
         <ViroSpinner type="dark" position={[0, 0, -3]} />
       ) : null}
