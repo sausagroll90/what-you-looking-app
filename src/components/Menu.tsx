@@ -50,7 +50,13 @@ export default function Menu({
       onPress={toggleDropdown}
       ref={DropdownButton}>
       <FontAwesomeIcon name="navicon" size={25} color={'black'} />
-      <Modal visible={visible} transparent animationType="none">
+      <Modal
+        visible={visible}
+        transparent
+        animationType="none"
+        onRequestClose={() => {
+          setVisible(false);
+        }}>
         <TouchableOpacity
           style={styles.overlay}
           onPress={() => setVisible(false)}>
@@ -102,7 +108,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOffset: { height: 4, width: 0 },
     shadowOpacity: 0.5,
-    marginLeft: 10,
     paddingRight: 10,
     paddingLeft: 10,
     height: 80,
@@ -117,7 +122,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOffset: { height: 4, width: 0 },
     shadowOpacity: 0.5,
-    marginLeft: 10,
     paddingRight: 10,
     paddingLeft: 10,
     height: 80,
@@ -129,7 +133,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOffset: { height: 4, width: 0 },
     shadowOpacity: 0.5,
-    marginLeft: 10,
     paddingLeft: 10,
   },
   overlay: {

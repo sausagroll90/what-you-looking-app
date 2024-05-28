@@ -57,8 +57,10 @@ export default function Filter({
       subKey="children"
       selectText="Filter"
       showDropDowns={true}
+      expandDropDowns={true}
       onSelectedItemsChange={onSelectedTypesChange}
       selectedItems={selectedFilters}
+      showChips={false}
       hideSearch={true}
       selectToggleIconComponent={
         <FontAwesomeIcon name="chevron-down" size={20} color={'black'} />
@@ -78,8 +80,9 @@ export default function Filter({
       onConfirm={onConfirm}
       showCancelButton={true}
       selectChildren={true}
-      showRemoveAll={true}
-      parentChipsRemoveChildren={true}
+      modalAnimationType="fade"
+      modalWithTouchable={true}
+      alwaysShowSelectText={true}
     />
   );
 }
