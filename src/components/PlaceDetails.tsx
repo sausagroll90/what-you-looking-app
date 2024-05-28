@@ -50,18 +50,18 @@ export default function PlaceDetails({
 
   async function onPlaceIdReceived(placeId: string) {
     try {
-      const data = await getPlaceDetails(placeId);
+      const place = await getPlaceDetails(placeId);
       const placeToStore = {
-        name: data.name,
-        address: data.formatted_address,
-        place_id: data.place_id,
+        name: place.name,
+        address: place.formatted_address,
+        place_id: place.place_id,
       };
-      setPlaceDetails(data);
+      setPlaceDetails(place);
       setItemForLocalStorage(placeToStore);
       addPlaceToStorage(placeToStore, 'history');
       const allData = await getAllPlaces('favourites');
 
-      setSaveButtonDisabled(!isPlaceIdUnique(allData, data));
+      setSaveButtonDisabled(!isPlaceIdUnique(allData, placeToStore));
     } catch (e) {
       console.log(e);
       console.log('Error fetching place details');
