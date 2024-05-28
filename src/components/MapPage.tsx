@@ -73,6 +73,7 @@ export default function MapPage({
         selectedFilters={selectedFilters}
         setSelectedFilters={setSelectedFilters}
         setSelectedFilterTypes={route.params.setSelectedFilterTypes}
+        currentScreen="map"
       />
       <EmbeddedMap placeDetails={pointsOfInterest[0]} />
     </>
