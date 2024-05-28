@@ -44,14 +44,14 @@ export default function PointMarker(props: {
   let objSource = '';
 
   switch (type) {
-    case 'cafe':
+    case 'museum':
       objScale = [8, 8, 8];
       imageSrc = 'slate';
       objSource = require('../../res/models/museum.obj');
       break;
-    case 'museum':
+    case 'cafe':
       objScale = [400, 400, 400];
-      imageSrc = 'slate';
+      imageSrc = 'mug';
       objSource = require('../../res/models/mug.obj');
       break;
     default:
@@ -64,7 +64,7 @@ export default function PointMarker(props: {
       diffuseTexture: require('../../res/models/slate.jpeg'),
     },
     mug: {
-      // diffuseTexture: require('../../res/models/slate.jpeg'),
+      diffuseTexture: require('../../res/models/ceramic.jpg'),
     },
   });
 
