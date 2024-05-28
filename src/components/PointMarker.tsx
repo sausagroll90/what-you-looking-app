@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import {
   Viro3DObject,
+  ViroAmbientLight,
   ViroAnimations,
   ViroBox,
   ViroMaterials,
@@ -42,6 +43,7 @@ export default function PointMarker(props: {
   let objScale = [100, 100, 100];
   let imageSrc = '';
   let objSource = '';
+  let objType = 'OBJ';
 
   switch (type) {
     case 'museum':
@@ -53,6 +55,11 @@ export default function PointMarker(props: {
       objScale = [400, 400, 400];
       imageSrc = 'mug';
       objSource = require('../../res/models/mug.obj');
+      break;
+    case 'restaurant':
+      objScale = [35, 35, 35];
+      objSource = require('../../res/models/burger.glb');
+      objType = 'GLB';
       break;
     default:
       objScale = [400, 400, 400];
@@ -84,10 +91,11 @@ export default function PointMarker(props: {
 
   return (
     <ViroNode position={props.position} onClick={handleClick}>
+      <ViroAmbientLight color="#ffffff" />
       <Viro3DObject
         source={objSource}
-        type="OBJ"
-        materials={[imageSrc]}
+        type={objType}
+        // materials={[imageSrc]}
         scale={objScale}
         animation={{ name: 'rotate', run: true, loop: true }}
       />
