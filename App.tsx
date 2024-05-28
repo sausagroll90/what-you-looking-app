@@ -13,13 +13,19 @@ function App(): JSX.Element {
   const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([]);
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'Home'}>
+      <Stack.Navigator initialRouteName={'PlaceDetails'}>
         <Stack.Screen
           name="PlaceDetails"
           component={PlaceDetails}
           options={{
             headerRight: HomeButton,
             headerBackVisible: false,
+            title: 'Details',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 25,
+              color: '#136f63',
+            },
           }}
         />
         <Stack.Screen
@@ -35,6 +41,11 @@ function App(): JSX.Element {
             headerRight: HomeButton,
             headerBackVisible: false,
             title: 'Favourites',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 25,
+              color: '#136f63',
+            },
           }}
           initialParams={{ key: 'favourites' }}
         />
@@ -46,13 +57,25 @@ function App(): JSX.Element {
             headerRight: HomeButton,
             headerBackVisible: false,
             title: 'History',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 25,
+              color: '#136f63',
+            },
           }}
         />
         <Stack.Screen
           name="Map"
           component={MapPage}
           initialParams={{ selectedFilterTypes, setSelectedFilterTypes }}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 25,
+              color: '#136f63',
+            },
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
