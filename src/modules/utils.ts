@@ -1,3 +1,6 @@
+import Geolocation from 'react-native-geolocation-service';
+import { useState } from 'react';
+
 const DEGREES_TO_RADIANS_CONVERSION = (2 * Math.PI) / 360;
 
 export function getRelativePosition(
@@ -47,4 +50,41 @@ export function getPositionForAR(
     -relativePosition.x * Math.sin(headingInRadians) +
       relativePosition.z * Math.cos(headingInRadians),
   ];
+}
+
+// type location =
+// {
+//   latitude: number;
+//   longitude: number;
+// }
+
+export function getUserLocation(setUserLocation: any): void {
+  // const [userLocation, setUserLocation] = useState<location | null>(null);
+
+  // const [error, setError] = useState<string | null>(null);
+
+  async function getLocation(): Promise<void> {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        setUserLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      },
+      (err) => {
+        console.log(err.code, err.message);
+        setUserLocation(null);
+        // setError(err.message);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
+    );
+  }
+
+  getLocation();
+  // if(error) {
+  //   console.log(error, "error in getUserLocation in utils");
+  //   return null;
+  // } else {
+  //   return userLocation;
+  // }
 }
