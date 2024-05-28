@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
@@ -31,51 +30,59 @@ const types = [
 
 type FilterProps = {
   setSelectedTypes: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedFilters: string[];
+  setSelectedFilters: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedFilterTypes: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-export default function Filter({ setSelectedTypes }: FilterProps) {
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-
+export default function Filter({
+  setSelectedTypes,
+  selectedFilters,
+  setSelectedFilters,
+  setSelectedFilterTypes,
+}: FilterProps) {
   const onSelectedTypesChange = (selectedTypes: string[]) => {
-    setSelectedItems(selectedTypes);
+    setSelectedFilters(selectedTypes);
+    setSelectedFilterTypes(selectedTypes);
   };
   const onConfirm = () => {
-    setSelectedTypes(selectedItems);
+    setSelectedTypes(selectedFilters);
   };
 
   return (
-    <View>
-      <SectionedMultiSelect
-        items={types}
-        IconRenderer={Icon}
-        uniqueKey="id"
-        subKey="children"
-        selectText="Filter"
-        showDropDowns={true}
-        onSelectedItemsChange={onSelectedTypesChange}
-        selectedItems={selectedItems}
-        hideSearch={true}
-        selectToggleIconComponent={
-          <FontAwesomeIcon name="chevron-down" size={20} color={'black'} />
-        }
-        dropDownToggleIconDownComponent={
-          <FontAwesomeIcon name="chevron-down" size={20} color={'black'} />
-        }
-        dropDownToggleIconUpComponent={
-          <FontAwesomeIcon name="chevron-up" size={20} color={'black'} />
-        }
-        unselectedIconComponent={
-          <FontAwesomeIcon name="square-o" size={20} color={'black'} />
-        }
-        selectedIconComponent={
-          <FontAwesomeIcon name="check-square-o" size={20} color={'black'} />
-        }
-        onConfirm={onConfirm}
-        showCancelButton={true}
-        selectChildren={true}
-        showRemoveAll={true}
-        parentChipsRemoveChildren={true}
-      />
-    </View>
+    <SectionedMultiSelect
+      items={types}
+      IconRenderer={Icon}
+      uniqueKey="id"
+      subKey="children"
+      selectText="Filter"
+      showDropDowns={true}
+      expandDropDowns={true}
+      onSelectedItemsChange={onSelectedTypesChange}
+      selectedItems={selectedFilters}
+      showChips={false}
+      hideSearch={true}
+      selectToggleIconComponent={
+        <FontAwesomeIcon name="chevron-down" size={20} color={'black'} />
+      }
+      dropDownToggleIconDownComponent={
+        <FontAwesomeIcon name="chevron-down" size={20} color={'black'} />
+      }
+      dropDownToggleIconUpComponent={
+        <FontAwesomeIcon name="chevron-up" size={20} color={'black'} />
+      }
+      unselectedIconComponent={
+        <FontAwesomeIcon name="square-o" size={20} color={'black'} />
+      }
+      selectedIconComponent={
+        <FontAwesomeIcon name="check-square-o" size={20} color={'black'} />
+      }
+      onConfirm={onConfirm}
+      showCancelButton={true}
+      selectChildren={true}
+      modalAnimationType="fade"
+      modalWithTouchable={true}
+      alwaysShowSelectText={true}
+    />
   );
 }

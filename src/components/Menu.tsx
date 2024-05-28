@@ -1,33 +1,31 @@
 import React, { useRef, useState } from 'react';
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, StyleSheet, TouchableOpacity, View } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 FontAwesomeIcon.loadFont();
-import FilterBy from './FilterBy';
 import NavButton from './NavButton';
-const TYPES = ['museum', 'cafe', 'library', 'bakery', 'church'];
+import Filter from './Filter';
 
 type MenuProps = {
-  selectedTypes: string[];
   setSelectedTypes: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedFilters: string[];
+  setSelectedFilters: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedFilterTypes: React.Dispatch<React.SetStateAction<string[]>>;
+  currentScreen: 'home' | 'map';
 };
 export default function Menu({
   setSelectedTypes,
-  selectedTypes,
+  selectedFilters,
+  setSelectedFilters,
+  setSelectedFilterTypes,
+  currentScreen,
 }: MenuProps): React.JSX.Element {
   const [visible, setVisible] = useState(false);
   const DropdownButton = useRef<any>();
   const [dropdownTop, setDropdownTop] = useState(100);
-  const [visibleTypes, setVisibleTypes] = useState(false);
-  const FilterButton = useRef<any>();
-  const [filterTop, setFilterTop] = useState(140);
 
   const toggleDropdown = () => {
     visible ? setVisible(false) : openDropdown();
-  };
-
-  const toggleFilter = () => {
-    visibleTypes ? setVisibleTypes(false) : openFilter();
   };
 
   const openDropdown = () => {
@@ -48,101 +46,57 @@ export default function Menu({
     setVisible(true);
   };
 
-  const openFilter = (): void => {
-    FilterButton.current.measure(
-      (
-        _fx: number,
-        _fy: number,
-        _w: number,
-        h: number,
-        _px: number,
-        py: number,
-      ) => {
-        setFilterTop(py + h);
-      },
-    );
-    setVisibleTypes(true);
-  };
-
-  const handleSelectAll = () => {
-    setSelectedTypes(TYPES);
-  };
-
-  const handleDeselectAll = () => {
-    setSelectedTypes([]);
-  };
-
   return (
     <TouchableOpacity
       style={styles.button}
       onPress={toggleDropdown}
       ref={DropdownButton}>
       <FontAwesomeIcon name="navicon" size={25} color={'black'} />
-      <Modal visible={visible} transparent animationType="none">
+      <Modal
+        visible={visible}
+        transparent
+        animationType="none"
+        onRequestClose={() => {
+          setVisible(false);
+        }}>
         <TouchableOpacity
           style={styles.overlay}
           onPress={() => setVisible(false)}>
+          {currentScreen === 'home' ? (
+            <View>
+              <NavButton text="Map" navigationTarget="Map" top={dropdownTop} />
+            </View>
+          ) : (
+            <View>
+              <NavButton
+                text="Home"
+                navigationTarget="Home"
+                top={dropdownTop}
+              />
+            </View>
+          )}
+
           <View>
             <NavButton
               text="Favourites"
-              navigationTarget="PlacesList"
-              style={[styles.dropdown, { top: dropdownTop }]}
+              navigationTarget="Favourites"
+              top={dropdownTop}
             />
           </View>
           <View>
-            <TouchableOpacity
-              ref={FilterButton}
-              onPress={toggleFilter}
-              style={[styles.dropdown, { top: dropdownTop }]}>
-              <Text>Filter</Text>
-              <FontAwesomeIcon
-                name={visibleTypes ? 'chevron-up' : 'chevron-down'}
-                size={20}
-                color={'black'}
-              />
-            </TouchableOpacity>
-            <Modal
-              visible={visibleTypes && visible}
-              transparent
-              animationType="none"
-              style={{ top: filterTop }}>
-              <TouchableOpacity onPress={() => setVisibleTypes(false)}>
-                <View style={[styles.filter, { top: filterTop }]}>
-                  <TouchableOpacity
-                    onPress={handleSelectAll}
-                    style={styles.selectAll}>
-                    <Text>Select All</Text>
-                    <FontAwesomeIcon
-                      name={
-                        selectedTypes.length === 5
-                          ? 'check-square-o'
-                          : 'square-o'
-                      }
-                      size={20}
-                      color={'black'}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={handleDeselectAll}
-                    style={styles.selectAll}>
-                    <Text>Deselect All</Text>
-                    <FontAwesomeIcon
-                      name={
-                        selectedTypes.length === 0
-                          ? 'check-square-o'
-                          : 'square-o'
-                      }
-                      size={20}
-                      color={'black'}
-                    />
-                  </TouchableOpacity>
-                  <FilterBy
-                    setSelectedTypes={setSelectedTypes}
-                    selectedTypes={selectedTypes}
-                  />
-                </View>
-              </TouchableOpacity>
-            </Modal>
+            <NavButton
+              text="History"
+              navigationTarget="History"
+              top={dropdownTop}
+            />
+          </View>
+          <View style={[styles.multiSelect, { top: dropdownTop }]}>
+            <Filter
+              setSelectedTypes={setSelectedTypes}
+              selectedFilters={selectedFilters}
+              setSelectedFilters={setSelectedFilters}
+              setSelectedFilterTypes={setSelectedFilterTypes}
+            />
           </View>
         </TouchableOpacity>
       </Modal>
@@ -170,13 +124,23 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOffset: { height: 4, width: 0 },
     shadowOpacity: 0.5,
-    marginLeft: 10,
     paddingRight: 10,
     paddingLeft: 10,
-    height: 60,
+    height: 80,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  multiSelect: {
+    backgroundColor: 'white',
+    width: '100%',
+    shadowColor: '#000000',
+    shadowRadius: 4,
+    shadowOffset: { height: 4, width: 0 },
+    shadowOpacity: 0.5,
+    paddingRight: 10,
+    paddingLeft: 10,
+    height: 80,
   },
   filter: {
     backgroundColor: 'white',
@@ -185,7 +149,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOffset: { height: 4, width: 0 },
     shadowOpacity: 0.5,
-    marginLeft: 10,
     paddingLeft: 10,
   },
   overlay: {

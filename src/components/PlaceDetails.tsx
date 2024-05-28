@@ -8,11 +8,21 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
-import { PlaceData, PlaceDetailsProps } from '../types/route';
+import {
+  PlaceData,
+  PlaceDetailsProps,
+  PlaceThumbnailData,
+} from '../types/route';
 import StyledButton from './StyledButton';
+
 import { getPlaceDetails } from '../modules/apis';
+import { addPlaceToStorage, getAllPlaces } from '../modules/localStorage';
+import { OnSave } from './OnSave';
+import { isPlaceIdUnique } from '../modules/utils';
 import EmbeddedMap from './EmbeddedMap';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import DisabledButton from './DisabledButton';
+import { useIsFocused } from '@react-navigation/native';
+import LoadingSpinner from './LoadingSpinner';
 
 export default function PlaceDetails({
   route,
@@ -21,6 +31,9 @@ export default function PlaceDetails({
   const [placeDetails, setPlaceDetails] = useState<PlaceData | null>(null);
   const [itemForLocalStorage, setItemForLocalStorage] =
     useState<PlaceThumbnailData | null>(null);
+  const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(false);
+  const [saveSuccessful, setSaveSuccessful] = useState(false);
+  const isFocused = useIsFocused();
 
   const place_id: string = route.params.place_id;
 
@@ -28,42 +41,27 @@ export default function PlaceDetails({
 
   route.params?.showButton ? (showButton = route.params.showButton) : false;
 
-  interface PlaceThumbnailData {
-    name: string;
-    address: string;
-    place_id: string;
-  }
-
-  const storeData = async (place: PlaceThumbnailData) => {
-    try {
-      const allData = await AsyncStorage.getItem('place');
-      if (allData === null) {
-        const jsonPlace = JSON.stringify([place]);
-        await AsyncStorage.setItem('place', jsonPlace);
-      } else {
-        const parsedPlaces = JSON.parse(allData);
-        parsedPlaces.push(place);
-        await AsyncStorage.setItem('place', JSON.stringify(parsedPlaces));
-      }
-    } catch (e) {
-      //what to show the user if there is no data returned
-      console.log('error', e);
-    }
-  };
-
   const handleSave = () => {
-    itemForLocalStorage ? storeData(itemForLocalStorage) : null;
+    itemForLocalStorage
+      ? addPlaceToStorage(itemForLocalStorage, 'favourites')
+      : null;
+    setSaveSuccessful(true);
   };
 
   async function onPlaceIdReceived(placeId: string) {
     try {
-      const data = await getPlaceDetails(placeId);
-      setPlaceDetails(data);
-      setItemForLocalStorage({
-        name: data.name,
-        address: data.formatted_address,
-        place_id: data.place_id,
-      });
+      const place = await getPlaceDetails(placeId);
+      const placeToStore = {
+        name: place.name,
+        address: place.formatted_address,
+        place_id: place.place_id,
+      };
+      setPlaceDetails(place);
+      setItemForLocalStorage(placeToStore);
+      addPlaceToStorage(placeToStore, 'history');
+      const allData = await getAllPlaces('favourites');
+
+      setSaveButtonDisabled(!isPlaceIdUnique(allData, placeToStore));
     } catch (e) {
       console.log(e);
       console.log('Error fetching place details');
@@ -72,7 +70,7 @@ export default function PlaceDetails({
 
   useEffect(() => {
     onPlaceIdReceived(place_id);
-  }, [place_id]);
+  }, [place_id, saveSuccessful, isFocused]);
 
   const handlePress = () => {
     if (placeDetails && placeDetails.website) {
@@ -99,7 +97,9 @@ export default function PlaceDetails({
               )}
               <Text style={styles.data}>{placeDetails.formatted_address}</Text>
               <View style={styles.openingHours}>
-                <Text style={styles.bold}>Opening Hours:</Text>
+                {placeDetails.current_opening_hours && (
+                  <Text style={styles.bold}>Opening Hours:</Text>
+                )}
                 {placeDetails.current_opening_hours &&
                   placeDetails.current_opening_hours.map((day) => {
                     return (
@@ -113,17 +113,24 @@ export default function PlaceDetails({
                 <StyledButton buttonText="Website" onPress={handlePress} />
               )}
             </>
-          ) : null}
+          ) : (
+            <LoadingSpinner />
+          )}
           {showButton ? (
             <StyledButton buttonText="Back" onPress={handleOnBackPress} />
           ) : null}
-          <Button title="Save" onPress={handleSave} />
+          {saveButtonDisabled ? (
+            <DisabledButton buttonText={'Saved'} />
+          ) : (
+            <StyledButton buttonText={'Save'} onPress={handleSave} />
+          )}
           <Button
-            title="Place list"
+            title="Favourites"
             onPress={() => {
-              navigation.push('PlacesList');
+              navigation.push('Favourites');
             }}
           />
+          {saveSuccessful ? <OnSave /> : null}
           {placeDetails ? <EmbeddedMap placeDetails={placeDetails} /> : null}
         </View>
       </ScrollView>

@@ -1,22 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import StyledButton from './StyledButton';
 import { useNavigation } from '@react-navigation/native';
-import { PlaceCardNavigationProp } from '../types/route';
+import { PlaceCardNavigationProp, PlaceThumbnailData } from '../types/route';
+import { getAllPlaces, setPlaces } from '../modules/localStorage';
 
 type PlaceDetailProps = {
-  placeDetails: { name: string; address: string; place_id: string };
+  placeDetails: PlaceThumbnailData;
+  isDeleted: boolean;
+  setIsDeleted: (open: boolean) => void;
+  storageKey: string;
 };
 
 export default function PlaceCard(props: PlaceDetailProps) {
   const {
     placeDetails: { name, address, place_id },
   } = props;
+  const { setIsDeleted, storageKey } = props;
+  const [deleteButtonText, setDeleteButtonText] = useState('Remove');
 
   const navigation = useNavigation<PlaceCardNavigationProp>();
 
   const handlePress = () => {
     navigation.push('PlaceDetails', { place_id: place_id, showButton: true });
+  };
+
+  const removeListItem = async () => {
+    try {
+      setDeleteButtonText('Removing...');
+      console.log(storageKey);
+
+      const allData = await getAllPlaces(storageKey);
+      if (allData) {
+        const placeIdArray = allData.map(
+          (place: PlaceThumbnailData) => place.place_id,
+        );
+        const indexPositionToDelete = placeIdArray.indexOf(place_id.toString());
+        allData.splice(indexPositionToDelete, 1);
+        await setPlaces(allData, storageKey);
+        setDeleteButtonText('Removed');
+        setIsDeleted(true);
+      } else {
+        null;
+      }
+    } catch (e) {
+      console.log('error removing item from list', e);
+    }
+  };
+
+  const handleDelete = () => {
+    removeListItem();
   };
 
   return (
@@ -28,7 +61,7 @@ export default function PlaceCard(props: PlaceDetailProps) {
         </View>
         <View style={styles.button_container}>
           <StyledButton buttonText="View" onPress={handlePress} />
-          <StyledButton buttonText="Remove" />
+          <StyledButton buttonText={deleteButtonText} onPress={handleDelete} />
         </View>
       </View>
     </View>

@@ -1,5 +1,6 @@
-import Geolocation from 'react-native-geolocation-service';
-import { useState } from 'react';
+import { PlaceThumbnailData } from '../types/route';
+import { requestLocationPermission } from './permissions';
+import Geolocation, { GeoError } from 'react-native-geolocation-service';
 
 const DEGREES_TO_RADIANS_CONVERSION = (2 * Math.PI) / 360;
 
@@ -52,39 +53,34 @@ export function getPositionForAR(
   ];
 }
 
-// type location =
-// {
-//   latitude: number;
-//   longitude: number;
-// }
+export function isPlaceIdUnique(
+  currentData: PlaceThumbnailData[] | null,
+  newPlace: PlaceThumbnailData,
+) {
+  const newPlaceId = newPlace.place_id;
+  if (currentData === null) {
+    return true;
+  }
+  return !currentData.some((place) => place.place_id === newPlaceId);
+}
 
-export function getUserLocation(setUserLocation: any): void {
-  // const [userLocation, setUserLocation] = useState<location | null>(null);
-
-  // const [error, setError] = useState<string | null>(null);
-
-  async function getLocation(): Promise<void> {
+export async function getUserLocation(
+  onLocationReceived: (latitude: number, longitude: number) => void,
+  onError: (err: GeoError) => void,
+  onPermissionDenied: () => void,
+): Promise<void> {
+  const isGranted = await requestLocationPermission();
+  if (isGranted) {
     Geolocation.getCurrentPosition(
       (position) => {
-        setUserLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
+        onLocationReceived(position.coords.latitude, position.coords.longitude);
       },
       (err) => {
-        console.log(err.code, err.message);
-        setUserLocation(null);
-        // setError(err.message);
+        onError(err);
       },
       { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
     );
+  } else {
+    onPermissionDenied();
   }
-
-  getLocation();
-  // if(error) {
-  //   console.log(error, "error in getUserLocation in utils");
-  //   return null;
-  // } else {
-  //   return userLocation;
-  // }
 }

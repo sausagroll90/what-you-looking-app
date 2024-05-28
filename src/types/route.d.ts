@@ -12,6 +12,7 @@ interface PlaceData {
   latitude: number;
   longitude: number;
   type?: string;
+  location: string;
 }
 
 type PlaceDetailsProps = NativeStackScreenProps<
@@ -34,4 +35,12 @@ type HomeButtonNavigationProp = NativeStackNavigationProp<
   'HomeButton'
 >;
 
+interface PlaceThumbnailData {
+  name: string;
+  address: string | undefined;
+  place_id: string;
+}
+
 type NavButtonNavigationProp = NativeStackNavigationProp<>;
+
+type MapPageNavigationProp = NativeStackNavigationProp<>;
