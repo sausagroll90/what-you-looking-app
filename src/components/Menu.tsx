@@ -21,7 +21,6 @@ export default function Menu({
   const [visible, setVisible] = useState(false);
   const DropdownButton = useRef<any>();
   const [dropdownTop, setDropdownTop] = useState(100);
-  const FavouriteButton = useRef<any>();
 
   const toggleDropdown = () => {
     visible ? setVisible(false) : openDropdown();
@@ -55,18 +54,18 @@ export default function Menu({
         <TouchableOpacity
           style={styles.overlay}
           onPress={() => setVisible(false)}>
-          <View ref={FavouriteButton}>
+          <View>
             <NavButton
               text="Favourites"
               navigationTarget="Favourites"
-              style={[styles.dropdown, { top: dropdownTop }]}
+              top={dropdownTop}
             />
           </View>
           <View>
             <NavButton
               text="History"
               navigationTarget="History"
-              style={[styles.dropdown, { top: dropdownTop }]}
+              top={dropdownTop}
             />
           </View>
           <View style={[styles.multiSelect, { top: dropdownTop }]}>
