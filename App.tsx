@@ -9,7 +9,9 @@ import HomeButton from './src/components/HomeButton';
 const Stack = createNativeStackNavigator();
 
 function App(): JSX.Element {
-  const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([]);
+  const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([
+    'museum',
+  ]);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={'Home'}>
