@@ -1,18 +1,18 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { NavButtonNavigationProp } from '../types/route';
 
 type NavButtonProps = {
   text: string;
   navigationTarget: string;
-  style?: { [key: string]: any };
+  top: number;
 };
 
 export default function NavButton({
   text,
   navigationTarget,
-  style,
+  top,
 }: NavButtonProps) {
   const navigation = useNavigation<NavButtonNavigationProp>();
 
@@ -21,8 +21,27 @@ export default function NavButton({
   }
 
   return (
-    <TouchableOpacity style={style} onPress={handlePress}>
-      <Text>{text}</Text>
+    <TouchableOpacity
+      style={[styles.navButton, { top: top }]}
+      onPress={handlePress}>
+      <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
   );
 }
+
+const styles = StyleSheet.create({
+  navButton: {
+    height: 80,
+    width: '100%',
+    backgroundColor: 'white',
+    marginLeft: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingLeft: 19,
+  },
+  text: {
+    fontSize: 16,
+    color: 'black',
+  },
+});
