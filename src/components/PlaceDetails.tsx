@@ -7,7 +7,6 @@ import {
   Button,
   SafeAreaView,
   ScrollView,
-  ActivityIndicator,
 } from 'react-native';
 import {
   PlaceData,
@@ -23,6 +22,7 @@ import { isPlaceIdUnique } from '../modules/utils';
 import EmbeddedMap from './EmbeddedMap';
 import DisabledButton from './DisabledButton';
 import { useIsFocused } from '@react-navigation/native';
+import LoadingSpinner from './LoadingSpinner';
 
 export default function PlaceDetails({
   route,
@@ -114,9 +114,7 @@ export default function PlaceDetails({
               )}
             </>
           ) : (
-            <View style={styles.loadingAnimation}>
-              <ActivityIndicator size={100} />
-            </View>
+            <LoadingSpinner />
           )}
           {showButton ? (
             <StyledButton buttonText="Back" onPress={handleOnBackPress} />
@@ -177,10 +175,5 @@ const styles = StyleSheet.create({
     color: '#032b43',
     fontSize: 16,
     alignSelf: 'center',
-  },
-  loadingAnimation: {
-    width: '100%',
-    flex: 1,
-    alignItems: 'center',
   },
 });
