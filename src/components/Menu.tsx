@@ -11,12 +11,14 @@ type MenuProps = {
   selectedFilters: string[];
   setSelectedFilters: React.Dispatch<React.SetStateAction<string[]>>;
   setSelectedFilterTypes: React.Dispatch<React.SetStateAction<string[]>>;
+  currentScreen: 'home' | 'map';
 };
 export default function Menu({
   setSelectedTypes,
   selectedFilters,
   setSelectedFilters,
   setSelectedFilterTypes,
+  currentScreen,
 }: MenuProps): React.JSX.Element {
   const [visible, setVisible] = useState(false);
   const DropdownButton = useRef<any>();
@@ -60,6 +62,20 @@ export default function Menu({
         <TouchableOpacity
           style={styles.overlay}
           onPress={() => setVisible(false)}>
+          {currentScreen === 'home' ? (
+            <View>
+              <NavButton text="Map" navigationTarget="Map" top={dropdownTop} />
+            </View>
+          ) : (
+            <View>
+              <NavButton
+                text="Home"
+                navigationTarget="Home"
+                top={dropdownTop}
+              />
+            </View>
+          )}
+
           <View>
             <NavButton
               text="Favourites"

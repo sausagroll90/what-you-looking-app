@@ -5,13 +5,12 @@ import HomeScreen from './src/components/HomeScreen';
 import PlaceDetails from './src/components/PlaceDetails';
 import PlacesList from './src/components/PlacesList';
 import HomeButton from './src/components/HomeButton';
+import MapPage from './src/components/MapPage';
 
 const Stack = createNativeStackNavigator();
 
 function App(): JSX.Element {
-  const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([
-    'museum',
-  ]);
+  const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([]);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={'Home'}>
@@ -48,6 +47,12 @@ function App(): JSX.Element {
             headerBackVisible: false,
             title: 'History',
           }}
+        />
+        <Stack.Screen
+          name="Map"
+          component={MapPage}
+          initialParams={{ selectedFilterTypes, setSelectedFilterTypes }}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
