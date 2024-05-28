@@ -20,7 +20,17 @@ export default function EmbeddedMap(props: EmbeddedMapProps) {
   const [userLocation, setUserLocation] = useState<location | null>(null);
 
   useEffect(() => {
-    getUserLocation(setUserLocation);
+    getUserLocation(
+      (lat, long) => {
+        setUserLocation({ latitude: lat, longitude: long });
+      },
+      (error) => {
+        console.log(error, 'error in EmbeddedMap');
+      },
+      () => {
+        console.log('location permission denied');
+      },
+    );
   }, []);
 
   const pointsOfInterest: [location] = [...props.placeDetails];
