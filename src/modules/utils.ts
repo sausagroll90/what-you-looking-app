@@ -1,4 +1,7 @@
 import { PlaceThumbnailData } from '../types/route';
+import { requestLocationPermission } from './permissions';
+import Geolocation, { GeoError } from 'react-native-geolocation-service';
+
 const DEGREES_TO_RADIANS_CONVERSION = (2 * Math.PI) / 360;
 
 export function getRelativePosition(
@@ -59,4 +62,25 @@ export function isPlaceIdUnique(
     return true;
   }
   return !currentData.some((place) => place.place_id === newPlaceId);
+}
+
+export async function getUserLocation(
+  onLocationReceived: (latitude: number, longitude: number) => void,
+  onError: (err: GeoError) => void,
+  onPermissionDenied: () => void,
+): Promise<void> {
+  const isGranted = await requestLocationPermission();
+  if (isGranted) {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        onLocationReceived(position.coords.latitude, position.coords.longitude);
+      },
+      (err) => {
+        onError(err);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
+    );
+  } else {
+    onPermissionDenied();
+  }
 }

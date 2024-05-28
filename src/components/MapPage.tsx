@@ -4,8 +4,7 @@ import { MapPageNavigationProp } from '../types/route';
 import { LogBox } from 'react-native';
 import Menu from './Menu';
 import { getNearbyPOIs } from '../modules/apis';
-import { requestLocationPermission } from '../modules/permissions';
-import Geolocation from 'react-native-geolocation-service';
+import { getUserLocation } from '../modules/utils';
 import ErrorScreen from './ErrorScreen';
 import LoadingSpinner from './LoadingSpinner';
 
@@ -21,10 +20,6 @@ export default function MapPage({
   const [selectedFilters, setSelectedFilters] = useState<string[]>(
     route.params.selectedFilterTypes,
   );
-  const [userLocation, setUserLocation] = useState<{
-    latitude: number;
-    longitude: number;
-  } | null>(null);
   const [pointsOfInterest, setPointsOfInterest] = useState<
     {
       latitude: number;
@@ -53,33 +48,18 @@ export default function MapPage({
       }
     }
 
-    async function getUserLocation(): Promise<void> {
-      const isGranted = await requestLocationPermission();
-      if (isGranted) {
-        Geolocation.getCurrentPosition(
-          (position) => {
-            setUserLocation({
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            });
-            fetchPlaces(position.coords.latitude, position.coords.longitude);
-          },
-          (err) => {
-            console.log(err.code, err.message);
-            setUserLocation(null);
-            setError(err.message);
-          },
-          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
-        );
-      } else {
+    getUserLocation(
+      fetchPlaces,
+      (err) => {
+        console.log(err.code, err.message);
+        setError(err.message);
+      },
+      () => {
         setError('please enable location permissions in app settings');
-      }
-    }
-
-    getUserLocation();
+      },
+    );
   }, [selectedTypes]);
 
-  console.log(userLocation);
   console.log(pointsOfInterest);
 
   return error ? (
