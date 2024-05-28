@@ -1,66 +1,113 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
-import Geolocation from 'react-native-geolocation-service';
+import MapView, { MapMarker } from 'react-native-maps';
+import Map from 'react-native-maps';
+
+import { getUserLocation } from '../modules/utils';
+
+type location = {
+  latitude: number;
+  longitude: number;
+  name?: string;
+  type?: string;
+};
 
 type EmbeddedMapProps = {
-  placeDetails: {
-    latitude: number;
-    longitude: number;
-    name?: string;
-    type?: string;
-  };
+  placeDetails: [location];
 };
 
 export default function EmbeddedMap(props: EmbeddedMapProps) {
-  let iconImage: HTMLImageElement = require('../../res/icons/building.png');
-  switch (props.placeDetails.type) {
-    case 'art_gallery':
-      iconImage = require('../../res/icons/art-gallery.png');
-      break;
-    case 'bar':
-      iconImage = require('../../res/icons/bar.png');
-      break;
-    case 'cafe':
-      iconImage = require('../../res/icons/cafe.png');
-      break;
-    case 'city_hall':
-      iconImage = require('../../res/icons/city-hall.png');
-      break;
-    case 'museum':
-      iconImage = require('../../res/icons/museum.png');
-      break;
-    case 'restaurant':
-      iconImage = require('../../res/icons/restaurant.png');
-      break;
-    case 'tourist_attraction':
-      iconImage = require('../../res/icons/tourist_attraction.png');
-      break;
+  const [userLocation, setUserLocation] = useState<location | null>(null);
+
+  useEffect(() => {
+    getUserLocation(
+      (lat, long) => {
+        setUserLocation({ latitude: lat, longitude: long });
+      },
+      (error) => {
+        console.log(error, 'error in EmbeddedMap');
+      },
+      () => {
+        console.log('location permission denied');
+      },
+    );
+  }, []);
+
+  const pointsOfInterest: [location] = [...props.placeDetails];
+
+  if (userLocation !== null) {
+    const youAreHere: location = {
+      latitude: userLocation.latitude,
+      longitude: userLocation.longitude,
+      name: 'you',
+      type: 'you_are_here',
+    };
+
+    pointsOfInterest.push(youAreHere);
   }
+
+  let iconImage: HTMLImageElement = require('../../res/icons/building.png');
 
   return (
     <View style={styles.mapStyle}>
       <MapView
         style={styles.mapViewStyle}
         initialRegion={{
-          latitude: props.placeDetails.latitude,
-          longitude: props.placeDetails.longitude,
-          latitudeDelta: 0.0002,
-          longitudeDelta: 0.002,
+          latitude: pointsOfInterest[pointsOfInterest.length - 1].latitude,
+          longitude: pointsOfInterest[pointsOfInterest.length - 1].longitude,
+          latitudeDelta: 0.002,
+          longitudeDelta: 0.02,
         }}>
-        <Marker
-          coordinate={{
-            latitude: props.placeDetails.latitude,
-            longitude: props.placeDetails.longitude,
-          }}
-          title={props.placeDetails.name || 'here'}>
-          <Text>{props.placeDetails.name || 'here'}</Text>
-          <Image
-            source={iconImage}
-            style={styles.markerImage}
-            resizeMode="contain"
-          />
-        </Marker>
+        {pointsOfInterest.map((poi, index) => {
+          switch (poi.type) {
+            case 'art_gallery':
+              iconImage = require('../../res/icons/art-gallery.png');
+              break;
+            case 'bar':
+              iconImage = require('../../res/icons/bar.png');
+              break;
+            case 'cafe':
+              iconImage = require('../../res/icons/cafe.png');
+              break;
+            case 'cinema':
+              iconImage = require('../../res/icons/cinema.png');
+              break;
+            case 'city_hall':
+              iconImage = require('../../res/icons/city-hall.png');
+              break;
+            case 'museum':
+              iconImage = require('../../res/icons/museum.png');
+              break;
+            case 'restaurant':
+              iconImage = require('../../res/icons/restaurant.png');
+              break;
+            case 'tourist_attraction':
+              iconImage = require('../../res/icons/tourist_attraction.png');
+              break;
+            case 'you_are_here':
+              iconImage = require('../../res/icons/marker_pin.png');
+              break;
+            default:
+              iconImage = require('../../res/icons/building.png');
+          }
+
+          return (
+            <MapMarker
+              key={index}
+              coordinate={{
+                latitude: poi.latitude,
+                longitude: poi.longitude,
+              }}
+              title={poi.name || 'here'}>
+              <Text>{poi.name || 'here'}</Text>
+              <Image
+                source={iconImage}
+                style={styles.markerImage}
+                resizeMode="contain"
+              />
+            </MapMarker>
+          );
+        })}
       </MapView>
     </View>
   );
@@ -79,6 +126,7 @@ const styles = StyleSheet.create({
   mapStyle: {
     flex: 1,
     alignSelf: 'stretch',
+    height: 400,
   },
   mapViewStyle: {
     position: 'absolute',

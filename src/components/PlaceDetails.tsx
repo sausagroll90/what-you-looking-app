@@ -131,7 +131,7 @@ export default function PlaceDetails({
             }}
           />
           {saveSuccessful ? <OnSave /> : null}
-          {placeDetails ? <EmbeddedMap placeDetails={placeDetails} /> : null}
+          {placeDetails ? <EmbeddedMap placeDetails={[placeDetails]} /> : null}
         </View>
       </ScrollView>
     </SafeAreaView>
