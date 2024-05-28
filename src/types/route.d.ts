@@ -15,10 +15,41 @@ interface PlaceData {
   location: string;
 }
 
+type RootStackParamList = {
+  PlaceDetails: {
+    place_id: string;
+    showButton?: boolean;
+  };
+  Home: {
+    selectedFilterTypes: string[];
+    setSelectedFilterTypes: React.Dispatch<React.SetStateAction<string[]>>;
+  };
+  Favourites:
+    | {
+        key: string;
+      }
+    | undefined;
+  History: {
+    key: string;
+  };
+  Map: {
+    selectedFilterTypes: string[];
+    setSelectedFilterTypes: React.Dispatch<React.SetStateAction<string[]>>;
+  };
+};
+
+type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
 type PlaceDetailsProps = NativeStackScreenProps<
   RootStackParamList,
   'PlaceDetails'
 >;
+
+type FavouritesProps = NativeStackScreenProps<RootStackParamList, 'Favourites'>;
+
+type HistoryProps = NativeStackScreenProps<RootStackParamList, 'History'>;
+
+type MapPageProps = NativeStackScreenProps<RootStackParamList, 'Map'>;
 
 type PointMarkerNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -41,6 +72,4 @@ interface PlaceThumbnailData {
   place_id: string;
 }
 
-type NavButtonNavigationProp = NativeStackNavigationProp<>;
-
-type MapPageNavigationProp = NativeStackNavigationProp<>;
+type NavButtonNavigationProp = NativeStackNavigationProp<RootStackParamList>;

@@ -13,6 +13,7 @@ import { getPositionForAR, getUserLocation } from '../modules/utils';
 import ErrorScreen from './ErrorScreen';
 import Menu from './Menu';
 import { LogBox } from 'react-native';
+import { HomeScreenProps } from '../types/route';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state.',
@@ -142,7 +143,7 @@ const HomeScreenSceneAR = ({
   );
 };
 
-export default ({ route }) => {
+export default ({ route }: HomeScreenProps) => {
   const [error, setError] = useState<string | null>(null);
   const [selectedTypes, setSelectedTypes] = useState<string[]>(['museum']);
   const [selectedFilters, setSelectedFilters] = useState<string[]>(

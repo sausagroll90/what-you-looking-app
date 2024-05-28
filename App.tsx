@@ -6,8 +6,9 @@ import PlaceDetails from './src/components/PlaceDetails';
 import PlacesList from './src/components/PlacesList';
 import HomeButton from './src/components/HomeButton';
 import MapPage from './src/components/MapPage';
+import { RootStackParamList } from './src/types/route';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
   const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([]);
