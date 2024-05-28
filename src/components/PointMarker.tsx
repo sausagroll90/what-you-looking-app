@@ -9,7 +9,7 @@ import {
 } from '@viro-community/react-viro';
 import React from 'react';
 import { PointMarkerNavigationProp } from '../types/route';
-import { Vibration } from 'react-native';
+import { StyleSheet, Vibration } from 'react-native';
 
 export default function PointMarker(props: {
   name: string;
@@ -19,28 +19,52 @@ export default function PointMarker(props: {
 }) {
   const navigation = useNavigation<PointMarkerNavigationProp>();
 
-  const imageSrc =
-    props.types[0] === 'museum'
-      ? require('../../res/models/slate.jpeg')
-      : props.types[0] === 'city_hall'
-      ? require('../../res/icons/city-hall.png')
-      : props.types[0] === 'art_gallery'
-      ? require('../../res/icons/art-gallery.png')
-      : props.types[0] === 'cafe'
-      ? require('../../res/icons/cafe.png')
-      : props.types[0] === 'restaurant'
-      ? require('../../res/icons/restaurant.png')
-      : props.types[0] === 'bar'
-      ? require('../../res/icons/bar.png')
-      : props.types[0] === 'movie_theater'
-      ? require('../../res/icons/cinema.png')
-      : props.types[0] === 'tourist_attraction'
-      ? require('../../res/icons/tourist_attraction.png')
-      : require('../../res/icons/building.png');
+  // const imageSrc =
+  //   props.types[0] === 'museum'
+  //     ? require('../../res/models/slate.jpeg')
+  //     : props.types[0] === 'city_hall'
+  //     ? require('../../res/icons/city-hall.png')
+  //     : props.types[0] === 'art_gallery'
+  //     ? require('../../res/icons/art-gallery.png')
+  //     : props.types[0] === 'cafe'
+  //     ? require('../../res/icons/cafe.png')
+  //     : props.types[0] === 'restaurant'
+  //     ? require('../../res/icons/restaurant.png')
+  //     : props.types[0] === 'bar'
+  //     ? require('../../res/icons/bar.png')
+  //     : props.types[0] === 'movie_theater'
+  //     ? require('../../res/icons/cinema.png')
+  //     : props.types[0] === 'tourist_attraction'
+  //     ? require('../../res/icons/tourist_attraction.png')
+  //     : require('../../res/icons/building.png');
 
+  const type = props.types[0];
+  let objScale = [100, 100, 100];
+  let imageSrc = '';
+  let objSource = '';
+
+  switch (type) {
+    case 'museum':
+      objScale = [8, 8, 8];
+      imageSrc = 'slate';
+      objSource = require('../../res/models/museum.obj');
+      break;
+    case 'cafe':
+      objScale = [400, 400, 400];
+      imageSrc = 'mug';
+      objSource = require('../../res/models/mug.obj');
+      break;
+    default:
+      objScale = [400, 400, 400];
+      imageSrc = 'slate';
+      objSource = require('../../res/models/mug.obj');
+  }
   ViroMaterials.createMaterials({
     slate: {
-      diffuseTexture: imageSrc,
+      diffuseTexture: require('../../res/models/slate.jpeg'),
+    },
+    mug: {
+      diffuseTexture: require('../../res/models/ceramic.jpg'),
     },
   });
 
@@ -61,13 +85,14 @@ export default function PointMarker(props: {
   return (
     <ViroNode position={props.position} onClick={handleClick}>
       <Viro3DObject
-        source={require('../../res/models/museum.obj')}
+        source={objSource}
         type="OBJ"
-        materials={['slate']}
-        scale={[8, 8, 8]}
+        materials={[imageSrc]}
+        scale={objScale}
         animation={{ name: 'rotate', run: true, loop: true }}
       />
       <ViroText
+        style={styles.text}
         text={props.name}
         scale={[100, 100, 100]}
         position={[0, -50, 0]}
@@ -84,3 +109,9 @@ export default function PointMarker(props: {
     // />
   );
 }
+
+const styles = StyleSheet.create({
+  text: {
+    textAlign: 'center',
+  },
+});

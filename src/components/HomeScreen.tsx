@@ -3,6 +3,7 @@ import {
   Viro3DObject,
   ViroARScene,
   ViroARSceneNavigator,
+  ViroAmbientLight,
   ViroAnimations,
   ViroMaterials,
   ViroNode,
@@ -131,28 +132,29 @@ const HomeScreenSceneAR = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTypes]);
 
-  // ViroMaterials.createMaterials({
-  //   slate: {
-  //     diffuseTexture: require('../../res/models/slate.jpeg'),
-  //   },
-  // });
+  ViroMaterials.createMaterials({
+    slate: {
+      diffuseTexture: require('../../res/models/slate.jpeg'),
+    },
+  });
 
-  // ViroAnimations.registerAnimations({
-  //   rotate: {
-  //     properties: {
-  //       rotateY: '+=180',
-  //     },
-  //     duration: 5000,
-  //   },
-  // });
+  ViroAnimations.registerAnimations({
+    rotate: {
+      properties: {
+        rotateY: '+=180',
+      },
+      duration: 5000,
+    },
+  });
   return (
     <ViroARScene onTrackingUpdated={onInitialised}>
-      <ViroNode position={[0, 0, -4]}>
+      {/* <ViroNode position={[0, 0, -4]}>
+        <ViroAmbientLight color="#ffffff" />
         <Viro3DObject
-          source={require('../../res/models/museum.obj')}
+          source={require('../../res/models/mug.obj')}
           type="OBJ"
           materials={['slate']}
-          scale={[0.2, 0.2, 0.2]}
+          scale={[2, 2, 2]}
           animation={{ name: 'rotate', run: true, loop: true }}
         />
         <ViroText
@@ -160,9 +162,9 @@ const HomeScreenSceneAR = ({
           scale={[1.5, 1.5, 1.5]}
           position={[0, -0.6, -0]}
         />
-      </ViroNode>
+      </ViroNode> */}
 
-      {/* {initialCompassHeading
+      {initialCompassHeading
         ? pointsOfInterest.map((location) => {
             const transformedPosition = getPositionForAR(
               userLocation,
@@ -179,7 +181,7 @@ const HomeScreenSceneAR = ({
               />
             );
           })
-        : null} */}
+        : null}
       {loading || !initialised ? (
         <ViroSpinner type="dark" position={[0, 0, -3]} />
       ) : null}
