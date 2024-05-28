@@ -75,6 +75,11 @@ export default function PointMarker(props: {
       objSource = require('../../res/models/cafe.glb');
       objType = 'GLB';
       break;
+    case 'restaurant':
+      objScale = [35, 35, 35];
+      objSource = require('../../res/models/burger.glb');
+      objType = 'GLB';
+      break;
   }
   ViroMaterials.createMaterials({
     slate: {
