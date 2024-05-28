@@ -9,9 +9,7 @@ import {
 import PointMarker from './PointMarker';
 import CompassHeading from 'react-native-compass-heading';
 import { getNearbyPOIs } from '../modules/apis';
-import { requestLocationPermission } from '../modules/permissions';
-import Geolocation from 'react-native-geolocation-service';
-import { getPositionForAR } from '../modules/utils';
+import { getPositionForAR, getUserLocation } from '../modules/utils';
 import ErrorScreen from './ErrorScreen';
 import Menu from './Menu';
 import { LogBox } from 'react-native';
@@ -77,32 +75,23 @@ const HomeScreenSceneAR = ({
   }
 
   useEffect(() => {
-    async function getUserLocation(): Promise<void> {
-      const isGranted = await requestLocationPermission();
-      if (isGranted) {
-        Geolocation.getCurrentPosition(
-          (position) => {
-            setUserLocation({
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            });
-            getPointsOfInterest(
-              position.coords.latitude,
-              position.coords.longitude,
-            );
-          },
-          (err) => {
-            console.log(err.code, err.message);
-            setUserLocation(null);
-            setError(err.message);
-          },
-          { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
-        );
-      } else {
+    getUserLocation(
+      (latitude, longitude) => {
+        setUserLocation({
+          latitude: latitude,
+          longitude: longitude,
+        });
+        getPointsOfInterest(latitude, longitude);
+      },
+      (err) => {
+        console.log(err.code, err.message);
+        setUserLocation(null);
+        setError(err.message);
+      },
+      () => {
         setError('please enable location permissions in app settings');
-      }
-    }
-    getUserLocation();
+      },
+    );
 
     const DEGREE_UPDATE_RATE = 3;
 
