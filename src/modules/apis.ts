@@ -135,15 +135,33 @@ export async function getEventDetails(event_id: string) {
 
   const data = await response.json();
 
+  const splitDate = data._embedded.events[0].dates.start.localDate.split('-');
+  const formattedDate = splitDate[2] + '/' + splitDate[1] + '/' + splitDate[0];
+
+  const formattedAddress =
+    data._embedded.events[0]._embedded.venues[0].address.line1 +
+    ', ' +
+    data._embedded.events[0]._embedded.venues[0].city.name +
+    ', ' +
+    data._embedded.events[0]._embedded.venues[0].postalCode;
+
   const results: EventData = {
     event_name: data._embedded.events[0].name,
     event_url: data._embedded.events[0].url,
     event_image: data._embedded.events[0].images[0].url,
     event_venue: data._embedded.events[0]._embedded.venues[0].name,
-    event_address: data._embedded.events[0]._embedded.venues[0].address.line1,
-    event_date: data._embedded.events[0].dates.start.localDate,
-    event_time: data._embedded.events[0].dates.start.localTime,
+    event_address: formattedAddress,
+    event_date: formattedDate,
+    event_time: data._embedded.events[0].dates.start.localTime.slice(0, 5),
+    event_latitude:
+      data._embedded.events[0]._embedded.venues[0].location.latitude,
+    event_longitude:
+      data._embedded.events[0]._embedded.venues[0].location.longitude,
   };
+
+  data._embedded.events[0].description
+    ? (results.event_description = data._embedded.events[0].description)
+    : null;
 
   return results;
 }
