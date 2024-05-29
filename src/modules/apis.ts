@@ -1,5 +1,5 @@
 import { GOOGLEAPIKEY, TICKETMASTERAPIKEY } from '@env';
-import { PlaceData } from '../types/route';
+import { EventData, PlaceData } from '../types/route';
 
 export async function getNearbyPOIs(
   latitude: number,
@@ -121,30 +121,29 @@ export async function getNearbyEvents(latitude: number, longitude: number) {
     };
   });
 
-  console.log('getNearbyEvents results --- ', results);
-
   return results;
 }
 
-// console.log('event name --', data._embedded.events[0].name);
-// console.log('event URL --', data._embedded.events[0].url);
-// console.log('event image --', data._embedded.events[0].images[0].url);
-// console.log(
-//   'event venue --',
-//   data._embedded.events[0]._embedded.venues[0].name,
-// );
-// console.log(
-//   'event address --',
-//   data._embedded.events[0]._embedded.venues[0].address.line1,
-//   console.log(
-//     'event latitude ---',
-//     data._embedded.events[0]._embedded.venues[0].location.latitude,
-//   ),
-//   console.log(
-//     'event longitude ---',
-//     data._embedded.events[0]._embedded.venues[0].location.longitude,
-//   ),
-//   console.log('event id', data._embedded.events[0].id),
-// );
+export async function getEventDetails(event_id: string) {
+  const response = await fetch(
+    `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTERAPIKEY}&id=${event_id}`,
+  );
 
-//Calling on line 86 of PlaceDetails
+  if (response.status !== 200) {
+    throw new Error('Error fetching from API: ' + response.status);
+  }
+
+  const data = await response.json();
+
+  const results: EventData = {
+    event_name: data._embedded.events[0].name,
+    event_url: data._embedded.events[0].url,
+    event_image: data._embedded.events[0].images[0].url,
+    event_venue: data._embedded.events[0]._embedded.venues[0].name,
+    event_address: data._embedded.events[0]._embedded.venues[0].address.line1,
+    event_date: data._embedded.events[0].dates.start.localDate,
+    event_time: data._embedded.events[0].dates.start.localTime,
+  };
+
+  return results;
+}
