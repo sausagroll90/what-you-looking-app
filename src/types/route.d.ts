@@ -37,6 +37,7 @@ type RootStackParamList = {
     setSelectedFilterTypes: React.Dispatch<React.SetStateAction<string[]>>;
   };
   SaveLocation: undefined;
+  SavedLocationAR: undefined;
 };
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;

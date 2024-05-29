@@ -16,6 +16,7 @@ import {
 } from '../modules/localStorage';
 import { SavedLocationData } from '../types/route';
 import LocationCard from './LocationCard';
+import DisabledButton from './DisabledButton';
 
 interface Location {
   latitude: number;
@@ -25,8 +26,9 @@ interface Location {
 
 export default function SaveLocation() {
   const [userLocation, setUserLocation] = useState<Location | null>(null);
-  const [place, setPlace] = useState<string>();
+  const [place, setPlace] = useState<string>('');
   const [savedPlaces, setSavedPlaces] = useState<SavedLocationData[]>();
+  const [validSave, setValidSave] = useState(false);
 
   useEffect(() => {
     getUserLocation(
@@ -43,6 +45,10 @@ export default function SaveLocation() {
     getSavedLocationData('location');
   }, []);
 
+  useEffect(() => {
+    place !== '' ? setValidSave(true) : null;
+  }, [place]);
+
   async function getSavedLocationData(key: string) {
     const allData = await getAllPlaces(key);
     allData ? setSavedPlaces(allData) : null;
@@ -53,29 +59,31 @@ export default function SaveLocation() {
   }
 
   async function savePlace() {
+    const dateNow = new Date();
     const newUserLocation = {
       ...userLocation,
       name: place,
-      date: new Date().toDateString(),
+      date: dateNow,
     };
     await addLocationToStorage(newUserLocation, 'location');
     await getSavedLocationData('location');
   }
-  const date = new Date();
-  const dateNow = new Date().toDateString();
-  console.log(dateNow, 'date now');
 
   return (
     <ScrollView>
-      <Text style={styles.title}>Label For Place to Save</Text>
+      <Text style={styles.title}>Label</Text>
       <TextInput
-        placeholder="car parked.. / park meet up... / friends house...."
+        placeholder="I parked my car here...."
         style={styles.input}
         value={place}
         onChangeText={setPlace}
       />
       <View style={styles.button}>
-        <StyledButton buttonText="Save" onPress={onPress} />
+        {validSave ? (
+          <StyledButton buttonText="Save" onPress={onPress} />
+        ) : (
+          <DisabledButton buttonText="Add Label" />
+        )}
       </View>
       <Text style={styles.title}>Saved Places</Text>
       {savedPlaces

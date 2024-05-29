@@ -8,6 +8,7 @@ import MapPage from './src/components/MapPage';
 import { RootStackParamList } from './src/types/route';
 import SimpleMenu from './src/components/SimpleMenu';
 import SaveLocation from './src/components/SaveLocation';
+import SavedLocationAR from './src/components/SavedLocationAR';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -15,7 +16,7 @@ function App(): JSX.Element {
   const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([]);
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'Home'}>
+      <Stack.Navigator initialRouteName={'SaveLocation'}>
         <Stack.Screen
           name="PlaceDetails"
           component={PlaceDetails}
@@ -95,20 +96,9 @@ function App(): JSX.Element {
           }}
         />
         <Stack.Screen
-          name="SavedLocations"
-          component={PlacesList}
-          initialParams={{ key: 'locations' }}
-          options={{
-            headerLeft: SimpleMenu,
-            headerBackVisible: false,
-            headerTitleAlign: 'center',
-            title: 'Saved Locations',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize: 25,
-              color: '#136f63',
-            },
-          }}
+          name="SavedLocationAR"
+          component={SavedLocationAR}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

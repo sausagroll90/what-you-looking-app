@@ -1,52 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import StyledButton from './StyledButton';
 import { useNavigation } from '@react-navigation/native';
-import { PlaceCardNavigationProp, PlaceThumbnailData } from '../types/route';
-import { getAllPlaces, setPlaces } from '../modules/localStorage';
 import EmbeddedMap from './EmbeddedMap';
 
 export default function LocationCard(props) {
   const { name, date, latitude, longitude } = props.location;
+  const navigation = useNavigation();
   const locationToShow = { latitude: latitude, longitude: longitude };
-  const [validSave, setValidSave] = useState(false);
-
-  //   const placeDetails = { latitude: latitude, longitude: longitude, name};
-  //   console.log(props, 'here in location card');
-
-  //   const { setIsDeleted, storageKey } = props;
-  //   const [deleteButtonText, setDeleteButtonText] = useState('Remove');
-
-  //   const navigation = useNavigation();
-
-  // const handlePress = () => {
-  //   navigation.push(//somewhere);
-  // };
-
-  //   const removeListItem = async () => {
-  //     try {
-  //       setDeleteButtonText('Removing...');
-  //       const allData = await getAllPlaces(storageKey);
-  //       if (allData) {
-  //         const placeIdArray = allData.map(
-  //           (place: PlaceThumbnailData) => place.place_id,
-  //         );
-  //         const indexPositionToDelete = placeIdArray.indexOf(place_id.toString());
-  //         allData.splice(indexPositionToDelete, 1);
-  //         await setPlaces(allData, storageKey);
-  //         setDeleteButtonText('Removed');
-  //         setIsDeleted(true);
-  //       } else {
-  //         null;
-  //       }
-  //     } catch (e) {
-  //       console.log('error removing item from list', e);
-  //     }
-  //   };
-
-  //   const handleDelete = () => {
-  //     removeListItem();
-  //   };
+  function handlePress() {
+    navigation.push('SavedLocationAR', { location: locationToShow });
+  }
 
   return (
     <ScrollView>
@@ -58,8 +22,8 @@ export default function LocationCard(props) {
             <EmbeddedMap placeDetails={[locationToShow]} />
           </View>
           <View style={styles.button_container}>
-            {/* <StyledButton buttonText="View Details" onPress={handlePress} />
-          <StyledButton buttonText={deleteButtonText} onPress={handleDelete} /> */}
+            <StyledButton buttonText="View AR" onPress={handlePress} />
+            {/* <StyledButton buttonText={deleteButtonText} onPress={handleDelete} /> */}
           </View>
         </View>
       </View>
