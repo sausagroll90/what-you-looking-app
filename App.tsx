@@ -6,7 +6,6 @@ import PlaceDetails from './src/components/PlaceDetails';
 import PlacesList from './src/components/PlacesList';
 import MapPage from './src/components/MapPage';
 import SimpleMenu from './src/components/SimpleMenu';
-import Menu from './src/components/Menu';
 
 const Stack = createNativeStackNavigator();
 

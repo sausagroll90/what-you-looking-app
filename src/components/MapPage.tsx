@@ -76,7 +76,7 @@ export default function MapPage({
         />
         <Text style={styles.title}>Map View</Text>
       </View>
-      <EmbeddedMap placeDetails={pointsOfInterest[0]} />
+      <EmbeddedMap placeDetails={pointsOfInterest} />
     </>
   );
 }
