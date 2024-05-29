@@ -116,7 +116,12 @@ export default function PointMarker(props: {
           animation={{ name: 'rotate', run: true, loop: true }}
         />
       ) : (
-        <Viro3DObject source={objSource} type={objType} scale={objScale} />
+        <Viro3DObject
+          source={objSource}
+          type={objType}
+          scale={objScale}
+          animation={{ name: 'rotate', run: true, loop: true }}
+        />
       )}
       <ViroText
         style={styles.text}
