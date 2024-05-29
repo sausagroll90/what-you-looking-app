@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import EmbeddedMap from './EmbeddedMap';
-import { MapPageNavigationProp } from '../types/route';
 import { LogBox, StyleSheet, Text, View } from 'react-native';
 import Menu from './Menu';
 import { getNearbyPOIs } from '../modules/apis';
@@ -75,7 +74,11 @@ export default function MapPage({ route }: MapPageProps): React.JSX.Element {
         />
         <Text style={styles.title}>Map View</Text>
       </View>
-      <EmbeddedMap placeDetails={pointsOfInterest} />
+      <EmbeddedMap
+        placeDetails={pointsOfInterest.map((pointOfInterest) => {
+          return { ...pointOfInterest, type: pointOfInterest.types[0] };
+        })}
+      />
     </>
   );
 }
