@@ -96,7 +96,7 @@ export default function EmbeddedMap(props: EmbeddedMapProps) {
               iconImage = require('../../res/icons/tourist_attraction.png');
               break;
             case 'you_are_here':
-              iconImage = require('../../res/icons/marker_pin.png');
+              iconImage = require('../../res/icons/circle.png');
               break;
             default:
               iconImage = require('../../res/icons/building.png');
