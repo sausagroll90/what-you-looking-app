@@ -7,12 +7,15 @@ import PlacesList from './src/components/PlacesList';
 import MapPage from './src/components/MapPage';
 import { RootStackParamList } from './src/types/route';
 import SimpleMenu from './src/components/SimpleMenu';
+import Logo from './src/components/Logo';
 import EventDetails from './src/components/EventDetails';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
-  const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([]);
+  const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([
+    'museum',
+  ]);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={'Home'}>
@@ -57,6 +60,7 @@ function App(): JSX.Element {
           component={PlacesList}
           options={{
             headerLeft: SimpleMenu,
+            headerRight: Logo,
             headerBackVisible: false,
             headerTitleAlign: 'center',
             title: 'Favourites',
@@ -74,6 +78,7 @@ function App(): JSX.Element {
           initialParams={{ key: 'history' }}
           options={{
             headerLeft: SimpleMenu,
+            headerRight: Logo,
             headerBackVisible: false,
             headerTitleAlign: 'center',
             title: 'History',
