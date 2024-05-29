@@ -35,8 +35,7 @@ export default function PlaceDetails({
   const [saveSuccessful, setSaveSuccessful] = useState(false);
   const isFocused = useIsFocused();
 
-  // const place_id: string = route.params.place_id;
-  const place_id = 'ChIJw3HXqeNfeUgRHx20YQSJJg8';
+  const place_id: string = route.params.place_id;
 
   let showButton = false;
 
