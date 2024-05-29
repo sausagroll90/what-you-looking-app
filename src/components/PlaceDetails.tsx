@@ -88,7 +88,14 @@ export default function PlaceDetails({
         <View style={styles.container}>
           {placeDetails ? (
             <>
-              <Text style={styles.name}>{placeDetails.name}</Text>
+              <View style={styles.save}>
+                <Text style={styles.name}>{placeDetails.name}</Text>
+                {saveButtonDisabled ? (
+                  <DisabledButton buttonText={'Saved'} />
+                ) : (
+                  <StyledButton buttonText={'Save'} onPress={handleSave} />
+                )}
+              </View>
               {placeDetails.rating && (
                 <Text style={styles.rating}>{placeDetails.rating} rating</Text>
               )}
@@ -119,11 +126,7 @@ export default function PlaceDetails({
           {showButton ? (
             <StyledButton buttonText="Back" onPress={handleOnBackPress} />
           ) : null}
-          {saveButtonDisabled ? (
-            <DisabledButton buttonText={'Saved'} />
-          ) : (
-            <StyledButton buttonText={'Save'} onPress={handleSave} />
-          )}
+
           {saveSuccessful ? <OnSave /> : null}
           {placeDetails ? <EmbeddedMap placeDetails={[placeDetails]} /> : null}
         </View>
@@ -169,5 +172,11 @@ const styles = StyleSheet.create({
     color: '#032b43',
     fontSize: 16,
     alignSelf: 'center',
+  },
+  save: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    alignContent: 'space-between',
   },
 });

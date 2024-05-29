@@ -5,11 +5,11 @@ import HomeScreen from './src/components/HomeScreen';
 import PlaceDetails from './src/components/PlaceDetails';
 import PlacesList from './src/components/PlacesList';
 import MapPage from './src/components/MapPage';
+import { RootStackParamList } from './src/types/route';
 import SimpleMenu from './src/components/SimpleMenu';
-import Menu from './src/components/Menu';
 import EventDetails from './src/components/EventDetails';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
   const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([]);
@@ -20,7 +20,8 @@ function App(): JSX.Element {
           name="PlaceDetails"
           component={PlaceDetails}
           options={{
-            headerLeft: SimpleMenu,
+            headerLeft: Simple
+              ,
             headerBackVisible: false,
             headerTitleAlign: 'center',
             title: 'Details',

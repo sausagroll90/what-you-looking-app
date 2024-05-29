@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { NavButtonNavigationProp } from '../types/route';
+import { NavButtonNavigationProp, RootStackParamList } from '../types/route';
 
 type NavButtonProps = {
   text: string;
-  navigationTarget: string;
+  navigationTarget: keyof RootStackParamList;
   top: number;
 };
 

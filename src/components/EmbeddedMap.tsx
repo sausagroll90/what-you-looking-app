@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import MapView, { MapMarker } from 'react-native-maps';
-import Map from 'react-native-maps';
 
 import { getUserLocation } from '../modules/utils';
 
@@ -13,7 +12,7 @@ type location = {
 };
 
 type EmbeddedMapProps = {
-  placeDetails: [location];
+  placeDetails: location[];
 };
 
 export default function EmbeddedMap(props: EmbeddedMapProps) {
@@ -33,7 +32,7 @@ export default function EmbeddedMap(props: EmbeddedMapProps) {
     );
   }, []);
 
-  const pointsOfInterest: [location] = [...props.placeDetails];
+  const pointsOfInterest: location[] = [...props.placeDetails];
 
   if (userLocation !== null) {
     const youAreHere: location = {
