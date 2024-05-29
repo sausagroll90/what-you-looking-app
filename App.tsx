@@ -16,7 +16,7 @@ function App(): JSX.Element {
   const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([]);
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'SaveLocation'}>
+      <Stack.Navigator initialRouteName={'Home'}>
         <Stack.Screen
           name="PlaceDetails"
           component={PlaceDetails}
