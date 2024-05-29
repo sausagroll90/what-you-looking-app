@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import EmbeddedMap from './EmbeddedMap';
 import { MapPageNavigationProp } from '../types/route';
-import { LogBox } from 'react-native';
+import { LogBox, StyleSheet, Text, View } from 'react-native';
 import Menu from './Menu';
 import { getNearbyPOIs } from '../modules/apis';
 import { getUserLocation } from '../modules/utils';
@@ -60,22 +60,39 @@ export default function MapPage({
     );
   }, [selectedTypes]);
 
-  console.log(pointsOfInterest);
-
   return error ? (
     <ErrorScreen message={error} />
   ) : loading ? (
     <LoadingSpinner />
   ) : (
     <>
-      <Menu
-        setSelectedTypes={setSelectedTypes}
-        selectedFilters={selectedFilters}
-        setSelectedFilters={setSelectedFilters}
-        setSelectedFilterTypes={route.params.setSelectedFilterTypes}
-        currentScreen="map"
-      />
+      <View style={styles.container}>
+        <Menu
+          setSelectedTypes={setSelectedTypes}
+          selectedFilters={selectedFilters}
+          setSelectedFilters={setSelectedFilters}
+          setSelectedFilterTypes={route.params.setSelectedFilterTypes}
+          currentScreen="map"
+        />
+        <Text style={styles.title}>Map View</Text>
+      </View>
       <EmbeddedMap placeDetails={pointsOfInterest[0]} />
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    elevation: 3,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 25,
+    color: '#136f63',
+    textAlignVertical: 'center',
+    width: '100%',
+    paddingLeft: 75,
+  },
+});
