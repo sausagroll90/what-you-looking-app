@@ -112,7 +112,7 @@ export default function EmbeddedMap(props: EmbeddedMapProps) {
               }}
               title={poi.name || 'here'}
               onPress={() => handlePress(poi.place_id || null)}>
-              <Text>{poi.name || 'here'}</Text>
+              <Text style={styles.text}>{poi.name || 'here'}</Text>
               <Image
                 source={iconImage}
                 style={styles.markerImage}
@@ -153,5 +153,8 @@ const styles = StyleSheet.create({
   markerImage: {
     width: 35,
     height: 35,
+  },
+  text: {
+    color: 'black',
   },
 });
