@@ -155,7 +155,7 @@ const HomeScreenSceneAR = ({
 
 export default ({ route }) => {
   const [error, setError] = useState<string | null>(null);
-  const [selectedTypes, setSelectedTypes] = useState<string[]>(['bar']);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>(['museum']);
   const [selectedFilters, setSelectedFilters] = useState<string[]>(
     route.params.selectedFilterTypes,
   );
