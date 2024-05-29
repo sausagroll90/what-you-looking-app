@@ -1,5 +1,5 @@
-import { GOOGLEAPIKEY } from '@env';
-import { PlaceData } from '../types/route';
+import { GOOGLEAPIKEY, TICKETMASTERAPIKEY } from '@env';
+import { EventData, PlaceData } from '../types/route';
 
 export async function getNearbyPOIs(
   latitude: number,
@@ -95,4 +95,55 @@ export async function getWikiSummary(placeName: string, location: string) {
   const pageSummary =
     pageResult.query.pages[searchResult.query.search[0].pageid].extract;
   return pageSummary;
+}
+
+export async function getNearbyEvents(latitude: number, longitude: number) {
+  const response = await fetch(
+    `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTERAPIKEY}&latlong=${latitude},${longitude}&radius=1&unit=km&sort=distance,asc&size=5`,
+  );
+
+  if (response.status !== 200) {
+    throw new Error('Error fetching from API: ' + response.status);
+  }
+
+  const data = await response.json();
+  const results: {
+    latitude: number;
+    longitude: number;
+    name: string;
+    event_id: string;
+  }[] = data._embedded.events.map((result: any) => {
+    return {
+      name: result.name,
+      event_id: result.id,
+      latitude: result._embedded.venues[0].location.latitude,
+      longitude: result._embedded.venues[0].location.longitude,
+    };
+  });
+
+  return results;
+}
+
+export async function getEventDetails(event_id: string) {
+  const response = await fetch(
+    `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTERAPIKEY}&id=${event_id}`,
+  );
+
+  if (response.status !== 200) {
+    throw new Error('Error fetching from API: ' + response.status);
+  }
+
+  const data = await response.json();
+
+  const results: EventData = {
+    event_name: data._embedded.events[0].name,
+    event_url: data._embedded.events[0].url,
+    event_image: data._embedded.events[0].images[0].url,
+    event_venue: data._embedded.events[0]._embedded.venues[0].name,
+    event_address: data._embedded.events[0]._embedded.venues[0].address.line1,
+    event_date: data._embedded.events[0].dates.start.localDate,
+    event_time: data._embedded.events[0].dates.start.localTime,
+  };
+
+  return results;
 }
