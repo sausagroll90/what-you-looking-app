@@ -124,12 +124,6 @@ export default function PlaceDetails({
           ) : (
             <StyledButton buttonText={'Save'} onPress={handleSave} />
           )}
-          <Button
-            title="Favourites"
-            onPress={() => {
-              navigation.push('Favourites');
-            }}
-          />
           {saveSuccessful ? <OnSave /> : null}
           {placeDetails ? <EmbeddedMap placeDetails={placeDetails} /> : null}
         </View>

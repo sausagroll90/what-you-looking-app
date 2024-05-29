@@ -4,8 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/components/HomeScreen';
 import PlaceDetails from './src/components/PlaceDetails';
 import PlacesList from './src/components/PlacesList';
-import HomeButton from './src/components/HomeButton';
 import MapPage from './src/components/MapPage';
+import SimpleMenu from './src/components/SimpleMenu';
+import Menu from './src/components/Menu';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,8 +19,9 @@ function App(): JSX.Element {
           name="PlaceDetails"
           component={PlaceDetails}
           options={{
-            headerRight: HomeButton,
+            headerLeft: SimpleMenu,
             headerBackVisible: false,
+            headerTitleAlign: 'center',
             title: 'Details',
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -38,8 +40,9 @@ function App(): JSX.Element {
           name="Favourites"
           component={PlacesList}
           options={{
-            headerRight: HomeButton,
+            headerLeft: SimpleMenu,
             headerBackVisible: false,
+            headerTitleAlign: 'center',
             title: 'Favourites',
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -54,8 +57,9 @@ function App(): JSX.Element {
           component={PlacesList}
           initialParams={{ key: 'history' }}
           options={{
-            headerRight: HomeButton,
+            headerLeft: SimpleMenu,
             headerBackVisible: false,
+            headerTitleAlign: 'center',
             title: 'History',
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -70,11 +74,8 @@ function App(): JSX.Element {
           initialParams={{ selectedFilterTypes, setSelectedFilterTypes }}
           options={{
             headerShown: false,
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize: 25,
-              color: '#136f63',
-            },
+            headerTitleAlign: 'center',
+            title: 'Map View',
           }}
         />
       </Stack.Navigator>

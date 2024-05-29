@@ -14,7 +14,7 @@ import Geolocation from 'react-native-geolocation-service';
 import { getPositionForAR } from '../modules/utils';
 import ErrorScreen from './ErrorScreen';
 import Menu from './Menu';
-import { LogBox } from 'react-native';
+import { LogBox, StyleSheet, Text, View } from 'react-native';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state.',
@@ -162,13 +162,16 @@ export default ({ route }) => {
 
   return !error ? (
     <>
-      <Menu
-        setSelectedTypes={setSelectedTypes}
-        selectedFilters={selectedFilters}
-        setSelectedFilters={setSelectedFilters}
-        setSelectedFilterTypes={route.params.setSelectedFilterTypes}
-        currentScreen="home"
-      />
+      <View style={styles.container}>
+        <Menu
+          setSelectedTypes={setSelectedTypes}
+          selectedFilters={selectedFilters}
+          setSelectedFilters={setSelectedFilters}
+          setSelectedFilterTypes={route.params.setSelectedFilterTypes}
+          currentScreen="home"
+        />
+        <Text style={styles.title}>Home</Text>
+      </View>
       <ViroARSceneNavigator
         autofocus={true}
         initialScene={{ scene: HomeScreenSceneAR }}
@@ -179,3 +182,19 @@ export default ({ route }) => {
     <ErrorScreen message={error} />
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    elevation: 3,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 25,
+    color: '#136f63',
+    textAlignVertical: 'center',
+    width: '100%',
+    paddingLeft: 75,
+  },
+});
