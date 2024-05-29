@@ -83,13 +83,28 @@ export default function PointMarker(props: {
     },
   });
 
+  let dragged: boolean = false;
+
   const handleClick = () => {
-    Vibration.vibrate(100);
-    navigation.push('PlaceDetails', { place_id: props.place_id });
+    if (dragged === true) {
+      dragged = false;
+    } else {
+      Vibration.vibrate(100);
+      navigation.push('PlaceDetails', { place_id: props.place_id });
+    }
+  };
+
+  const handleDrag = (dragProps: any) => {
+    if (Math.abs(props.position[0] - dragProps[0]) > 5) {
+      dragged = true;
+    }
   };
 
   return (
-    <ViroNode position={props.position} onClick={handleClick}>
+    <ViroNode
+      position={props.position}
+      onClick={handleClick}
+      onDrag={handleDrag}>
       <ViroAmbientLight color="#ffffff" />
 
       {imageSrc ? (
@@ -101,12 +116,7 @@ export default function PointMarker(props: {
           animation={{ name: 'rotate', run: true, loop: true }}
         />
       ) : (
-        <Viro3DObject
-          source={objSource}
-          type={objType}
-          scale={objScale}
-          // animation={{ name: 'rotate', run: true, loop: true }}
-        />
+        <Viro3DObject source={objSource} type={objType} scale={objScale} />
       )}
       <ViroText
         style={styles.text}
@@ -117,13 +127,6 @@ export default function PointMarker(props: {
         transformBehaviors={'billboard'}
       />
     </ViroNode>
-    // <ViroBox
-    //   materials={['building']}
-    //   scale={[50, 50, 50]}
-    //   position={props.position}
-    //   animation={{ name: 'rotate', run: true, loop: true }}
-    //   onClick={handleClick}
-    // />
   );
 }
 
