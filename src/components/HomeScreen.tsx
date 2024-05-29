@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Viro3DObject,
   ViroARScene,
   ViroARSceneNavigator,
-  ViroAmbientLight,
-  ViroAnimations,
-  ViroMaterials,
-  ViroNode,
   ViroSpinner,
-  ViroText,
   ViroTrackingReason,
   ViroTrackingStateConstants,
 } from '@viro-community/react-viro';
@@ -132,38 +126,8 @@ const HomeScreenSceneAR = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTypes]);
 
-  ViroMaterials.createMaterials({
-    slate: {
-      diffuseTexture: require('../../res/models/slate.jpeg'),
-    },
-  });
-
-  ViroAnimations.registerAnimations({
-    rotate: {
-      properties: {
-        rotateY: '+=180',
-      },
-      duration: 5000,
-    },
-  });
   return (
     <ViroARScene onTrackingUpdated={onInitialised}>
-      {/* <ViroNode position={[0, 0, -4]}>
-        <ViroAmbientLight color="#ffffff" />
-        <Viro3DObject
-          source={require('../../res/models/mug.obj')}
-          type="OBJ"
-          materials={['slate']}
-          scale={[2, 2, 2]}
-          animation={{ name: 'rotate', run: true, loop: true }}
-        />
-        <ViroText
-          text="Leeds City Museum"
-          scale={[1.5, 1.5, 1.5]}
-          position={[0, -0.6, -0]}
-        />
-      </ViroNode> */}
-
       {initialCompassHeading
         ? pointsOfInterest.map((location) => {
             const transformedPosition = getPositionForAR(
@@ -191,9 +155,7 @@ const HomeScreenSceneAR = ({
 
 export default ({ route }) => {
   const [error, setError] = useState<string | null>(null);
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([
-    'movie_theater',
-  ]);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>(['bar']);
   const [selectedFilters, setSelectedFilters] = useState<string[]>(
     route.params.selectedFilterTypes,
   );
