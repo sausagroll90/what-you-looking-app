@@ -21,10 +21,9 @@ const styles = StyleSheet.create({
     borderColor: '#032b43',
     borderWidth: 2,
     backgroundColor: '#a8d3dc',
-    width: 110,
-    height: 48,
+    minWidth: 60,
     borderRadius: 10,
-    alignSelf: 'center',
+    alignSelf: 'flex-end',
   },
   buttonText: {
     fontSize: 16,
