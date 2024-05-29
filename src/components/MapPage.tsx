@@ -7,14 +7,13 @@ import { getNearbyPOIs } from '../modules/apis';
 import { getUserLocation } from '../modules/utils';
 import ErrorScreen from './ErrorScreen';
 import LoadingSpinner from './LoadingSpinner';
+import { MapPageProps } from '../types/route';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state.',
 ]);
 
-export default function MapPage({
-  route,
-}: MapPageNavigationProp): React.JSX.Element {
+export default function MapPage({ route }: MapPageProps): React.JSX.Element {
   const [error, setError] = useState<string | null>(null);
   const [selectedTypes, setSelectedTypes] = useState<string[]>(['museum']);
   const [selectedFilters, setSelectedFilters] = useState<string[]>(
@@ -76,7 +75,7 @@ export default function MapPage({
         />
         <Text style={styles.title}>Map View</Text>
       </View>
-      <EmbeddedMap placeDetails={pointsOfInterest[0]} />
+      <EmbeddedMap placeDetails={pointsOfInterest} />
     </>
   );
 }

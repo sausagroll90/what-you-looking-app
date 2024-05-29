@@ -3,9 +3,13 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import PlaceCard from './PlaceCard';
 import StyledButton from './StyledButton';
 import { getAllPlaces, removePlaceData } from '../modules/localStorage';
-import { PlaceThumbnailData } from '../types/route';
+import {
+  PlaceThumbnailData,
+  FavouritesProps,
+  HistoryProps,
+} from '../types/route';
 
-export default function PlacesList({ route }) {
+export default function PlacesList({ route }: FavouritesProps | HistoryProps) {
   const [placesToDisplay, setPlacesToDisplay] = useState<
     PlaceThumbnailData[] | []
   >([]);
