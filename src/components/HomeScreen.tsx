@@ -13,8 +13,9 @@ import { getPositionForAR, getUserLocation } from '../modules/utils';
 import ErrorScreen from './ErrorScreen';
 import Menu from './Menu';
 import { HomeScreenProps } from '../types/route';
-import { LogBox, StyleSheet, Text, View } from 'react-native';
+import { Image, LogBox, Modal, StyleSheet, Text, View } from 'react-native';
 import Logo from './Logo';
+import LoadingSpinner from './LoadingSpinner';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state.',
@@ -22,7 +23,14 @@ LogBox.ignoreLogs([
 
 const HomeScreenSceneAR = ({
   arSceneNavigator: {
-    viroAppProps: { setError, selectedTypes },
+    viroAppProps: {
+      setError,
+      selectedTypes,
+      loading,
+      setLoading,
+      initialised,
+      setInitialised,
+    },
   },
 }: {
   arSceneNavigator: {
@@ -30,6 +38,10 @@ const HomeScreenSceneAR = ({
       setError: React.Dispatch<React.SetStateAction<string | null>>;
       setSelectedTypes: React.Dispatch<React.SetStateAction<string[]>>;
       selectedTypes: string[];
+      loading: boolean;
+      setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+      initialised: boolean;
+      setInitialised: React.Dispatch<React.SetStateAction<boolean>>;
     };
   };
 }) => {
@@ -50,8 +62,6 @@ const HomeScreenSceneAR = ({
   const [initialCompassHeading, setInitialCompassHeading] = useState<
     number | null
   >(null);
-  const [initialised, setInitialised] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
 
   function onInitialised(state: any, reason: ViroTrackingReason) {
     console.log('onInitialised', state, reason);
@@ -150,6 +160,8 @@ export default ({ route }: HomeScreenProps) => {
   const [selectedFilters, setSelectedFilters] = useState<string[]>(
     route.params.selectedFilterTypes,
   );
+  const [initialised, setInitialised] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   return !error ? (
     <>
@@ -164,10 +176,29 @@ export default ({ route }: HomeScreenProps) => {
         <Text style={styles.title}>Home</Text>
         <Logo />
       </View>
+      {loading || !initialised ? (
+        <View style={styles.intro}>
+          <Modal transparent>
+            <Image
+              source={require('../../res/logo/logo.png')}
+              style={styles.logo}
+            />
+            <LoadingSpinner />
+            <Text style={styles.introText}>Please hold your phone flat</Text>
+          </Modal>
+        </View>
+      ) : null}
       <ViroARSceneNavigator
         autofocus={true}
         initialScene={{ scene: HomeScreenSceneAR }}
-        viroAppProps={{ setError, selectedTypes }}
+        viroAppProps={{
+          setError,
+          selectedTypes,
+          initialised,
+          setInitialised,
+          loading,
+          setLoading,
+        }}
       />
     </>
   ) : (
@@ -189,5 +220,20 @@ const styles = StyleSheet.create({
     color: '#136f63',
     textAlignVertical: 'center',
     paddingLeft: 65,
+  },
+  intro: {
+    height: '90%',
+    width: '60%',
+  },
+  logo: {
+    alignSelf: 'center',
+  },
+  introText: {
+    fontWeight: 'bold',
+    fontSize: 25,
+    color: '#136f63',
+    textAlignVertical: 'center',
+    alignSelf: 'center',
+    marginBottom: 100,
   },
 });
