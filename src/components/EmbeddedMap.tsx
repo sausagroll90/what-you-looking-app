@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Vibration } from 'react-native';
 import MapView, { MapMarker } from 'react-native-maps';
 
 import { getUserLocation } from '../modules/utils';
+import { useNavigation } from '@react-navigation/native';
+import { MapPageNavigationProp } from '../types/route';
+import LoadingSpinner from './LoadingSpinner';
 
 type location = {
   latitude: number;
   longitude: number;
   name?: string;
   type?: string;
+  place_id?: string;
 };
 
 type EmbeddedMapProps = {
@@ -17,6 +21,8 @@ type EmbeddedMapProps = {
 
 export default function EmbeddedMap(props: EmbeddedMapProps) {
   const [userLocation, setUserLocation] = useState<location | null>(null);
+
+  const navigation = useNavigation<MapPageNavigationProp>();
 
   useEffect(() => {
     getUserLocation(
@@ -47,13 +53,20 @@ export default function EmbeddedMap(props: EmbeddedMapProps) {
 
   let iconImage: HTMLImageElement = require('../../res/icons/building.png');
 
-  return (
+  function handlePress(place_id: string | null) {
+    if (place_id) {
+      Vibration.vibrate(100);
+      navigation.push('PlaceDetails', { place_id: place_id });
+    }
+  }
+
+  return userLocation ? (
     <View style={styles.mapStyle}>
       <MapView
         style={styles.mapViewStyle}
         initialRegion={{
-          latitude: pointsOfInterest[pointsOfInterest.length - 1].latitude,
-          longitude: pointsOfInterest[pointsOfInterest.length - 1].longitude,
+          latitude: userLocation.latitude,
+          longitude: userLocation.longitude,
           latitudeDelta: 0.002,
           longitudeDelta: 0.02,
         }}>
@@ -97,7 +110,8 @@ export default function EmbeddedMap(props: EmbeddedMapProps) {
                 latitude: poi.latitude,
                 longitude: poi.longitude,
               }}
-              title={poi.name || 'here'}>
+              title={poi.name || 'here'}
+              onPress={() => handlePress(poi.place_id || null)}>
               <Text>{poi.name || 'here'}</Text>
               <Image
                 source={iconImage}
@@ -109,6 +123,8 @@ export default function EmbeddedMap(props: EmbeddedMapProps) {
         })}
       </MapView>
     </View>
+  ) : (
+    <LoadingSpinner />
   );
 }
 

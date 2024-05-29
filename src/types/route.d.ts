@@ -83,3 +83,5 @@ interface PlaceThumbnailData {
 }
 
 type NavButtonNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+type MapPageNavigationProp = NativeStackNavigationProp<RootStackParamList>;
