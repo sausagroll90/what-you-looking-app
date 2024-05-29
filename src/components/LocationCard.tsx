@@ -23,7 +23,6 @@ export default function LocationCard(props) {
           </View>
           <View style={styles.button_container}>
             <StyledButton buttonText="View AR" onPress={handlePress} />
-            {/* <StyledButton buttonText={deleteButtonText} onPress={handleDelete} /> */}
           </View>
         </View>
       </View>

@@ -91,8 +91,8 @@ export default function SaveLocation() {
             return <LocationCard key={location.date} location={location} />;
           })
         : null}
-      <Button
-        title="Delete All"
+      <StyledButton
+        buttonText="Delete All"
         onPress={() => {
           removePlaceData('location');
           setSavedPlaces([]);
