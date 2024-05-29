@@ -14,6 +14,7 @@ import ErrorScreen from './ErrorScreen';
 import Menu from './Menu';
 import { HomeScreenProps } from '../types/route';
 import { LogBox, StyleSheet, Text, View } from 'react-native';
+import Logo from './Logo';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state.',
@@ -161,6 +162,7 @@ export default ({ route }: HomeScreenProps) => {
           currentScreen="home"
         />
         <Text style={styles.title}>Home</Text>
+        <Logo />
       </View>
       <ViroARSceneNavigator
         autofocus={true}
@@ -178,13 +180,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'white',
     elevation: 3,
+    width: '100%',
+    justifyContent: 'space-between',
   },
   title: {
     fontWeight: 'bold',
     fontSize: 25,
     color: '#136f63',
     textAlignVertical: 'center',
-    width: '100%',
-    paddingLeft: 75,
+    paddingLeft: 65,
   },
 });

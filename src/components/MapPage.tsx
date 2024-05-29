@@ -8,6 +8,7 @@ import { getUserLocation } from '../modules/utils';
 import ErrorScreen from './ErrorScreen';
 import LoadingSpinner from './LoadingSpinner';
 import { MapPageProps } from '../types/route';
+import Logo from './Logo';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state.',
@@ -74,6 +75,7 @@ export default function MapPage({ route }: MapPageProps): React.JSX.Element {
           currentScreen="map"
         />
         <Text style={styles.title}>Map View</Text>
+        <Logo />
       </View>
       <EmbeddedMap placeDetails={pointsOfInterest} />
     </>
@@ -85,13 +87,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'white',
     elevation: 3,
+    width: '100%',
+    justifyContent: 'space-between',
   },
   title: {
     fontWeight: 'bold',
     fontSize: 25,
     color: '#136f63',
     textAlignVertical: 'center',
-    width: '100%',
-    paddingLeft: 75,
+    paddingLeft: 45,
   },
 });
