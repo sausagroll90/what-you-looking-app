@@ -15,7 +15,9 @@ LogBox.ignoreLogs([
 
 export default function MapPage({ route }: MapPageProps): React.JSX.Element {
   const [error, setError] = useState<string | null>(null);
-  const [selectedTypes, setSelectedTypes] = useState<string[]>(['museum']);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>(
+    route.params.selectedFilterTypes,
+  );
   const [selectedFilters, setSelectedFilters] = useState<string[]>(
     route.params.selectedFilterTypes,
   );
