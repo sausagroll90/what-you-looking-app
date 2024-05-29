@@ -89,6 +89,13 @@ export default function Menu({
               top={dropdownTop}
             />
           </View>
+          <View>
+            <NavButton
+              text="Saved Locations"
+              navigationTarget="SaveLocation"
+              top={dropdownTop}
+            />
+          </View>
           <View style={[styles.multiSelect, { top: dropdownTop }]}>
             <Filter
               setSelectedTypes={setSelectedTypes}

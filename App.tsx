@@ -7,8 +7,11 @@ import PlacesList from './src/components/PlacesList';
 import MapPage from './src/components/MapPage';
 import { RootStackParamList } from './src/types/route';
 import SimpleMenu from './src/components/SimpleMenu';
+import SaveLocation from './src/components/SaveLocation';
+import SavedLocationAR from './src/components/SavedLocationAR';
 import Logo from './src/components/Logo';
 import EventDetails from './src/components/EventDetails';
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -98,6 +101,26 @@ function App(): JSX.Element {
             headerTitleAlign: 'center',
             title: 'Map View',
           }}
+        />
+        <Stack.Screen
+          name="SaveLocation"
+          component={SaveLocation}
+          options={{
+            headerLeft: SimpleMenu,
+            headerBackVisible: false,
+            headerTitleAlign: 'center',
+            title: 'Save Location',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 25,
+              color: '#136f63',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="SavedLocationAR"
+          component={SavedLocationAR}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

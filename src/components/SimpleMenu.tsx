@@ -73,6 +73,13 @@ export default function SimpleMenu() {
                 top={dropdownTop}
               />
             </View>
+            <View>
+              <NavButton
+                text="Saved Locations"
+                navigationTarget="SaveLocation"
+                top={dropdownTop}
+              />
+            </View>
           </TouchableOpacity>
         </Modal>
       </TouchableOpacity>

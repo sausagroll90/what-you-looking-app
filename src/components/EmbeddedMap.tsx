@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, Vibration } from 'react-native';
 import MapView, { MapMarker } from 'react-native-maps';
-
 import { getUserLocation } from '../modules/utils';
 import { useNavigation } from '@react-navigation/native';
 import { MapPageNavigationProp } from '../types/route';
