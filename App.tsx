@@ -7,6 +7,7 @@ import PlacesList from './src/components/PlacesList';
 import MapPage from './src/components/MapPage';
 import SimpleMenu from './src/components/SimpleMenu';
 import Menu from './src/components/Menu';
+import EventDetails from './src/components/EventDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,21 @@ function App(): JSX.Element {
             headerBackVisible: false,
             headerTitleAlign: 'center',
             title: 'Details',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 25,
+              color: '#136f63',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="EventDetails"
+          component={EventDetails}
+          options={{
+            headerLeft: SimpleMenu,
+            headerBackVisible: false,
+            headerTitleAlign: 'center',
+            title: 'Event details',
             headerTitleStyle: {
               fontWeight: 'bold',
               fontSize: 25,
