@@ -27,7 +27,6 @@ export default function Menu({
   const toggleDropdown = () => {
     visible ? setVisible(false) : openDropdown();
   };
-
   const openDropdown = () => {
     DropdownButton.current
       ? DropdownButton.current.measure(

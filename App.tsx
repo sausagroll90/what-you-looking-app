@@ -6,12 +6,13 @@ import PlaceDetails from './src/components/PlaceDetails';
 import PlacesList from './src/components/PlacesList';
 import MapPage from './src/components/MapPage';
 import SimpleMenu from './src/components/SimpleMenu';
-import Menu from './src/components/Menu';
 
 const Stack = createNativeStackNavigator();
 
 function App(): JSX.Element {
-  const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([]);
+  const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([
+    'museum',
+  ]);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={'Home'}>

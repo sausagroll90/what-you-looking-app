@@ -164,7 +164,7 @@ export default ({ route }) => {
       <ViroARSceneNavigator
         autofocus={true}
         initialScene={{ scene: HomeScreenSceneAR }}
-        viroAppProps={{ setError, selectedTypes, setSelectedTypes }}
+        viroAppProps={{ setError, selectedTypes }}
       />
     </>
   ) : (

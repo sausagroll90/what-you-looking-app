@@ -33,13 +33,14 @@ type FilterProps = {
   selectedFilters: string[];
   setSelectedFilters: React.Dispatch<React.SetStateAction<string[]>>;
   setSelectedFilterTypes: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedFilterTypes: string[];
 };
 
 export default function Filter({
   setSelectedTypes,
   selectedFilters,
-  setSelectedFilters,
   setSelectedFilterTypes,
+  setSelectedFilters,
 }: FilterProps) {
   const onSelectedTypesChange = (selectedTypes: string[]) => {
     setSelectedFilters(selectedTypes);
