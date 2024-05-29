@@ -48,6 +48,9 @@ interface EventData {
   event_address: string;
   event_date: string;
   event_time: string;
+  event_description?: string;
+  event_latitude: string;
+  event_longitude: string;
 }
 
 type PlaceDetailsProps = NativeStackScreenProps<
