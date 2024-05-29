@@ -20,8 +20,7 @@ function App(): JSX.Element {
           name="PlaceDetails"
           component={PlaceDetails}
           options={{
-            headerLeft: Simple
-              ,
+            headerLeft: SimpleMenu,
             headerBackVisible: false,
             headerTitleAlign: 'center',
             title: 'Details',
