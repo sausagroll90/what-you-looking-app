@@ -21,10 +21,8 @@ const styles = StyleSheet.create({
     borderColor: '#032b43',
     borderWidth: 2,
     backgroundColor: '#494B4B',
-    width: 110,
-    height: 48,
+    minWidth: 80,
     borderRadius: 10,
-    alignSelf: 'center',
   },
   buttonText: {
     fontSize: 16,

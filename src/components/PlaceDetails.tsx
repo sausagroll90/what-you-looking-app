@@ -4,7 +4,6 @@ import {
   Text,
   View,
   Linking,
-  Button,
   SafeAreaView,
   ScrollView,
 } from 'react-native';
@@ -146,6 +145,7 @@ const styles = StyleSheet.create({
     color: '#136f63',
     fontSize: 32,
     padding: 10,
+    width: '80%',
   },
   data: {
     color: '#032b43',
@@ -177,6 +177,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    alignContent: 'space-between',
+    alignItems: 'flex-end',
   },
 });

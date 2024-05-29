@@ -9,11 +9,16 @@ import { RootStackParamList } from './src/types/route';
 import SimpleMenu from './src/components/SimpleMenu';
 import SaveLocation from './src/components/SaveLocation';
 import SavedLocationAR from './src/components/SavedLocationAR';
+import Logo from './src/components/Logo';
+import EventDetails from './src/components/EventDetails';
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
-  const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([]);
+  const [selectedFilterTypes, setSelectedFilterTypes] = useState<string[]>([
+    'museum',
+  ]);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={'Home'}>
@@ -33,6 +38,21 @@ function App(): JSX.Element {
           }}
         />
         <Stack.Screen
+          name="EventDetails"
+          component={EventDetails}
+          options={{
+            headerLeft: SimpleMenu,
+            headerBackVisible: false,
+            headerTitleAlign: 'center',
+            title: 'Event details',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 25,
+              color: '#136f63',
+            },
+          }}
+        />
+        <Stack.Screen
           name="Home"
           component={HomeScreen}
           options={{ headerShown: false }}
@@ -43,6 +63,7 @@ function App(): JSX.Element {
           component={PlacesList}
           options={{
             headerLeft: SimpleMenu,
+            headerRight: Logo,
             headerBackVisible: false,
             headerTitleAlign: 'center',
             title: 'Favourites',
@@ -60,6 +81,7 @@ function App(): JSX.Element {
           initialParams={{ key: 'history' }}
           options={{
             headerLeft: SimpleMenu,
+            headerRight: Logo,
             headerBackVisible: false,
             headerTitleAlign: 'center',
             title: 'History',
