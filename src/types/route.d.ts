@@ -15,6 +15,16 @@ interface PlaceData {
   location: string;
 }
 
+interface EventData {
+  event_name: string;
+  event_url: string;
+  event_image: string;
+  event_venue: string;
+  event_address: string;
+  event_date: string;
+  event_time: string;
+}
+
 type PlaceDetailsProps = NativeStackScreenProps<
   RootStackParamList,
   'PlaceDetails'
