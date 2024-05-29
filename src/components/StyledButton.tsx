@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     borderColor: '#032b43',
     borderWidth: 2,
     backgroundColor: '#a8d3dc',
-    minWidth: 60,
+    minWidth: 80,
     borderRadius: 10,
     alignSelf: 'flex-end',
   },
