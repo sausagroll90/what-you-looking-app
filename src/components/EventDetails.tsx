@@ -17,7 +17,7 @@ export default function EventDetails(): React.JSX.Element {
   const [eventDetails, setEventDetails] = useState<EventData | null>(null);
 
   // const event_id: string = route.params.event_id;
-  const event_id = 'G5dzZ9MVeV3q2';
+  const event_id = 'G5dzZ9UnN5xZi';
 
   async function onEventIdReceived(eventID: string) {
     try {
@@ -41,16 +41,20 @@ export default function EventDetails(): React.JSX.Element {
 
   return (
     <ScrollView>
-      <View>
+      <View style={styles.container}>
         {eventDetails ? (
           <>
-            <Text>{eventDetails.event_name}</Text>
-            <Text>{eventDetails.event_venue}</Text>
+            <Text style={styles.name}>{eventDetails.event_name}</Text>
+            <Text style={styles.venue}>{eventDetails.event_venue}</Text>
             <Image style={styles.image} src={eventDetails.event_image} />
-            <Text>{eventDetails.event_address}</Text>
-            <Text>{eventDetails.event_date}</Text>
-            <Text>Start time: {eventDetails.event_time}</Text>
-            <StyledButton buttonText="Buy tickets" onPress={handlePress} />
+            <Text style={styles.text}>{eventDetails.event_address}</Text>
+            <Text style={styles.text}>{eventDetails.event_date}</Text>
+            <Text style={styles.text}>
+              Start time: {eventDetails.event_time}
+            </Text>
+            <View style={styles.button}>
+              <StyledButton buttonText="Buy tickets" onPress={handlePress} />
+            </View>
             <Text>{eventDetails.event_description}</Text>
             <EmbeddedMap
               placeDetails={[
@@ -72,8 +76,38 @@ export default function EventDetails(): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'flex-start',
+  },
   image: {
-    width: 200,
+    marginTop: 10,
+    width: 500,
     height: 200,
+    padding: 0,
+  },
+  name: {
+    fontWeight: 'bold',
+    color: '#136f63',
+    fontSize: 32,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    paddingTop: 10,
+  },
+  venue: {
+    fontWeight: 'bold',
+    color: 'black',
+    fontSize: 16,
+    paddingLeft: 10,
+    marginBottom: 10,
+  },
+  text: {
+    fontSize: 16,
+    marginTop: 10,
+    paddingLeft: 10,
+  },
+  button: {
+    alignSelf: 'center',
+    marginBottom: 10,
   },
 });
