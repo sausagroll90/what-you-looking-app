@@ -36,6 +36,7 @@ type RootStackParamList = {
     selectedFilterTypes: string[];
     setSelectedFilterTypes: React.Dispatch<React.SetStateAction<string[]>>;
   };
+  SaveLocation: undefined;
 };
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
@@ -80,6 +81,13 @@ interface PlaceThumbnailData {
   name: string;
   address: string | undefined;
   place_id: string;
+}
+
+interface SavedLocationData {
+  latitude: number;
+  longitude: number;
+  name: string;
+  date: number;
 }
 
 type NavButtonNavigationProp = NativeStackNavigationProp<RootStackParamList>;

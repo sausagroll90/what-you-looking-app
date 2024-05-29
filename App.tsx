@@ -7,6 +7,7 @@ import PlacesList from './src/components/PlacesList';
 import MapPage from './src/components/MapPage';
 import { RootStackParamList } from './src/types/route';
 import SimpleMenu from './src/components/SimpleMenu';
+import SaveLocation from './src/components/SaveLocation';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -76,6 +77,37 @@ function App(): JSX.Element {
             headerShown: false,
             headerTitleAlign: 'center',
             title: 'Map View',
+          }}
+        />
+        <Stack.Screen
+          name="SaveLocation"
+          component={SaveLocation}
+          options={{
+            headerLeft: SimpleMenu,
+            headerBackVisible: false,
+            headerTitleAlign: 'center',
+            title: 'Save Location',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 25,
+              color: '#136f63',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="SavedLocations"
+          component={PlacesList}
+          initialParams={{ key: 'locations' }}
+          options={{
+            headerLeft: SimpleMenu,
+            headerBackVisible: false,
+            headerTitleAlign: 'center',
+            title: 'Saved Locations',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 25,
+              color: '#136f63',
+            },
           }}
         />
       </Stack.Navigator>

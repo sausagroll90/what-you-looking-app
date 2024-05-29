@@ -18,7 +18,20 @@ export async function addPlaceToStorage(
       }
     }
   } catch (e) {
-    //do we need to show the user anything
+    console.log('error', e);
+  }
+}
+
+export async function addLocationToStorage(place: any, key: string) {
+  try {
+    const allData = await getAllPlaces(key);
+    if (allData === null) {
+      await setPlaces([place], key);
+    } else {
+      allData.push(place);
+      await setPlaces(allData, key);
+    }
+  } catch (e) {
     console.log('error', e);
   }
 }
