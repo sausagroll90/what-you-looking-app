@@ -12,6 +12,7 @@ import { getNearbyPOIs } from '../modules/apis';
 import { getPositionForAR, getUserLocation } from '../modules/utils';
 import ErrorScreen from './ErrorScreen';
 import Menu from './Menu';
+import { HomeScreenProps } from '../types/route';
 import { LogBox, StyleSheet, Text, View } from 'react-native';
 
 LogBox.ignoreLogs([
@@ -142,7 +143,7 @@ const HomeScreenSceneAR = ({
   );
 };
 
-export default ({ route }) => {
+export default ({ route }: HomeScreenProps) => {
   const [error, setError] = useState<string | null>(null);
   const [selectedTypes, setSelectedTypes] = useState<string[]>(['museum']);
   const [selectedFilters, setSelectedFilters] = useState<string[]>(

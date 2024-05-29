@@ -60,7 +60,7 @@ export default function PlaceCard(props: PlaceDetailProps) {
           <Text style={styles.address}>{address}</Text>
         </View>
         <View style={styles.button_container}>
-          <StyledButton buttonText="View" onPress={handlePress} />
+          <StyledButton buttonText="View Details" onPress={handlePress} />
           <StyledButton buttonText={deleteButtonText} onPress={handleDelete} />
         </View>
       </View>
