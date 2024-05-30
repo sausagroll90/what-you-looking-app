@@ -21,7 +21,6 @@ import { addPlaceToStorage, getAllPlaces } from '../modules/localStorage';
 import { OnSave } from './OnSave';
 import { isPlaceIdUnique } from '../modules/utils';
 import EmbeddedMap from './EmbeddedMap';
-import DisabledButton from './DisabledButton';
 import { useIsFocused } from '@react-navigation/native';
 import LoadingSpinner from './LoadingSpinner';
 
@@ -36,8 +35,7 @@ export default function PlaceDetails({
   const [saveSuccessful, setSaveSuccessful] = useState(false);
   const isFocused = useIsFocused();
 
-  // const place_id: string = route.params.place_id;
-  const place_id = 'ChIJLT2I8s5deUgR90SpTPQOKKo';
+  const place_id: string = route.params.place_id;
 
   let showButton = false;
 
