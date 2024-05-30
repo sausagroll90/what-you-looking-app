@@ -43,7 +43,7 @@ export default function EmbeddedMap(props: EmbeddedMapProps) {
     const youAreHere: location = {
       latitude: userLocation.latitude,
       longitude: userLocation.longitude,
-      name: 'you',
+      name: '',
       type: 'you_are_here',
     };
 
@@ -66,8 +66,8 @@ export default function EmbeddedMap(props: EmbeddedMapProps) {
         initialRegion={{
           latitude: userLocation.latitude,
           longitude: userLocation.longitude,
-          latitudeDelta: 0.002,
-          longitudeDelta: 0.02,
+          latitudeDelta: 0.001,
+          longitudeDelta: 0.01,
         }}>
         {pointsOfInterest.map((poi, index) => {
           switch (poi.type) {
@@ -111,7 +111,7 @@ export default function EmbeddedMap(props: EmbeddedMapProps) {
               }}
               title={poi.name || 'here'}
               onPress={() => handlePress(poi.place_id || null)}>
-              <Text style={styles.text}>{poi.name || 'here'}</Text>
+              <Text style={styles.text}>{poi.name || ''}</Text>
               <Image
                 source={iconImage}
                 style={styles.markerImage}
@@ -150,10 +150,13 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   markerImage: {
-    width: 35,
-    height: 35,
+    width: 30,
+    height: 30,
+    alignSelf: 'center',
   },
   text: {
     color: 'black',
+    textAlign: 'center',
+    fontSize: 13,
   },
 });
