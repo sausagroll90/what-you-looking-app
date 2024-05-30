@@ -28,7 +28,6 @@ export default function PlaceCard(props: PlaceDetailProps) {
   const removeListItem = async () => {
     try {
       setDeleteButtonText('Removing...');
-      console.log(storageKey);
 
       const allData = await getAllPlaces(storageKey);
       if (allData) {

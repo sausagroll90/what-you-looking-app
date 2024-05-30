@@ -21,6 +21,7 @@ interface SavedLocationData {
   longitude: number;
   name: string;
   date: string;
+  place_id: string;
 }
 
 export default function SaveLocation() {
@@ -28,6 +29,7 @@ export default function SaveLocation() {
   const [place, setPlace] = useState<string>('');
   const [savedPlaces, setSavedPlaces] = useState<SavedLocationData[]>();
   const [validSave, setValidSave] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
 
   useEffect(() => {
     getUserLocation(
@@ -43,6 +45,12 @@ export default function SaveLocation() {
     );
     getSavedLocationData('location');
   }, []);
+
+  useEffect(() => {
+    setIsDeleted(false);
+
+    getSavedLocationData('location');
+  }, [isDeleted]);
 
   useEffect(() => {
     place !== '' ? setValidSave(true) : null;
@@ -63,6 +71,7 @@ export default function SaveLocation() {
       ...userLocation,
       name: place,
       date: dateNow,
+      place_id: dateNow,
     };
     await addLocationToStorage(newUserLocation, 'location');
     await getSavedLocationData('location');
@@ -87,7 +96,13 @@ export default function SaveLocation() {
       <Text style={styles.title}>Saved Places</Text>
       {savedPlaces
         ? savedPlaces.map((location) => {
-            return <LocationCard key={location.date} location={location} />;
+            return (
+              <LocationCard
+                key={location.date}
+                location={location}
+                setIsDeleted={setIsDeleted}
+              />
+            );
           })
         : null}
       <StyledButton
