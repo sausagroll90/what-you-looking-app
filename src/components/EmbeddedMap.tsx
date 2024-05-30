@@ -99,7 +99,7 @@ export default function EmbeddedMap(props: EmbeddedMapProps) {
               iconImage = require('../../res/icons/circle.png');
               break;
             default:
-              iconImage = require('../../res/icons/building.png');
+              iconImage = require('../../res/icons/blue-marker-pin.png');
           }
 
           return (
