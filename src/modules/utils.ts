@@ -84,3 +84,11 @@ export async function getUserLocation(
     onPermissionDenied();
   }
 }
+
+export function formatDate(date: string) {
+  const dateArray = date.split('-');
+  const formattedDate = `${dateArray[2].slice(0, 2)}-${dateArray[1]}-${
+    dateArray[0]
+  }`;
+  return formattedDate;
+}

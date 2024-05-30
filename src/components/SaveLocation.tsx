@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import StyledButton from './StyledButton';
 import { getUserLocation } from '../modules/utils';
 import {
@@ -14,14 +7,20 @@ import {
   getAllPlaces,
   removePlaceData,
 } from '../modules/localStorage';
-import { SavedLocationData } from '../types/route';
 import LocationCard from './LocationCard';
 import DisabledButton from './DisabledButton';
 
 interface Location {
   latitude: number;
   longitude: number;
-  date?: number;
+  date?: string;
+}
+
+interface SavedLocationData {
+  latitude: number;
+  longitude: number;
+  name: string;
+  date: string;
 }
 
 export default function SaveLocation() {
