@@ -46,6 +46,7 @@ type RootStackParamList = {
 };
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 interface EventData {
   event_name: string;

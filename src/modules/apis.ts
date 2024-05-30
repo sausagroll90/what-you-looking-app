@@ -78,9 +78,11 @@ export async function getPlaceDetails(place_id: string): Promise<PlaceData> {
 }
 
 export async function getNearbyEvents(latitude: number, longitude: number) {
+  console.log('getting nearby events');
   const response = await fetch(
     `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTERAPIKEY}&latlong=${latitude},${longitude}&radius=1&unit=km&sort=distance,asc&size=5`,
   );
+  console.log('got nearby events -->', response);
 
   if (response.status !== 200) {
     throw new Error('Error fetching from API: ' + response.status);

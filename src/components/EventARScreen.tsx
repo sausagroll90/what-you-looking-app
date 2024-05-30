@@ -54,8 +54,10 @@ const EventScreenSceneAR = ({
   const [loading, setLoading] = useState<boolean>(true);
   const navigation = useNavigation<PointMarkerNavigationProp>();
 
+  console.log('rendering EventARScreen');
+
   function onInitialised(state: any, reason: ViroTrackingReason) {
-    console.log('onInitialised', state, reason);
+    console.log('onInitialised event screen', state, reason);
     if (state === ViroTrackingStateConstants.TRACKING_NORMAL) {
       setInitialCompassHeading(compassHeading);
       setInitialised(true);
@@ -63,24 +65,30 @@ const EventScreenSceneAR = ({
   }
 
   async function getEvents(latitude: number, longitude: number) {
+    console.log('fetching events');
     try {
       const data = await getNearbyEvents(latitude, longitude);
+      console.log('events fetched -->', data);
       if (data) {
         setEvents(data);
         setLoading(false);
       }
-    } catch (_) {
+    } catch (e) {
+      console.log('error getting events -->', e);
       setError('Error loading data');
     }
   }
 
   useEffect(() => {
+    console.log('getting user location');
     getUserLocation(
       (latitude, longitude) => {
+        console.log('got user location');
         setUserLocation({
           latitude: latitude,
           longitude: longitude,
         });
+        console.log('invoking getEvents');
         getEvents(latitude, longitude);
       },
       (err) => {

@@ -13,7 +13,7 @@ import { getPositionForAR, getUserLocation } from '../modules/utils';
 import ErrorScreen from './ErrorScreen';
 import Menu from './Menu';
 import LoadingSpinner from './LoadingSpinner';
-import { HomeScreenProps, PointMarkerNavigationProp } from '../types/route';
+import { HomeScreenNavigationProp, HomeScreenProps } from '../types/route';
 import {
   LogBox,
   StyleSheet,
@@ -71,6 +71,8 @@ const HomeScreenSceneAR = ({
   const [initialCompassHeading, setInitialCompassHeading] = useState<
     number | null
   >(null);
+
+  const navigation = useNavigation<HomeScreenNavigationProp>();
 
   function onInitialised(state: any, reason: ViroTrackingReason) {
     console.log('onInitialised', state, reason);
