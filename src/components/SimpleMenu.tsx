@@ -75,7 +75,7 @@ export default function SimpleMenu() {
             </View>
             <View>
               <NavButton
-                text="Saved Locations"
+                text="Save Location"
                 navigationTarget="SaveLocation"
                 top={dropdownTop}
               />
