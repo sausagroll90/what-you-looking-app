@@ -3,10 +3,23 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import StyledButton from './StyledButton';
 import { useNavigation } from '@react-navigation/native';
 import EmbeddedMap from './EmbeddedMap';
+import { formatDate } from '../modules/utils';
+import { LocationCardNavigationProp } from '../types/route';
 
-export default function LocationCard(props) {
+type LocationCardProps = {
+  location: {
+    latitude: number;
+    longitude: number;
+    date: string;
+    name: string;
+  };
+};
+
+export default function LocationCard(
+  props: LocationCardProps,
+): React.JSX.Element {
   const { name, date, latitude, longitude } = props.location;
-  const navigation = useNavigation();
+  const navigation = useNavigation<LocationCardNavigationProp>();
   const locationToShow = { latitude: latitude, longitude: longitude };
   function handlePress() {
     navigation.push('SavedLocationAR', { location: locationToShow });
@@ -18,7 +31,7 @@ export default function LocationCard(props) {
         <View style={[styles.card, styles.elevation]}>
           <View style={styles.text_area}>
             <Text style={styles.place_name}>{name}</Text>
-            <Text style={styles.address}>Saved {date}</Text>
+            <Text style={styles.address}>Saved {formatDate(date)}</Text>
             <EmbeddedMap placeDetails={[locationToShow]} />
           </View>
           <View style={styles.button_container}>

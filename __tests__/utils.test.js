@@ -1,4 +1,5 @@
 import {
+  formatDate,
   getPositionForAR,
   getRelativePosition,
   isPlaceIdUnique,
@@ -97,5 +98,11 @@ describe('isPlaceIdUnique', () => {
       place_id: 'ChIJwdWI4RxceUgRFF7zMoxhXQE',
     };
     expect(isPlaceIdUnique(currentData, newData)).toBe(false);
+  });
+});
+
+describe('formatDate', () => {
+  it('returns date in user friendly format', () => {
+    expect(formatDate('2024-05-30T07:44:46.181Z')).toBe('30-05-2024');
   });
 });
