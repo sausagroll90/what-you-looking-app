@@ -6,6 +6,7 @@ import {
   Linking,
   SafeAreaView,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import {
   PlaceData,
@@ -13,6 +14,7 @@ import {
   PlaceThumbnailData,
 } from '../types/route';
 import StyledButton from './StyledButton';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { getPlaceDetails } from '../modules/apis';
 import { addPlaceToStorage, getAllPlaces } from '../modules/localStorage';
@@ -90,9 +92,13 @@ export default function PlaceDetails({
               <View style={styles.save}>
                 <Text style={styles.name}>{placeDetails.name}</Text>
                 {saveButtonDisabled ? (
-                  <DisabledButton buttonText={'Saved'} />
+                  <TouchableOpacity>
+                    <Icon name="heart" size={30} color={'red'} />
+                  </TouchableOpacity>
                 ) : (
-                  <StyledButton buttonText={'Save'} onPress={handleSave} />
+                  <TouchableOpacity onPress={handleSave}>
+                    <Icon name="heart-o" size={30} color={'red'} />
+                  </TouchableOpacity>
                 )}
               </View>
               {placeDetails.rating && (
@@ -176,7 +182,8 @@ const styles = StyleSheet.create({
   save: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%',
-    alignItems: 'flex-end',
+    // width: '100%',
+    alignItems: 'center',
+    // marginRight: 0,
   },
 });
