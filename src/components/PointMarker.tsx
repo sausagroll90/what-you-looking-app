@@ -100,6 +100,11 @@ export default function PointMarker(props: {
     }
   };
 
+  const resizeScale = (scale: number[]) => {
+    const RESIZE_FACTOR = 0.25;
+    return scale.map((scaleValue) => scaleValue * RESIZE_FACTOR);
+  };
+
   return (
     <ViroNode
       position={props.position}
@@ -112,22 +117,22 @@ export default function PointMarker(props: {
           source={objSource}
           type={objType}
           materials={imageSrc}
-          scale={objScale}
+          scale={resizeScale(objScale)}
           animation={{ name: 'rotate', run: true, loop: true }}
         />
       ) : (
         <Viro3DObject
           source={objSource}
           type={objType}
-          scale={objScale}
+          scale={resizeScale(objScale)}
           animation={{ name: 'rotate', run: true, loop: true }}
         />
       )}
       <ViroText
         style={styles.text}
         text={props.name}
-        scale={[100, 100, 100]}
-        position={[0, -50, 0]}
+        scale={[25, 25, 25]}
+        position={[0, -12.5, 0]}
         animation={{ name: 'rotate', run: true, loop: true }}
         transformBehaviors={'billboard'}
       />

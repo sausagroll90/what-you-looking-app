@@ -32,9 +32,10 @@ export default function MapPage({ route }: MapPageProps): React.JSX.Element {
 
   useEffect(() => {
     async function fetchPlaces(latitude: number, longitude: number) {
+      const SEARCH_RADIUS = 1000;
       try {
         const fetchedPromises = selectedTypes.map((type) => {
-          return getNearbyPOIs(latitude, longitude, type);
+          return getNearbyPOIs(latitude, longitude, type, SEARCH_RADIUS);
         });
         const data = (await Promise.all(fetchedPromises)).flat();
         if (data) {

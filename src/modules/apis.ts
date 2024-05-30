@@ -5,9 +5,10 @@ export async function getNearbyPOIs(
   latitude: number,
   longitude: number,
   type: string,
+  radius: number,
 ) {
   const response = await fetch(
-    `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1000&type=${type}&key=${GOOGLEAPIKEY}`,
+    `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&type=${type}&key=${GOOGLEAPIKEY}`,
   );
   if (response.status !== 200) {
     throw new Error('Error fetching from API: ' + response.status);
