@@ -28,7 +28,7 @@ export async function addLocationToStorage(place: any, key: string) {
     if (allData === null) {
       await setPlaces([place], key);
     } else {
-      allData.push(place);
+      allData.unshift(place);
       await setPlaces(allData, key);
     }
   } catch (e) {

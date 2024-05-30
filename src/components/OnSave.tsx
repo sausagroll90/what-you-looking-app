@@ -1,7 +1,7 @@
 import { Modal, View, Text, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 
-export function OnSave() {
+export function OnSave(props: { text: string }) {
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
   const TOAST_DURATION_MILISECONDS = 3000;
@@ -18,7 +18,7 @@ export function OnSave() {
         }}>
         <View>
           <View style={styles.saveView}>
-            <Text>Added to favourites!</Text>
+            <Text>{props.text}</Text>
           </View>
         </View>
       </Modal>
@@ -31,5 +31,8 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: 'white',
     padding: 35,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#032b43',
   },
 });

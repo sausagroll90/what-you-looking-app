@@ -9,6 +9,7 @@ import {
 } from '../modules/localStorage';
 import LocationCard from './LocationCard';
 import DisabledButton from './DisabledButton';
+import { OnSave } from './OnSave';
 
 interface Location {
   latitude: number;
@@ -28,8 +29,9 @@ export default function SaveLocation() {
   const [userLocation, setUserLocation] = useState<Location | null>(null);
   const [place, setPlace] = useState<string>('');
   const [savedPlaces, setSavedPlaces] = useState<SavedLocationData[]>();
-  const [validSave, setValidSave] = useState(false);
-  const [isDeleted, setIsDeleted] = useState(false);
+  const [validSave, setValidSave] = useState<boolean>(false);
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const [saveSuccessful, setSaveSuccessful] = useState<boolean>(false);
 
   useEffect(() => {
     getUserLocation(
@@ -48,7 +50,6 @@ export default function SaveLocation() {
 
   useEffect(() => {
     setIsDeleted(false);
-
     getSavedLocationData('location');
   }, [isDeleted]);
 
@@ -75,6 +76,7 @@ export default function SaveLocation() {
     };
     await addLocationToStorage(newUserLocation, 'location');
     await getSavedLocationData('location');
+    setSaveSuccessful(true);
   }
 
   return (
@@ -112,6 +114,7 @@ export default function SaveLocation() {
           setSavedPlaces([]);
         }}
       />
+      {saveSuccessful ? <OnSave text={'Saved location!'} /> : null}
     </ScrollView>
   );
 }

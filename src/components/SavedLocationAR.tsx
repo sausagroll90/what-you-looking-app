@@ -97,7 +97,7 @@ const SavedLocationSceneAR = ({
 
   ViroMaterials.createMaterials({
     marker: {
-      diffuseTexture: require('../../res/icons/marker_pin.png'),
+      diffuseTexture: require('../../res/icons/blue-marker-pin.png'),
     },
   });
 
@@ -112,10 +112,10 @@ const SavedLocationSceneAR = ({
 
   return (
     <ViroARScene onTrackingUpdated={onInitialised}>
-      {initialCompassHeading ? (
+      {initialCompassHeading && userLocation ? (
         <ViroBox
           materials={['marker']}
-          scale={[100, 100, 100]}
+          scale={[50, 50, 50]}
           position={transformPosition()}
           animation={{ name: 'rotate', run: true, loop: true }}
         />
