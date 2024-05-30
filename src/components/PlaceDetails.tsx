@@ -36,7 +36,8 @@ export default function PlaceDetails({
   const [saveSuccessful, setSaveSuccessful] = useState(false);
   const isFocused = useIsFocused();
 
-  const place_id: string = route.params.place_id;
+  // const place_id: string = route.params.place_id;
+  const place_id = 'ChIJLT2I8s5deUgR90SpTPQOKKo';
 
   let showButton = false;
 
@@ -93,11 +94,11 @@ export default function PlaceDetails({
                 <Text style={styles.name}>{placeDetails.name}</Text>
                 {saveButtonDisabled ? (
                   <TouchableOpacity>
-                    <Icon name="heart" size={30} color={'red'} />
+                    <Icon name="heart" size={30} color={'#D90202'} />
                   </TouchableOpacity>
                 ) : (
                   <TouchableOpacity onPress={handleSave}>
-                    <Icon name="heart-o" size={30} color={'red'} />
+                    <Icon name="heart-o" size={30} color={'#D90202'} />
                   </TouchableOpacity>
                 )}
               </View>
