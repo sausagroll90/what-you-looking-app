@@ -91,7 +91,7 @@ export default function Menu({
           </View>
           <View>
             <NavButton
-              text="Saved Locations"
+              text="Save Location"
               navigationTarget="SaveLocation"
               top={dropdownTop}
             />
