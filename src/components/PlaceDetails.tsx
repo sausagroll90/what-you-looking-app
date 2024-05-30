@@ -204,8 +204,6 @@ const styles = StyleSheet.create({
   save: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // width: '100%',
     alignItems: 'center',
-    // marginRight: 0,
   },
 });
