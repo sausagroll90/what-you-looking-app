@@ -3,6 +3,7 @@ import {
   Viro3DObject,
   ViroAmbientLight,
   ViroAnimations,
+  ViroBox,
   ViroMaterials,
   ViroNode,
   ViroText,
@@ -16,6 +17,7 @@ export default function PointMarker(props: {
   place_id: string;
   types: string[];
   position: [number, number, number];
+  onClick: () => void;
 }) {
   const navigation = useNavigation<PointMarkerNavigationProp>();
 
@@ -72,6 +74,9 @@ export default function PointMarker(props: {
     mug: {
       diffuseTexture: require('../../res/models/ceramic.jpg'),
     },
+    marker: {
+      diffuseTexture: require('../../res/icons/marker_pin.png'),
+    },
   });
 
   ViroAnimations.registerAnimations({
@@ -83,16 +88,20 @@ export default function PointMarker(props: {
     },
   });
 
-  const handleClick = () => {
-    Vibration.vibrate(100);
-    navigation.push('PlaceDetails', { place_id: props.place_id });
-  };
+  const handleClick = props.onClick;
 
   return (
     <ViroNode position={props.position} onClick={handleClick}>
       <ViroAmbientLight color="#ffffff" />
 
-      {imageSrc ? (
+      {type === 'event' ? (
+        <ViroBox
+          materials={['marker']}
+          scale={[100, 100, 100]}
+          position={props.position}
+          animation={{ name: 'rotate', run: true, loop: true }}
+        />
+      ) : imageSrc ? (
         <Viro3DObject
           source={objSource}
           type={objType}

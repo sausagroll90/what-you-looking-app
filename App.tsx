@@ -9,6 +9,7 @@ import { RootStackParamList } from './src/types/route';
 import SimpleMenu from './src/components/SimpleMenu';
 import Logo from './src/components/Logo';
 import EventDetails from './src/components/EventDetails';
+import EventARScreen from './src/components/EventARScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -54,6 +55,11 @@ function App(): JSX.Element {
           component={HomeScreen}
           options={{ headerShown: false }}
           initialParams={{ selectedFilterTypes, setSelectedFilterTypes }}
+        />
+        <Stack.Screen
+          name="Events"
+          component={EventARScreen}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Favourites"

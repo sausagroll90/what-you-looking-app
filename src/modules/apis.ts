@@ -76,27 +76,6 @@ export async function getPlaceDetails(place_id: string): Promise<PlaceData> {
   return results;
 }
 
-export async function getWikiSummary(placeName: string, location: string) {
-  const placeToSearch = placeName.replaceAll(' ', '%20');
-
-  const titleResponse = await fetch(
-    `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${location}${placeToSearch}&format=json&srlimit=1`,
-  );
-  if (titleResponse.status !== 200) {
-    throw new Error('Error fetching from API: ' + titleResponse.status);
-  }
-  const searchResult = await titleResponse.json();
-  const pageTitle = searchResult.query.search[0].title;
-  const titleToSearch = pageTitle.replaceAll(' ', '%20');
-  const pageResponse = await fetch(
-    `https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles=${titleToSearch}`,
-  );
-  const pageResult = await pageResponse.json();
-  const pageSummary =
-    pageResult.query.pages[searchResult.query.search[0].pageid].extract;
-  return pageSummary;
-}
-
 export async function getNearbyEvents(latitude: number, longitude: number) {
   const response = await fetch(
     `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${TICKETMASTERAPIKEY}&latlong=${latitude},${longitude}&radius=1&unit=km&sort=distance,asc&size=5`,
@@ -115,9 +94,10 @@ export async function getNearbyEvents(latitude: number, longitude: number) {
   }[] = data._embedded.events.map((result: any) => {
     return {
       name: result.name,
-      event_id: result.id,
+      place_id: result.id,
       latitude: result._embedded.venues[0].location.latitude,
       longitude: result._embedded.venues[0].location.longitude,
+      types: ['event'],
     };
   });
 

@@ -8,29 +8,28 @@ import {
 } from '@viro-community/react-viro';
 import PointMarker from './PointMarker';
 import CompassHeading from 'react-native-compass-heading';
-import { getNearbyPOIs } from '../modules/apis';
+import { getNearbyEvents, getNearbyPOIs } from '../modules/apis';
 import { getPositionForAR, getUserLocation } from '../modules/utils';
 import ErrorScreen from './ErrorScreen';
 import Menu from './Menu';
 import { HomeScreenProps, PointMarkerNavigationProp } from '../types/route';
 import { LogBox, StyleSheet, Text, Vibration, View } from 'react-native';
 import Logo from './Logo';
+import SimpleMenu from './SimpleMenu';
 import { useNavigation } from '@react-navigation/native';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state.',
 ]);
 
-const HomeScreenSceneAR = ({
+const EventScreenSceneAR = ({
   arSceneNavigator: {
-    viroAppProps: { setError, selectedTypes },
+    viroAppProps: { setError },
   },
 }: {
   arSceneNavigator: {
     viroAppProps: {
       setError: React.Dispatch<React.SetStateAction<string | null>>;
-      setSelectedTypes: React.Dispatch<React.SetStateAction<string[]>>;
-      selectedTypes: string[];
     };
   };
 }) => {
@@ -38,7 +37,7 @@ const HomeScreenSceneAR = ({
     latitude: number;
     longitude: number;
   } | null>(null);
-  const [pointsOfInterest, setPointsOfInterest] = useState<
+  const [events, setEvents] = useState<
     {
       latitude: number;
       longitude: number;
@@ -63,14 +62,11 @@ const HomeScreenSceneAR = ({
     }
   }
 
-  async function getPointsOfInterest(latitude: number, longitude: number) {
+  async function getEvents(latitude: number, longitude: number) {
     try {
-      const fetchedPromises = selectedTypes.map((type) => {
-        return getNearbyPOIs(latitude, longitude, type);
-      });
-      const data = (await Promise.all(fetchedPromises)).flat();
+      const data = await getNearbyEvents(latitude, longitude);
       if (data) {
-        setPointsOfInterest(data);
+        setEvents(data);
         setLoading(false);
       }
     } catch (_) {
@@ -85,7 +81,7 @@ const HomeScreenSceneAR = ({
           latitude: latitude,
           longitude: longitude,
         });
-        getPointsOfInterest(latitude, longitude);
+        getEvents(latitude, longitude);
       },
       (err) => {
         console.log(err.code, err.message);
@@ -112,34 +108,25 @@ const HomeScreenSceneAR = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    userLocation
-      ? getPointsOfInterest(userLocation.latitude, userLocation.longitude)
-      : null;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTypes]);
-
   return (
     <ViroARScene onTrackingUpdated={onInitialised}>
       {initialCompassHeading
-        ? pointsOfInterest.map((location) => {
+        ? events.map((event) => {
             const transformedPosition = getPositionForAR(
               userLocation,
-              { latitude: location.latitude, longitude: location.longitude },
+              { latitude: event.latitude, longitude: event.longitude },
               initialCompassHeading,
             );
             return (
               <PointMarker
-                key={location.place_id}
-                name={location.name}
-                place_id={location.place_id}
-                types={location.types}
+                key={event.place_id}
+                name={event.name}
+                place_id={event.place_id}
+                types={event.types}
                 position={transformedPosition}
                 onClick={() => {
                   Vibration.vibrate(100);
-                  navigation.push('PlaceDetails', {
-                    place_id: location.place_id,
-                  });
+                  navigation.push('EventDetails', { place_id: event.place_id });
                 }}
               />
             );
@@ -154,28 +141,18 @@ const HomeScreenSceneAR = ({
 
 export default ({ route }: HomeScreenProps) => {
   const [error, setError] = useState<string | null>(null);
-  const [selectedTypes, setSelectedTypes] = useState<string[]>(['museum']);
-  const [selectedFilters, setSelectedFilters] = useState<string[]>(
-    route.params.selectedFilterTypes,
-  );
 
   return !error ? (
     <>
       <View style={styles.container}>
-        <Menu
-          setSelectedTypes={setSelectedTypes}
-          selectedFilters={selectedFilters}
-          setSelectedFilters={setSelectedFilters}
-          setSelectedFilterTypes={route.params.setSelectedFilterTypes}
-          currentScreen="home"
-        />
-        <Text style={styles.title}>Home</Text>
+        <SimpleMenu />
+        <Text style={styles.title}>Events</Text>
         <Logo />
       </View>
       <ViroARSceneNavigator
         autofocus={true}
-        initialScene={{ scene: HomeScreenSceneAR }}
-        viroAppProps={{ setError, selectedTypes }}
+        initialScene={{ scene: EventScreenSceneAR }}
+        viroAppProps={{ setError }}
       />
     </>
   ) : (
