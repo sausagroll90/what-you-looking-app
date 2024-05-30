@@ -11,7 +11,7 @@ import SaveLocation from './src/components/SaveLocation';
 import SavedLocationAR from './src/components/SavedLocationAR';
 import Logo from './src/components/Logo';
 import EventDetails from './src/components/EventDetails';
-
+import EventARScreen from './src/components/EventARScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -57,6 +57,11 @@ function App(): JSX.Element {
           component={HomeScreen}
           options={{ headerShown: false }}
           initialParams={{ selectedFilterTypes, setSelectedFilterTypes }}
+        />
+        <Stack.Screen
+          name="Events"
+          component={EventARScreen}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Favourites"

@@ -61,6 +61,13 @@ export default function SimpleMenu() {
             </View>
             <View>
               <NavButton
+                text="Events"
+                navigationTarget="Events"
+                top={dropdownTop}
+              />
+            </View>
+            <View>
+              <NavButton
                 text="Favourites"
                 navigationTarget="Favourites"
                 top={dropdownTop}

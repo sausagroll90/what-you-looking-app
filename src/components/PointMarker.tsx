@@ -3,6 +3,7 @@ import {
   Viro3DObject,
   ViroAmbientLight,
   ViroAnimations,
+  ViroBox,
   ViroMaterials,
   ViroNode,
   ViroText,
@@ -16,6 +17,7 @@ export default function PointMarker(props: {
   place_id: string;
   types: string[];
   position: [number, number, number];
+  onClick: () => void;
 }) {
   const navigation = useNavigation<PointMarkerNavigationProp>();
 
@@ -72,6 +74,9 @@ export default function PointMarker(props: {
     mug: {
       diffuseTexture: require('../../res/models/ceramic.jpg'),
     },
+    marker: {
+      diffuseTexture: require('../../res/icons/marker_pin.png'),
+    },
   });
 
   ViroAnimations.registerAnimations({
@@ -85,15 +90,6 @@ export default function PointMarker(props: {
 
   let dragged: boolean = false;
 
-  const handleClick = () => {
-    if (dragged === true) {
-      dragged = false;
-    } else {
-      Vibration.vibrate(100);
-      navigation.push('PlaceDetails', { place_id: props.place_id });
-    }
-  };
-
   const handleDrag = (dragProps: any) => {
     if (Math.abs(props.position[0] - dragProps[0]) > 5) {
       dragged = true;
@@ -105,6 +101,8 @@ export default function PointMarker(props: {
     return scale.map((scaleValue) => scaleValue * RESIZE_FACTOR);
   };
 
+  const handleClick = props.onClick;
+
   return (
     <ViroNode
       position={props.position}
@@ -112,7 +110,14 @@ export default function PointMarker(props: {
       onDrag={handleDrag}>
       <ViroAmbientLight color="#ffffff" />
 
-      {imageSrc ? (
+      {type === 'event' ? (
+        <ViroBox
+          materials={['marker']}
+          scale={[20, 20, 20]}
+          position={props.position}
+          animation={{ name: 'rotate', run: true, loop: true }}
+        />
+      ) : imageSrc ? (
         <Viro3DObject
           source={objSource}
           type={objType}
@@ -132,7 +137,7 @@ export default function PointMarker(props: {
         style={styles.text}
         text={props.name}
         scale={[25, 25, 25]}
-        position={[0, -12.5, 0]}
+        position={type === 'event' ? [0, -20, 0] : [0, -12.5, 0]}
         animation={{ name: 'rotate', run: true, loop: true }}
         transformBehaviors={'billboard'}
       />
