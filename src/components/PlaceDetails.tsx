@@ -17,7 +17,11 @@ import StyledButton from './StyledButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { getPlaceDetails } from '../modules/apis';
-import { addPlaceToStorage, getAllPlaces } from '../modules/localStorage';
+import {
+  addPlaceToStorage,
+  getAllPlaces,
+  setPlaces,
+} from '../modules/localStorage';
 import { OnSave } from './OnSave';
 import { isPlaceIdUnique } from '../modules/utils';
 import EmbeddedMap from './EmbeddedMap';
@@ -46,6 +50,25 @@ export default function PlaceDetails({
       ? addPlaceToStorage(itemForLocalStorage, 'favourites')
       : null;
     setSaveSuccessful(true);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const allData = await getAllPlaces('favourites');
+      if (allData) {
+        const placeIdArray = allData.map(
+          (place: PlaceThumbnailData) => place.place_id,
+        );
+        const indexPositionToDelete = placeIdArray.indexOf(place_id);
+        allData.splice(indexPositionToDelete, 1);
+        await setPlaces(allData, 'favourites');
+        setSaveButtonDisabled(false);
+      } else {
+        null;
+      }
+    } catch (e) {
+      console.log('error removing item from list', e);
+    }
   };
 
   async function onPlaceIdReceived(placeId: string) {
@@ -91,7 +114,7 @@ export default function PlaceDetails({
               <View style={styles.save}>
                 <Text style={styles.name}>{placeDetails.name}</Text>
                 {saveButtonDisabled ? (
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={handleDelete}>
                     <Icon name="heart" size={30} color={'#D90202'} />
                   </TouchableOpacity>
                 ) : (
