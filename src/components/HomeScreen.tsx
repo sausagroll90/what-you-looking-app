@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     paddingLeft: 65,
   },
   intro: {
-    height: '90%',
+    height: '80%',
     width: '60%',
   },
   logo: {
