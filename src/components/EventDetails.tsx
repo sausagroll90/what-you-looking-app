@@ -16,7 +16,7 @@ import EmbeddedMap from './EmbeddedMap';
 export default function EventDetails(): React.JSX.Element {
   const [eventDetails, setEventDetails] = useState<EventData | null>(null);
 
-  // const event_id: string = route.params.event_id;
+  // const event_id: string = route.params.place_id;
   const event_id = 'G5dzZ9UnN5xZi';
 
   async function onEventIdReceived(eventID: string) {
