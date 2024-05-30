@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#a8d3dc',
     minWidth: 80,
     borderRadius: 10,
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
   },
   buttonText: {
     fontSize: 16,
