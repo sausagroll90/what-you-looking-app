@@ -83,10 +83,10 @@ const HomeScreenSceneAR = ({
   }
 
   async function getPointsOfInterest(latitude: number, longitude: number) {
-    const SEARCH_RADIUS = 100;
+    const SEARCH_RADIUS_METRES = 200;
     try {
       const fetchedPromises = selectedTypes.map((type) => {
-        return getNearbyPOIs(latitude, longitude, type, SEARCH_RADIUS);
+        return getNearbyPOIs(latitude, longitude, type, SEARCH_RADIUS_METRES);
       });
       const data = (await Promise.all(fetchedPromises)).flat();
       if (data) {

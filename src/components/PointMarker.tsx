@@ -97,7 +97,7 @@ export default function PointMarker(props: {
   };
 
   const resizeScale = (scale: number[]) => {
-    const RESIZE_FACTOR = 0.25;
+    const RESIZE_FACTOR = 0.12;
     return scale.map((scaleValue) => scaleValue * RESIZE_FACTOR);
   };
 
