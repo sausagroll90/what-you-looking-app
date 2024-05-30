@@ -113,7 +113,7 @@ export default function PointMarker(props: {
       {type === 'event' ? (
         <ViroBox
           materials={['marker']}
-          scale={[100, 100, 100]}
+          scale={[20, 20, 20]}
           position={props.position}
           animation={{ name: 'rotate', run: true, loop: true }}
         />
@@ -137,7 +137,7 @@ export default function PointMarker(props: {
         style={styles.text}
         text={props.name}
         scale={[25, 25, 25]}
-        position={[0, -12.5, 0]}
+        position={type === 'event' ? [0, -20, 0] : [0, -12.5, 0]}
         animation={{ name: 'rotate', run: true, loop: true }}
         transformBehaviors={'billboard'}
       />

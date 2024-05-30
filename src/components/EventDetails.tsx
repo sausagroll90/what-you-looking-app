@@ -13,11 +13,10 @@ import LoadingSpinner from './LoadingSpinner';
 import StyledButton from './StyledButton';
 import EmbeddedMap from './EmbeddedMap';
 
-export default function EventDetails(): React.JSX.Element {
+export default function EventDetails({ route }): React.JSX.Element {
   const [eventDetails, setEventDetails] = useState<EventData | null>(null);
 
-  // const event_id: string = route.params.place_id;
-  const event_id = 'G5dzZ9UnN5xZi';
+  const event_id: string = route.params.place_id;
 
   async function onEventIdReceived(eventID: string) {
     try {
