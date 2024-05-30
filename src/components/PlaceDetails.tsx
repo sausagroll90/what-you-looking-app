@@ -15,7 +15,6 @@ import {
 } from '../types/route';
 import StyledButton from './StyledButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
 import { getPlaceDetails } from '../modules/apis';
 import {
   addPlaceToStorage,
@@ -83,7 +82,6 @@ export default function PlaceDetails({
       setItemForLocalStorage(placeToStore);
       addPlaceToStorage(placeToStore, 'history');
       const allData = await getAllPlaces('favourites');
-
       setSaveButtonDisabled(!isPlaceIdUnique(allData, placeToStore));
     } catch (e) {
       console.log(e);
@@ -154,7 +152,7 @@ export default function PlaceDetails({
             <StyledButton buttonText="Back" onPress={handleOnBackPress} />
           ) : null}
 
-          {saveSuccessful ? <OnSave /> : null}
+          {saveSuccessful ? <OnSave text={'Added to favourites!'} /> : null}
           {placeDetails ? <EmbeddedMap placeDetails={[placeDetails]} /> : null}
         </View>
       </ScrollView>

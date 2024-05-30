@@ -36,12 +36,9 @@ export default function LocationCard(
       const allData = await getAllPlaces('location');
       if (allData) {
         setDeleteButtonText('Removing...');
-        console.log(allData);
-
         const locationIdArray = allData.map(
           (place: PlaceThumbnailData) => place.place_id,
         );
-
         const indexPositionToDelete = locationIdArray.indexOf(place_id);
         allData.splice(indexPositionToDelete, 1);
         await setPlaces(allData, 'location');
