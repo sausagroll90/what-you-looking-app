@@ -14,9 +14,9 @@ Further functionality is supplied:
 - button to save details of "favourite" POIs
 - button to save current location as a custom POI
 
-## Try it out
+## Demo
 
-You can download the app [here](https://www.dropbox.com/scl/fi/mob2ngrmvm3vnyrh7n4us/app-debug.apk?rlkey=z6dnnnzztx09hd8ykigk2o93e&st=tn4r1zl3&dl=0). You will need to enable developer options on your device and turn USB debugging on.
+You can see a video demonstration of the app [here](https://northcoders.com/project-phase/what-you-looking-app).
 
 ## Installation
 
