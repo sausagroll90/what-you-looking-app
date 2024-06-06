@@ -1,6 +1,6 @@
 # What You Looking App?
 
-*What You Looking App?* is a mobile app for Android created using React Native and ViroReact. It allows the user to see an augmented reality (AR) view of their surroundings. Points of interest (POIs) in the vicinity are overlaid with an AR object, which can be tapped to display more detailed information about this specific POI.
+_What You Looking App?_ is a mobile app for Android created using React Native and ViroReact. It allows the user to see an augmented reality (AR) view of their surroundings. Points of interest (POIs) in the vicinity are overlaid with an AR object, which can be tapped to display more detailed information about this specific POI.
 
 This app was developed as part of the Northcoders Software Engineering Bootcamp in May 2024.
 
@@ -14,7 +14,9 @@ Further functionality is supplied:
 - button to save details of "favourite" POIs
 - button to save current location as a custom POI
 
-## Table of contents
+## Demo
+
+You can see a video demonstration of the app [here](https://northcoders.com/project-phase/what-you-looking-app).
 
 ## Installation
 
